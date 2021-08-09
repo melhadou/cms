@@ -31,9 +31,10 @@ while ($row = mysqli_fetch_assoc($select_all_cat_querys)) {
 
 
 
-                <!-- <li>
-                    <a href="#">About</a>
+                <li>
+                    <a href="admin/">Admin</a>
                 </li>
+                <!--
                 <li>
                     <a href="#">Services</a>
                 </li>
