@@ -34,7 +34,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <li>
-                <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i
@@ -54,7 +54,7 @@
             </li>
 
             <li class="active">
-                <a href="blank-page.html"><i class="fa fa-fw fa-comments-o"></i> Comments</a>
+                <a href="comments.php"><i class="fa fa-fw fa-comments-o"></i> Comments</a>
             </li>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#users_dropdown"><i
@@ -71,7 +71,7 @@
                 </ul>
             </li>
             <li class="active">
-                <a href="blank-page.html"><i class="fa fa-fw fa-user"></i> Profile</a>
+                <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             </li>
         </ul>
     </div>

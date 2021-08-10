@@ -19,7 +19,27 @@ include "includes/admin_header.php";
                         <small>Author</small>
                     </h1>
                     <div class="col-xs-6">
-                        <form action="">
+                        <?php
+
+if (isset($_POST['submit'])) {
+    $cat_title = $_POST[('cat_title')];
+
+    if ($cat_title == "" || empty($cat_title)) {
+        echo "You need to Type Somthing";
+    } else {
+        $query = "INSERT INTO categories(cat_title) VALUE('{$cat_title}') ";
+
+        $creat_cat_query = mysqli_query($connection, $query);
+        if (!$creat_cat_query) {
+            die("QUERY FAILED" . mysqli_error($connection));
+        }
+    }
+}
+
+?>
+
+
+                        <form action="" method="POST">
 
                             <div class="form-group">
                                 <label for="cat-title">Add Category</label>
@@ -31,6 +51,12 @@ include "includes/admin_header.php";
                         </form>
                     </div>
                     <div class="col-xs-6">
+                        <?php
+
+$query = "SELECT * FROM categories";
+$select_categories = mysqli_query($connection, $query);
+
+?>
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -39,22 +65,19 @@ include "includes/admin_header.php";
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php
 
-$query = "SELECT * FROM categories";
-$select_sidbar_cat_querys = mysqli_query($connection, $query);
-
-while ($row = mysqli_fetch_assoc($select_sidbar_cat_querys)) {
+while ($row = mysqli_fetch_assoc($select_categories)) {
     $cat_title = $row['cat_title'];
     $cat_id = $row['cat_id'];
-    ?>
-                                <tr>
-                                    <td><?php echo $cat_id; ?></td>
-                                    <td><?php echo $cat_title; ?></td>
-                                </tr>
-                                <?php }?>
+    echo "<tr>";
+    echo "<td>{$cat_id}</td>";
+    echo "<td>{$cat_title}</td>";
+    echo "</tr>";
 
+}
+
+?>
 
                             </tbody>
                         </table>
