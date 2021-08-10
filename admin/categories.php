@@ -39,15 +39,26 @@ include "includes/admin_header.php";
                                 </tr>
                             </thead>
                             <tbody>
+
+                                <?php
+
+$query = "SELECT * FROM categories";
+$select_sidbar_cat_querys = mysqli_query($connection, $query);
+
+while ($row = mysqli_fetch_assoc($select_sidbar_cat_querys)) {
+    $cat_title = $row['cat_title'];
+    $cat_id = $row['cat_id'];
+    ?>
                                 <tr>
-                                    <td>Basballe Category</td>
-                                    <td>Footbale Category</td>
+                                    <td><?php echo $cat_id; ?></td>
+                                    <td><?php echo $cat_title; ?></td>
                                 </tr>
+                                <?php }?>
+
+
                             </tbody>
                         </table>
                     </div>
-
-
 
 
 
