@@ -20,6 +20,7 @@ include "includes/admin_header.php";
                     </h1>
                     <div class="col-xs-6">
                         <?php
+//adding categories to db
 
 if (isset($_POST['submit'])) {
     $cat_title = $_POST[('cat_title')];
@@ -42,13 +43,22 @@ if (isset($_POST['submit'])) {
                         <form action="" method="POST">
 
                             <div class="form-group">
-                                <label for="cat-title">Add Category</label>
-                                <input class="form-control" type="text" name="cat_title" id="cat-title">
+                                <label for="cat-title1">Add Category</label>
+                                <input class="form-control" type="text" name="cat_title" id="cat-title1">
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                             </div>
                         </form>
+
+                        <!-- Update Categories -->
+                        <?php
+if (isset($_GET['edit'])) {
+    $cat_id = $_GET['edit'];
+    include "includes/update_categories.php";
+}
+
+?>
                     </div>
                     <div class="col-xs-6">
 
@@ -60,7 +70,8 @@ if (isset($_POST['submit'])) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php // get categories from db
+                                <?php
+// get categories from db
 $query = "SELECT * FROM categories";
 $select_categories = mysqli_query($connection, $query);
 while ($row = mysqli_fetch_assoc($select_categories)) {
@@ -70,12 +81,14 @@ while ($row = mysqli_fetch_assoc($select_categories)) {
     echo "<td>{$cat_id}</td>";
     echo "<td>{$cat_title}</td>";
     echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
+    echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
     echo "</tr>";
 
 }
 
 ?>
-                                <?php // delete categories from db
+                                <?php
+// delete categories from db
 
 if (isset($_GET['delete'])) {
 
