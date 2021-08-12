@@ -66,3 +66,21 @@ function FindAllCategories()
     confirm($select_categories);
 
 }
+function delete_post()
+{
+    global $connection;
+    if (isset($_GET['delete'])) {
+
+        $the_post_id = $_GET['delete'];
+
+        $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
+
+        $delete_query = mysqli_query($connection, $query);
+
+        // refraiche the page , to show data after deleting a post
+        header("Location: posts.php");
+
+        confirm($delete_query);
+    }
+
+}
