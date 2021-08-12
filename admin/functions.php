@@ -1,6 +1,15 @@
 <?php
 include "../includes/db.php";
 
+function confirm($result)
+{
+    global $connection;
+    if (!$result) {
+        die("QUERY FAILED" . mysqli_error($connection));
+    }
+    return $result;
+
+}
 function insert_categories()
 {
     global $connection;
@@ -13,9 +22,7 @@ function insert_categories()
             $query = "INSERT INTO categories(cat_title) VALUE('{$cat_title}') ";
 
             $creat_cat_query = mysqli_query($connection, $query);
-            if (!$creat_cat_query) {
-                die("QUERY FAILED" . mysqli_error($connection));
-            }
+            confirm($creat_cat_query);
         }
     }
 
@@ -35,9 +42,7 @@ function delete_cat()
         // refraiche the page , to show data after deleting categories
         header("Location: categories.php");
 
-        if (!$delete_query) {
-            die("QUERY FAILED" . mysqli_error($connection));
-        }
+        confirm($delete_query);
     }
 
 }
@@ -58,5 +63,6 @@ function FindAllCategories()
         echo "</tr>";
 
     }
+    confirm($select_categories);
 
 }
