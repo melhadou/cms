@@ -43,8 +43,13 @@ if (isset($_POST['creat_post'])) {
         <input type="text" class="form-control" name="post_title" id="title">
     </div>
     <div class="form-group">
-        <label for="category">Post Category</label>
-        <input type="text" class="form-control" name="post_category_id" id="category">
+        <label for="post_category_id">Post Category</label>
+        <select name="post_category_id" id="post_category_id" class="form-control">
+            <?php
+//show categories
+showCategories();
+?>
+        </select>
     </div>
     <div class="form-group">
         <label for="author">Post author</label>

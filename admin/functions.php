@@ -84,3 +84,18 @@ function delete_post()
     }
 
 }
+
+function showCategories()
+{
+    global $connection;
+    $query = "SELECT * FROM categories ";
+    $select_categories = mysqli_query($connection, $query);
+    confirm($select_categories);
+    while ($row = mysqli_fetch_assoc($select_categories)) {
+        $cat_title = $row['cat_title'];
+        $cat_id = $row['cat_id'];
+
+        echo "  <option value='{$cat_id}'>{$cat_title}</option>";
+    }
+
+}

@@ -1,4 +1,5 @@
     <?php
+//pull data from db , => show it on , so we can edit it
 
 if (isset($_GET['p_id'])) {
 
@@ -19,6 +20,7 @@ while ($row = mysqli_fetch_assoc($edit_post_query)) {
 }
 ?>
     <?php
+// edit the data , & send it back to db
 
 if (isset($_POST['edit_post'])) {
 
@@ -83,15 +85,8 @@ if (isset($_POST['edit_post'])) {
             <label for="post_category_id">Post Category</label>
             <select name="post_category_id" id="post_category_id" class="form-control">
                 <?php
-$query = "SELECT * FROM categories";
-$select_categories = mysqli_query($connection, $query);
-confirm($select_categories);
-while ($row = mysqli_fetch_assoc($select_categories)) {
-    $cat_title = $row['cat_title'];
-    $cat_id = $row['cat_id'];
-
-    echo "  <option value='{$cat_id}'>{$cat_title}</option>";
-}
+//show categories
+showCategories();
 ?>
             </select>
 
