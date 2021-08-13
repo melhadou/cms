@@ -12,23 +12,12 @@
 
         <!-- Blog Entries Column -->
         <div class="col-md-8">
+
+
             <?php
 if (isset($_GET['c_id'])) {
     $c_id = $_GET['c_id'];
 }
-
-$query = "SELECT * FROM categories WHERE cat_id = {$c_id}";
-$select_all_cat_querys = mysqli_query($connection, $query);
-
-while ($row = mysqli_fetch_assoc($select_all_cat_querys)) {
-    $cat_title = $row['cat_title'];
-    $cat_id = $row['cat_id'];
-
-}
-
-?>
-
-            <?php
 
 $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
 $select_all_posts_querys = mysqli_query($connection, $query);
