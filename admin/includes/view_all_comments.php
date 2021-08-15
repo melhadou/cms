@@ -21,7 +21,7 @@ $query = "SELECT * FROM comments";
 $select_comments = mysqli_query($connection, $query);
 while ($row = mysqli_fetch_assoc($select_comments)) {
     $comment_id = $row['comment_id'];
-    $comment_post_id = $row['post_post_id'];
+    $comment_post_id = $row['comment_post_id'];
     $comment_author = $row['comment_author'];
     $comment_email = $row['comment_email'];
     $comment_status = $row['comment_status'];
@@ -45,10 +45,10 @@ while ($row = mysqli_fetch_assoc($select_comments)) {
     echo "<td> $comment_status</td>";
     echo "<td> in response </td>";
     echo "<td> $comment_date</td>";
-    echo "<td><a href='posts.php?delete={$post_id}'>Approve</a></td>";
-    echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Unapprove</a></td>";
-    echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
-    echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+    echo "<td><a href='posts.php?delete='>Approve</a></td>";
+    echo "<td><a href='posts.php?source=edit_post&p_id='>Unapprove</a></td>";
+    echo "<td><a href='posts.php?delete='>Delete</a></td>";
+    echo "<td><a href='posts.php?source=edit_post&p_id='>Edit</a></td>";
 
     echo "</tr>";
 }
