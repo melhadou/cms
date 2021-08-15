@@ -57,7 +57,10 @@ showCategories();
     </div>
     <div class="form-group">
         <label for="status">Post status</label>
-        <input type="text" class="form-control" name="post_status" id="status">
+        <select name="post_status" id="status" class="form-control">
+            <option value="draft">Draft</option>
+            <option value="published">Publish</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="image">Post Image</label>

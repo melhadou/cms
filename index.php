@@ -14,7 +14,7 @@
         <div class="col-md-8">
             <?php
 
-$query = "SELECT * FROM posts";
+$query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC";
 $select_all_posts_querys = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
@@ -24,8 +24,13 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
     $post_date = $row['post_date'];
     $post_image = $row['post_image'];
     $post_content = substr($row['post_content'], 0, 100);
+    $post_status = $row['post_status'];
 
-    ?>
+    if ($post_status != 'published') {
+        echo "<h1>Sorry! No Post Yet!!</h1>";
+    } else {
+
+        ?>
             <h1 class="page-header">
                 Page Heading
                 <small>Secondary Text</small>
@@ -50,7 +55,7 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
             <p><?php echo $post_content; ?></p>
             <a class="btn btn-primary" href="posts.php?p_id=<?php echo $post_id ?>">Read More <span
                     class="glyphicon glyphicon-chevron-right"></span></a>
-            <?php }?>
+            <?php }}?>
 
 
 
