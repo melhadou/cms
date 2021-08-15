@@ -53,7 +53,7 @@
                 <a href="categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
             </li>
 
-            <li class="active">
+            <li class="">
                 <a href="comments.php"><i class="fa fa-fw fa-comments-o"></i> Comments</a>
             </li>
             <li>
@@ -70,7 +70,7 @@
 
                 </ul>
             </li>
-            <li class="active">
+            <li class="">
                 <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             </li>
         </ul>

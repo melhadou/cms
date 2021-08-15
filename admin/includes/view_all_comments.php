@@ -52,17 +52,29 @@ while ($row = mysqli_fetch_assoc($select_comments)) {
     }
 
     echo "<td> $comment_date</td>";
-    echo "<td><a href='posts.php?delete='>Approve</a></td>";
-    echo "<td><a href='posts.php?source=edit_post&p_id='>Unapprove</a></td>";
-    echo "<td><a href='posts.php?delete='>Delete</a></td>";
-    echo "<td><a href='posts.php?source=edit_post&p_id='>Edit</a></td>";
+    echo "<td><a href='comments.php?source=edit_post&p_id='>Approve</a></td>";
+    echo "<td><a href='comments.php?source=edit_post&p_id='>Unapprove</a></td>";
+    echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
 
     echo "</tr>";
 }
 ?>
         <?php
-// delete categories from db
+// delete comment from db
 
+if (isset($_GET['delete'])) {
+
+    $the_comment_id = $_GET['delete'];
+
+    $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id}";
+
+    $delete_comment_query = mysqli_query($connection, $query);
+
+    // refraiche the page , to show data after deleting a post
+    header("Location: comments.php");
+
+    confirm($delete_commment_query);
+}
 ?>
     </tbody>
 </table>
