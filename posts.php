@@ -62,11 +62,17 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
 
 if (isset($_POST['creat_comment'])) {
 
-    echo $comment_author = $_POST['comment_author'];
-    echo "<br>";
-    echo $comment_email = $_POST['comment_email'];
-    echo "<br>";
-    echo $comment_content = $_POST['comment_content'];
+    $comment_post_id = $_GET['p_id'];
+    $comment_author = $_POST['comment_author'];
+    $comment_email = $_POST['comment_email'];
+    $comment_content = $_POST['comment_content'];
+    $comment_status = 'unapproved';
+    $comment_date;
+
+    $query = "INSERT INTO comments(comment_content,comment_post_id,comment_author,comment_email,comment_status,comment_date) ";
+    $query .= "VALUES('{$comment_content}','{$comment_post_id}','{$comment_author}','{$comment_email}','{$comment_status}',now() ) ";
+
+    $creat_comment_query = mysqli_query($connection, $query);
 
 }
 ?>
