@@ -19,6 +19,7 @@
 
 $query = "SELECT * FROM comments";
 $select_comments = mysqli_query($connection, $query);
+
 while ($row = mysqli_fetch_assoc($select_comments)) {
     $comment_id = $row['comment_id'];
     $comment_post_id = $row['comment_post_id'];
@@ -43,7 +44,13 @@ while ($row = mysqli_fetch_assoc($select_comments)) {
 
     echo "<td> $comment_email</td>";
     echo "<td> $comment_status</td>";
-    echo "<td> in response </td>";
+    $post_query = "SELECT * FROM posts WHERE post_id = {$comment_post_id}";
+    $select_post = mysqli_query($connection, $post_query);
+    while ($row = mysqli_fetch_assoc($select_post)) {
+        $post_title = $row['post_title'];
+        echo "<td> <a href='../posts.php?p_id={$comment_post_id}'>$post_title</a></td>";
+    }
+
     echo "<td> $comment_date</td>";
     echo "<td><a href='posts.php?delete='>Approve</a></td>";
     echo "<td><a href='posts.php?source=edit_post&p_id='>Unapprove</a></td>";
@@ -55,7 +62,7 @@ while ($row = mysqli_fetch_assoc($select_comments)) {
 ?>
         <?php
 // delete categories from db
-delete_post();
+
 ?>
     </tbody>
 </table>

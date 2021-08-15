@@ -74,6 +74,9 @@ if (isset($_POST['creat_comment'])) {
 
     $creat_comment_query = mysqli_query($connection, $query);
 
+    if ($creat_comment_query) {
+        die('QUERY FAILED' . mysqli_error($connection));
+    }
 }
 ?>
 
