@@ -58,13 +58,37 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
             <hr>
 
             <!-- Leave a Comment -->
+            <?php
+
+if (isset($_POST['creat_comment'])) {
+
+    echo $comment_author = $_POST['comment_author'];
+    echo "<br>";
+    echo $comment_email = $_POST['comment_email'];
+    echo "<br>";
+    echo $comment_content = $_POST['comment_content'];
+
+}
+?>
+
+
+
             <div class="well">
                 <h4>Leave a Comment:</h4>
-                <form role="form">
+                <form role="form" action="" method="POST">
                     <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <label for="comment_author">Author:</label>
+                        <input type="text" name="comment_author" id="comment_author" class="form-control">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="form-group">
+                        <label for="comment_email">Email:</label>
+                        <input type="email" name="comment_email" id="comment_email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment_content">Comment:</label>
+                        <textarea class="form-control" rows="3" name="comment_content" id="comment_content"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="creat_comment">Submit</button>
                 </form>
             </div>
 
