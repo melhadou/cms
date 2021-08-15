@@ -7,6 +7,7 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Delete</th>
 
 
         </tr>
@@ -16,9 +17,9 @@
         <?php
 
 $query = "SELECT * FROM users";
-$select_comments = mysqli_query($connection, $query);
+$select_user = mysqli_query($connection, $query);
 
-while ($row = mysqli_fetch_assoc($select_comments)) {
+while ($row = mysqli_fetch_assoc($select_user)) {
     $user_id = $row['user_id'];
     $username = $row['username'];
     $user_firstname = $row['user_firstname'];
@@ -33,6 +34,7 @@ while ($row = mysqli_fetch_assoc($select_comments)) {
     echo "<td> $user_lastname</td>";
     echo "<td> $user_email</td>";
     echo "<td> $user_role</td>";
+    echo "<td><a href='users.php?delete=$user_id'>Delete</a></td>";
 
     echo "</tr>";
 }
@@ -62,20 +64,20 @@ if (isset($_GET['approve'])) {
     confirm($approve_comment_query);
 }
 
-// delete comment from db
+// delete user from db
 
 if (isset($_GET['delete'])) {
 
-    $the_comment_id = $_GET['delete'];
+    $the_user_id = $_GET['delete'];
 
-    $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id}";
+    $query = "DELETE FROM users WHERE user_id = {$the_user_id}";
 
-    $delete_comment_query = mysqli_query($connection, $query);
+    $delete_user_query = mysqli_query($connection, $query);
 
     // refraiche the page , to show data after deleting a comment
-    header("Location: comments.php");
+    header("Location: users.php");
 
-    confirm($delete_commment_query);
+    confirm($delete_user_query);
 }
 ?>
     </tbody>
