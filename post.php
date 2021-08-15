@@ -18,9 +18,9 @@ if (isset($_GET['p_id'])) {
 }
 
 $query = "SELECT * FROM posts WHERE post_id = {$p_id}";
-$select_all_posts_querys = mysqli_query($connection, $query);
+$select_all_post_querys = mysqli_query($connection, $query);
 
-while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
+while ($row = mysqli_fetch_assoc($select_all_post_querys)) {
     $post_title = $row['post_title'];
     $post_author = $row['post_author'];
     $post_date = $row['post_date'];
@@ -40,7 +40,7 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
 
 
             <h2>
-                <a href="posts.php?p_id=<?php echo $p_id ?>"><?php echo $post_title ?></a>
+                <a href="post.php?p_id=<?php echo $p_id ?>"><?php echo $post_title ?></a>
             </h2>
             <p class="lead">
                 by <a href="index.php"><?php echo $post_author ?></a>
@@ -77,6 +77,10 @@ if (isset($_POST['creat_comment'])) {
     if (!$creat_comment_query) {
         die('QUERY FAILED' . mysqli_error($connection));
     }
+
+    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+    $query .= "WHERE post_id = $comment_post_id";
+    $update_comment_query = mysqli_query($connection, $query);
 }
 ?>
 

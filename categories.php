@@ -43,7 +43,7 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
 
 
             <h2>
-                <a href="posts.php?p_id=<?php echo $post_id ?>"><?php echo $post_title; ?></a>
+                <a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title; ?></a>
             </h2>
             <p class="lead">
                 by <a href="index.php"><?php echo $post_author; ?></a>
