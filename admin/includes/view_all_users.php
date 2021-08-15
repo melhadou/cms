@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>Id</th>
+            <th>User Image</th>
             <th>Username</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -26,9 +27,11 @@ while ($row = mysqli_fetch_assoc($select_user)) {
     $user_lastname = $row['user_lastname'];
     $user_email = $row['user_email'];
     $user_role = $row['user_role'];
+    $user_image = $row['user_image'];
 
     echo "<tr>";
-    echo "<td>  $user_id</td>";
+    echo "<td> $user_id</td>";
+    echo "<td><img src='../users_images/$user_image' width='50' </td>";
     echo "<td> $username</td>";
     echo "<td> $user_firstname</td>";
     echo "<td> $user_lastname</td>";
@@ -74,11 +77,11 @@ if (isset($_GET['delete'])) {
 
     $delete_user_query = mysqli_query($connection, $query);
 
-    // refraiche the page , to show data after deleting a comment
+    // refraiche the page , to show data after deleting a user
     header("Location: users.php");
 
-    confirm($delete_user_query);
-}
+    confirm($delete_user_query);}
 ?>
+
     </tbody>
 </table>
