@@ -97,6 +97,7 @@ showCategories();
         <div class="form-group">
             <label for="status">Post status</label>
             <select name="post_status" id="status" class="form-control">
+                <option selected hidden style="display:none">Chose One</option>
                 <option value="draft">Draft</option>
                 <option value="published">Publish</option>
             </select>

@@ -9,6 +9,7 @@
             <th>Email</th>
             <th>Role</th>
             <th>Delete</th>
+            <th>Change Role</th>
 
 
         </tr>
@@ -38,33 +39,35 @@ while ($row = mysqli_fetch_assoc($select_user)) {
     echo "<td> $user_email</td>";
     echo "<td> $user_role</td>";
     echo "<td><a href='users.php?delete=$user_id'>Delete</a></td>";
+    echo "<td><a href='users.php?to_admin=$user_id'>Admin</a> <br>";
+    echo "<a href='users.php?to_subs=$user_id'>Subscriber</a></td>";
 
     echo "</tr>";
 }
 ?>
         <?php
 
-// unapprove comments
-if (isset($_GET['unapprove'])) {
-    $the_comment_id = $_GET['unapprove'];
+// change role to admin
+if (isset($_GET['to_admin'])) {
+    $the_user_id = $_GET['to_admin'];
 
-    $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = $the_comment_id ";
+    $query = "UPDATE users SET user_role  = 'admin' WHERE user_id = $the_user_id ";
 
-    $unapprove_comment_query = mysqli_query($connection, $query);
-    // refraiche the page , to show data after unapproving a comment
-    header("Location: comments.php");
-    confirm($unapprove_comment_query);
+    $change_to_admin_query = mysqli_query($connection, $query);
+    // refraiche the page , to show data after changing role to admin
+    header("Location: users.php");
+    confirm($change_to_admin_query);
 }
-// approve comments
-if (isset($_GET['approve'])) {
-    $the_comment_id = $_GET['approve'];
+// change role to subscriber
+if (isset($_GET['to_subs'])) {
+    $the_user_id = $_GET['to_subs'];
 
-    $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = $the_comment_id ";
+    $query = "UPDATE users SET user_role  = 'subscriber' WHERE user_id = $the_user_id ";
 
-    $approve_comment_query = mysqli_query($connection, $query);
-    // refraiche the page , to show data after approving a comment
-    header("Location: comments.php");
-    confirm($approve_comment_query);
+    $change_to_subs_query = mysqli_query($connection, $query);
+    // refraiche the page , to show data after changing role to subscriber
+    header("Location: users.php");
+    confirm($change_to_subs_query);
 }
 
 // delete user from db

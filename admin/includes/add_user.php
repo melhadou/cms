@@ -57,6 +57,7 @@ if (isset($_POST['creat_user'])) {
     <div class="form-group">
         <label for="user_role">Role</label>
         <select name="user_role" id="user_role" class="form-control">
+            <option selected hidden style="display:none">Select One</option>
             <option value="admin">Admin</option>
             <option value="subscriber">Subscriber</option>
         </select>

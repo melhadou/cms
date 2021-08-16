@@ -94,7 +94,7 @@ function showCategories()
     while ($row = mysqli_fetch_assoc($select_categories)) {
         $cat_title = $row['cat_title'];
         $cat_id = $row['cat_id'];
-
+        echo "<option selected hidden style='display:none'>Chose A Category</option>";
         echo "  <option value='{$cat_id}'>{$cat_title}</option>";
     }
 
