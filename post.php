@@ -18,9 +18,9 @@ if (isset($_GET['p_id'])) {
 }
 
 $query = "SELECT * FROM posts WHERE post_id = {$p_id}";
-$select_all_post_querys = mysqli_query($connection, $query);
+$select_post_querys = mysqli_query($connection, $query);
 
-while ($row = mysqli_fetch_assoc($select_all_post_querys)) {
+while ($row = mysqli_fetch_assoc($select_post_querys)) {
     $post_title = $row['post_title'];
     $post_author = $row['post_author'];
     $post_date = $row['post_date'];
@@ -45,6 +45,7 @@ while ($row = mysqli_fetch_assoc($select_all_post_querys)) {
             <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
             <hr>
             <p><?php echo $post_content ?></p>
+
 
 
 
