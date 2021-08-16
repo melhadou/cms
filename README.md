@@ -17,7 +17,7 @@
   ## Comment Section:
  - :heavy_check_mark: Add comment
  - :heavy_check_mark: delete comment
- - :heavy_check_mark: sort commnets based on newset added
+ - :heavy_check_mark: sort comments based on newset added
  - :heavy_check_mark: approve || unapprove comment
  
  ## Users Section:
