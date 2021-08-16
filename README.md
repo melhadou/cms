@@ -19,6 +19,14 @@
  - :heavy_check_mark: delete comment
  - :heavy_check_mark: sort commnets based on newset added
  - :heavy_check_mark: approve || unapprove comment
-- .....
+ 
+ ## Users Section:
+ - :heavy_check_mark: Creat user
+ - :heavy_check_mark: Edit user
+ - :heavy_check_mark: delete user
+ - :heavy_check_mark: change user role
+ 
+ ## Login Section:
+ - [X] Coming Soon
 
     
