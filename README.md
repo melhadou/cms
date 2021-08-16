@@ -11,8 +11,8 @@
    
   ## Category Section:
  - :heavy_check_mark: add categories
- - :heavy_check_mark: edit cateogr name
- * :heavy_check_mark: delete category
+ - :heavy_check_mark: edit category name
+ - :heavy_check_mark: delete category
     
   ## Comment Section:
  - :heavy_check_mark: Add comment
