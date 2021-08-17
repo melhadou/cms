@@ -14,6 +14,23 @@ if (isset($_POST['login'])) {
     if (!$select_username_query) {
         die("QEURY FAILD " . mysqli_error($connection));
     }
-    while ($row = mysqli_fetch_array($select_username_query)) {
-        echo $db_id = $row['user_firstname'];
+    while ($row = mysqli_fetch_assoc($select_username_query)) {
+        $db_user_id = $row['user_id'];
+        $db_username = $row['username'];
+        $db_user_password = $row['user_password'];
+        $db_user_firstname = $row['user_firstname'];
+        $db_user_lastname = $row['user_lastname'];
+        $db_user_email = $row['user_email'];
+        $db_user_role = $row['user_role'];
     }}
+
+if ($username !== $db_username) {
+    if ($password !== $db_user_password) {
+        header("Location: ../index.php");
+    }
+} else if ($username == $db_username) {
+    if ($password == $db_user_password) {
+        header("Location: ../admin");
+    } else {header("Location: ../index.php");}
+
+}
