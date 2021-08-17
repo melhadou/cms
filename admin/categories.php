@@ -16,7 +16,15 @@ include "includes/admin_header.php";
                 <div class="col-lg-12">
                     <h1 class="page-header">
                         Welcome
-                        <small>Author</small>
+                        <small><?php
+
+if (empty($_SESSION['username'])) {
+    echo "Author";
+} else {
+    echo $_SESSION['username'];
+}
+
+?></small>
                     </h1>
                     <div class="col-xs-6">
                         <?php insert_categories();
