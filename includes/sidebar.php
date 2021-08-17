@@ -34,8 +34,7 @@
             <div class="input-group">
                 <!--  -->
 
-                <input type="password" name="user_password" id="password" class="form-control"
-                    placeholder="Enter Password">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password">
                 <span class="input-group-btn">
                     <button class="btn btn-primary" name="login" type="submit">Login</button>
                 </span>
