@@ -47,7 +47,7 @@ if (empty($_SESSION['username'])) {
                                 <div class="col-xs-9 text-right">
                                     <div class='huge'>
 
-                                        <?php echo counter('posts'); ?>
+                                        <?php echo $post_count = counter('posts'); ?>
 
                                     </div>
                                     <div>Posts</div>
@@ -71,7 +71,7 @@ if (empty($_SESSION['username'])) {
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'><?php echo counter('comments'); ?></div>
+                                    <div class='huge'><?php echo $comment_count = counter('comments'); ?></div>
                                     <div>Comments</div>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@ if (empty($_SESSION['username'])) {
                                     <i class="fa fa-user fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'><?php echo counter('users'); ?></div>
+                                    <div class='huge'><?php echo $users_count = counter('users'); ?></div>
                                     <div> Users</div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@ if (empty($_SESSION['username'])) {
                                     <i class="fa fa-list fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'><?php echo counter('categories'); ?></div>
+                                    <div class='huge'><?php echo $categories_count = counter('categories'); ?></div>
                                     <div>Categories</div>
                                 </div>
                             </div>
@@ -140,17 +140,25 @@ if (empty($_SESSION['username'])) {
 
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                        ['Year', 'Sales', 'Expenses', 'Profit'],
-                        ['2014', 1000, 400, 200],
-                        ['2015', 1170, 460, 250],
-                        ['2016', 660, 1120, 300],
-                        ['2017', 1030, 540, 350]
+                        ['Date', 'Count'],
+                        <?php
+
+$element_title = ['Active Posts', 'Comments', 'Users', 'Categories'];
+$element_count = [$post_count, $comment_count, $users_count, $categories_count];
+
+for ($i = 0; $i < 4; $i++) {
+    echo "['{$element_title[$i]}','{$element_count[$i]}'],";
+
+}
+
+?>
+
                     ]);
 
                     var options = {
                         chart: {
-                            title: 'Company Performance',
-                            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                            title: '',
+                            subtitle: '',
                         }
                     };
 
@@ -159,7 +167,7 @@ if (empty($_SESSION['username'])) {
                     chart.draw(data, google.charts.Bar.convertOptions(options));
                 }
                 </script>
-                <div id="columnchart_material" style="width: 1000px; height: 500px;"> </div>
+                <div id="columnchart_material" style="width: 'auto'; height: 500px;"> </div>
             </div>
 
 
