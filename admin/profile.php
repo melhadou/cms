@@ -1,8 +1,6 @@
 <?php
 include "includes/admin_header.php";
 ?>
-<<<<<<< HEAD
-=======
 <?php
 
 if (isset($_SESSION['username'])) {
@@ -44,10 +42,11 @@ if (isset($_POST['edit_profile'])) {
     //check if there is no image
     if (empty($user_image)) {
 
-        $query = "SELECT * FROM users WHERE username = {$the_username}";
+        $query = "SELECT * FROM users WHERE username = '{$the_username}'";
         $select_img = mysqli_query($connection, $query);
-
-        confirm($select_img);
+        if (!$select_img) {
+            die("QUERY FAILED" . mysqli_error($connection));
+        }
         while ($row = mysqli_fetch_assoc($select_img)) {
             $user_image = $row['user_image'];
         }
@@ -61,16 +60,15 @@ if (isset($_POST['edit_profile'])) {
     $query .= ", user_lastname = '{$user_lastname}' ";
     $query .= ", user_email = '{$user_email}' ";
     $query .= ", user_role = '{$user_role}' ";
-    $query .= ", user_image =  '{$user_image}'";
+    $query .= ", user_image =  '{$user_image}' ";
     $query .= "WHERE username = '{$the_username}' ";
 
-    $edit_user_query = mysqli_query($connection, $query);
-    confirm($edit_user_query);
+    $edit_profile_query = mysqli_query($connection, $query);
+    confirm($edit_profile_query);
 
 }
 
 ?>
->>>>>>> e5c21a3 (Changed OS to Linux)
 
 <div id="wrapper">
 
@@ -97,8 +95,6 @@ if (empty($_SESSION['username'])) {
 ?></small>
                     </h1>
 
-<<<<<<< HEAD
-=======
                     <form action="" method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
@@ -130,7 +126,7 @@ if (empty($_SESSION['username'])) {
                         <div class="form-group">
                             <label for="user_role">Role</label>
                             <select name="user_role" id="user_role" class="form-control">
-                                <option value='$user_role'><?php echo $user_role; ?></option>
+                                <option value='<?php echo $user_role; ?>'><?php echo $user_role; ?></option>
                                 <?php
 if ($user_role == 'admin') {
     echo "<option value='subscriber'>Subscriber</option>";
@@ -160,7 +156,6 @@ if ($user_role == 'admin') {
 
                     </form>
 
->>>>>>> e5c21a3 (Changed OS to Linux)
 
                 </div>
             </div>
