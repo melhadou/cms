@@ -45,7 +45,11 @@ if (empty($_SESSION['username'])) {
                                     <i class="fa fa-file-text fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'>12</div>
+                                    <div class='huge'>
+
+                                        <?php echo counter('posts'); ?>
+
+                                    </div>
                                     <div>Posts</div>
                                 </div>
                             </div>
@@ -67,7 +71,7 @@ if (empty($_SESSION['username'])) {
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'>23</div>
+                                    <div class='huge'><?php echo counter('comments'); ?></div>
                                     <div>Comments</div>
                                 </div>
                             </div>
@@ -89,7 +93,7 @@ if (empty($_SESSION['username'])) {
                                     <i class="fa fa-user fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'>23</div>
+                                    <div class='huge'><?php echo counter('users'); ?></div>
                                     <div> Users</div>
                                 </div>
                             </div>
@@ -111,7 +115,7 @@ if (empty($_SESSION['username'])) {
                                     <i class="fa fa-list fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'>13</div>
+                                    <div class='huge'><?php echo counter('categories'); ?></div>
                                     <div>Categories</div>
                                 </div>
                             </div>

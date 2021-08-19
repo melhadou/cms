@@ -99,3 +99,13 @@ function showCategories()
     }
 
 }
+
+// give table name   . and return how much data is there , exemple: count posts .
+function counter($table_name)
+{
+    global $connection;
+    $query = "SELECT * FROM {$table_name}";
+    $send_query = mysqli_query($connection, $query);
+    $result_count = mysqli_num_rows($send_query);
+    return $result_count;
+}
