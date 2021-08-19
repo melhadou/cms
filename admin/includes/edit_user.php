@@ -57,7 +57,11 @@ if (isset($_POST['edit_user'])) {
     $query .= ", user_email = '{$user_email}' ";
     $query .= ", user_role = '{$user_role}' ";
     $query .= ", user_image =  '{$user_image}'";
+<<<<<<< HEAD
     $query .= "WHERE user_id = {$u_id}";
+=======
+    $query .= " WHERE user_id = {$u_id}";
+>>>>>>> e5c21a3 (Changed OS to Linux)
 
     $edit_user_query = mysqli_query($connection, $query);
     confirm($edit_user_query);

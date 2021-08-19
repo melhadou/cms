@@ -26,7 +26,21 @@
  - :heavy_check_mark: delete user
  - :heavy_check_mark: change user role
  
+<<<<<<< HEAD
+ ## Login Section: 
+    Admin username: admin 
+    Admin password: admin
+ - :heavy_check_mark: added login section
+ - :heavy_check_mark: check if user exist
+ - :heavy_check_mark: check user role , admin -> admin panel , subs -> website
+ - :heavy_check_mark: Added logout 
+ 
+  ## Profile Section:
+  - [x] Coming Sonn
+ 
+=======
  ## Login Section:
  - [X] Coming Soon
+>>>>>>> e5c21a3 (Changed OS to Linux)
 
     

@@ -1,13 +1,15 @@
 <?php
 include "includes/admin_header.php";
 ?>
+<<<<<<< HEAD
+=======
 <?php
 
 if (isset($_SESSION['username'])) {
 
-    $username = $_SESSION['username'];
+    $the_username = $_SESSION['username'];
 
-    $query = "SELECT * FROM users WHERE username = '{$username}'";
+    $query = "SELECT * FROM users WHERE username = '{$the_username}'";
 
     $select_user_query = mysqli_query($connection, $query);
     confirm($select_user_query);
@@ -22,6 +24,53 @@ if (isset($_SESSION['username'])) {
 }
 
 ?>
+<?php
+// edit the data , & send it back to db
+
+if (isset($_POST['edit_profile'])) {
+
+    $username = $_POST['username'];
+    $user_password = $_POST['user_password'];
+    $user_firstname = $_POST['user_firstname'];
+    $user_lastname = $_POST['user_lastname'];
+    $user_email = $_POST['user_email'];
+    $user_role = $_POST['user_role'];
+    $user_image = $_FILES['user_image']['name'];
+    $user_image_temp = $_FILES['user_image']['tmp_name'];
+
+    //uploid image to user images folder
+    move_uploaded_file($user_image_temp, "../users_images/$user_image");
+
+    //check if there is no image
+    if (empty($user_image)) {
+
+        $query = "SELECT * FROM users WHERE username = {$the_username}";
+        $select_img = mysqli_query($connection, $query);
+
+        confirm($select_img);
+        while ($row = mysqli_fetch_assoc($select_img)) {
+            $user_image = $row['user_image'];
+        }
+
+    }
+
+    $query = "UPDATE users SET";
+    $query .= " username = '{$username}' ";
+    $query .= ", user_password = '{$user_password}' ";
+    $query .= ", user_firstname = '{$user_firstname}' ";
+    $query .= ", user_lastname = '{$user_lastname}' ";
+    $query .= ", user_email = '{$user_email}' ";
+    $query .= ", user_role = '{$user_role}' ";
+    $query .= ", user_image =  '{$user_image}'";
+    $query .= "WHERE username = '{$the_username}' ";
+
+    $edit_user_query = mysqli_query($connection, $query);
+    confirm($edit_user_query);
+
+}
+
+?>
+>>>>>>> e5c21a3 (Changed OS to Linux)
 
 <div id="wrapper">
 
@@ -48,6 +97,8 @@ if (empty($_SESSION['username'])) {
 ?></small>
                     </h1>
 
+<<<<<<< HEAD
+=======
                     <form action="" method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
@@ -104,11 +155,12 @@ if ($user_role == 'admin') {
 
                         <div class="form-group">
 
-                            <input type="submit" class="btn btn-primary" name="edit_user" value="Update Profile">
+                            <input type="submit" class="btn btn-primary" name="edit_profile" value="Update Profile">
                         </div>
 
                     </form>
 
+>>>>>>> e5c21a3 (Changed OS to Linux)
 
                 </div>
             </div>

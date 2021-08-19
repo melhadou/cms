@@ -43,15 +43,25 @@ if (isset($_POST['creat_user'])) {
 
     </div>
     <div class="form-group">
+<<<<<<< HEAD
+        <label for="user_lastname">Last Name</label>
+        <input type="text" class="form-control" name="user_lastname" id="user_lastname">
+    </div>
+    <div class="form-group">
+=======
+>>>>>>> e5c21a3 (Changed OS to Linux)
         <label for="user_firstname">First Name</label>
         <input type="text" class="form-control" name="user_firstname" id="user_firstname">
     </div>
     <div class="form-group">
+<<<<<<< HEAD
+=======
         <label for="user_lastname">Last Name</label>
         <input type="text" class="form-control" name="user_lastname" id="user_lastname">
     </div>
 
     <div class="form-group">
+>>>>>>> e5c21a3 (Changed OS to Linux)
         <label for="user_email">Email</label>
         <input type="email" class="form-control" name="user_email" id="user_email">
     </div>
