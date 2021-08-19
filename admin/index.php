@@ -131,7 +131,26 @@ if (empty($_SESSION['username'])) {
                 </div>
             </div>
             <!-- end admin widget-->
+            <?php
+// draft posts counter
+$qeury = "SELECT * FROM posts WHERE post_status = 'draft'";
+$draft_posts_query = mysqli_query($connection, $qeury);
+$draft_posts_count = mysqli_num_rows($draft_posts_query);
+
+//unnaproved comments counter
+$qeury = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
+$unapproved_comment_query = mysqli_query($connection, $qeury);
+$unapproved_comment_count = mysqli_num_rows($unapproved_comment_query);
+
+//subscribers count
+$qeury = "SELECT * FROM users WHERE user_role = 'subscriber'";
+$subscriber_users_query = mysqli_query($connection, $qeury);
+$subscriber_users_count = mysqli_num_rows($subscriber_users_query);
+?>
+
             <div class="row">
+
+
                 <script type="text/javascript">
                 google.charts.load('current', {
                     'packages': ['bar']
@@ -143,12 +162,11 @@ if (empty($_SESSION['username'])) {
                         ['Date', 'Count'],
                         <?php
 
-$element_title = ['Active Posts', 'Comments', 'Users', 'Categories'];
-$element_count = [$post_count, $comment_count, $users_count, $categories_count];
+$element_title = ['Draft Posts', 'All Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscribers', 'Categories'];
+$element_count = [$draft_posts_count, $post_count, $comment_count, $unapproved_comment_count, $users_count, $subscriber_users_count, $categories_count];
 
-for ($i = 0; $i < 4; $i++) {
-    echo "['{$element_title[$i]}','{$element_count[$i]}'],";
-
+for ($i = 0; $i < 7; $i++) {
+    echo "['{$element_title[$i]}'" . "," . "'{$element_count[$i]}'],";
 }
 
 ?>
