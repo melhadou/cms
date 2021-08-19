@@ -159,7 +159,7 @@ $subscriber_users_count = mysqli_num_rows($subscriber_users_query);
 
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                        ['Date', 'Count'],
+                        ['CMS', 'Data'],
                         <?php
 
 $element_title = ['Draft Posts', 'All Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscribers', 'Categories'];
