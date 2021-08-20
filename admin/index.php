@@ -136,11 +136,20 @@ if (empty($_SESSION['username'])) {
 $qeury = "SELECT * FROM posts WHERE post_status = 'draft'";
 $draft_posts_query = mysqli_query($connection, $qeury);
 $draft_posts_count = mysqli_num_rows($draft_posts_query);
+// published posts counter
+$qeury = "SELECT * FROM posts WHERE post_status = 'published'";
+$published_posts_query = mysqli_query($connection, $qeury);
+$published_posts_count = mysqli_num_rows($published_posts_query);
 
 //unnaproved comments counter
 $qeury = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
 $unapproved_comment_query = mysqli_query($connection, $qeury);
 $unapproved_comment_count = mysqli_num_rows($unapproved_comment_query);
+
+// upproved comments
+$query = "SELECT * FROM comments WHERE comment_status = 'approved' ";
+$approved_comment_query = mysqli_query($connection, $query);
+$approved_comment_count = mysqli_num_rows($approved_comment_query);
 
 //subscribers count
 $qeury = "SELECT * FROM users WHERE user_role = 'subscriber'";
@@ -159,17 +168,18 @@ $subscriber_users_count = mysqli_num_rows($subscriber_users_query);
 
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                        ['CMS', 'Data'],
+                        ['Data', 'Count'],
+
                         <?php
 
-$element_title = ['Draft Posts', 'All Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscribers', 'Categories'];
-$element_count = [$draft_posts_count, $post_count, $comment_count, $unapproved_comment_count, $users_count, $subscriber_users_count, $categories_count];
-
+$element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Approved Comments', 'Pending Comments', 'Categories'];
+$element_count = [$post_count, $published_posts_count, $draft_posts_count, $comment_count, $approved_comment_count, $unapproved_comment_count, $categories_count];
 for ($i = 0; $i < 7; $i++) {
-    echo "['{$element_title[$i]}'" . "," . "'{$element_count[$i]}'],";
+    echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
 }
 
 ?>
+
 
                     ]);
 
