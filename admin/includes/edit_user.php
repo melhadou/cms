@@ -61,6 +61,7 @@ if (isset($_POST['edit_user'])) {
 
     $edit_user_query = mysqli_query($connection, $query);
     confirm($edit_user_query);
+    echo "User Updated: Check" . " " . "<a href='users.php'>{$username}</a>";
 
 }
 
@@ -101,7 +102,7 @@ if (isset($_POST['edit_user'])) {
     <div class="form-group">
         <label for="user_role">Role</label>
         <select name="user_role" id="user_role" class="form-control">
-            <option value='$user_role'><?php echo $user_role; ?></option>
+            <option value='<?php echo $user_role; ?>'><?php echo $user_role; ?></option>
             <?php
 if ($user_role == 'admin') {
     echo "<option value='subscriber'>Subscriber</option>";

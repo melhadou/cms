@@ -26,9 +26,7 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
     $post_status = $row['post_status'];
     $post_content = substr($row['post_content'], 0, 100);
 
-    if ($post_status != 'published') {
-        echo "<h1>Sorry! No Post Yet!!</h1>";
-    } else {
+    if ($post_status == 'published') {
 
         ?>
             <h1 class="page-header">
