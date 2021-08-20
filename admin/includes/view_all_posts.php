@@ -1,22 +1,38 @@
-<table class="table table-bordered table-hover">
+<form action="" method="POST">
+  <table class="table table-bordered table-hover">
+    <div id="bulkOptionContainer" class="col-xs-4">
+      <select class="form-control" name="" id="">
+        <option value="">Select Option</option>
+        <option value="">Publish</option>
+        <option value="">Draft</option>
+        <option value="">Delete</option>
+      </select>
+    </div>
+
+    <div class="col-xs-4-">
+      <input type="submit" name="submit" class="btn btn-success" value="Apply">
+      <a href="posts.php?source=add_post" class="btn btn-primary">Add New</a>
+    </div>
+    <br>
+
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Status</th>
-            <th>Image</th>
-            <th>Tags</th>
-            <th>Comments</th>
-            <th>Date</th>
-            <th>Delete</th>
-            <th>Edit</th>
-        </tr>
+      <tr>
+        <th>Id</th>
+        <th>Author</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Image</th>
+        <th>Tags</th>
+        <th>Comments</th>
+        <th>Date</th>
+        <th>Delete</th>
+        <th>Edit</th>
+      </tr>
     </thead>
     <tbody>
 
-        <?php
+      <?php
 
 $query = "SELECT * FROM posts";
 $select_posts = mysqli_query($connection, $query);
@@ -54,9 +70,10 @@ while ($row = mysqli_fetch_assoc($select_posts)) {
     echo "</tr>";
 }
 ?>
-        <?php
+      <?php
 // delete categories from db
 delete_post();
 ?>
     </tbody>
-</table>
+  </table>
+</form>
