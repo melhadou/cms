@@ -17,6 +17,7 @@
 
     <thead>
       <tr>
+        <th><input type="checkbox" id="selectAllBoxes"></th>
         <th>Id</th>
         <th>Author</th>
         <th>Title</th>
@@ -48,7 +49,10 @@ while ($row = mysqli_fetch_assoc($select_posts)) {
     $post_date = $row['post_date'];
 
     echo "<tr>";
-    echo "<td> $post_id</td>";
+    ?>
+      <th><input type="checkbox" class="checkBoxes" name="checkBoxArray[]" value="<?php echo $post_id; ?>"></th>
+      <?php
+echo "<td> $post_id</td>";
     echo "<td> $post_author</td>";
     echo "<td> $post_title</td>";
 
