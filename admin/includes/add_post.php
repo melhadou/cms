@@ -24,7 +24,7 @@ if (isset($_POST['creat_post'])) {
 
     $creat_post_query = mysqli_query($connection, $query);
     confirm($creat_post_query);
-
+    echo "<p class='bg-success'>Post Created: View <a href='posts.php'>Posts</a><p>";
 }
 
 ?>
@@ -38,55 +38,50 @@ if (isset($_POST['creat_post'])) {
 
 <form action="" method="POST" enctype="multipart/form-data">
 
-    <div class="form-group">
-        <label for="title">Post Title</label>
-        <input type="text" class="form-control" name="post_title" id="title">
-    </div>
-    <div class="form-group">
-        <label for="post_category_id">Post Category</label>
-        <select name="post_category_id" id="post_category_id" class="form-control">
-            <?php
+  <div class="form-group">
+    <label for="title">Post Title</label>
+    <input type="text" class="form-control" name="post_title" id="title">
+  </div>
+  <div class="form-group">
+    <label for="post_category_id">Post Category</label>
+    <select name="post_category_id" id="post_category_id" class="form-control">
+      <?php
 //show categories
 showCategories();
 ?>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="author">Post author</label>
-        <input type="text" class="form-control" name="post_author" id="author">
-    </div>
-    <div class="form-group">
-        <label for="status">Post status</label>
-        <select name="post_status" id="status" class="form-control">
-            <option value="<?php echo $post_status ?>"><?php echo $post_status ?></option>
-            <?php
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="author">Post author</label>
+    <input type="text" class="form-control" name="post_author" id="author">
+  </div>
+  <div class="form-group">
+    <label for="status">Post status</label>
+    <select name="post_status" id="status" class="form-control">
+      <option value='published'>Publish</option>
+      <option value='draft'>Darft</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="image">Post Image</label>
+    <input type="file" class="form-control" name="post_image" id="image">
+  </div>
+  <div class="form-group">
+    <label for="tags">Post tags</label>
+    <input type="text" class="form-control" name="post_tags" id="tags">
+  </div>
+  <div class="form-group">
 
-if ($post_status == 'draft') {
-    echo "<option value='published'>Publish</option>";
-} else {
-    echo "<option value='draft'>Darft</option>";
-}
+    <label for="body">Post Content</label>
 
-?>
+    <textarea class="form-control" name="post_content" id="body">
 
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="image">Post Image</label>
-        <input type="file" class="form-control" name="post_image" id="image">
-    </div>
-    <div class="form-group">
-        <label for="tags">Post tags</label>
-        <input type="text" class="form-control" name="post_tags" id="tags">
-    </div>
-    <div class="form-group">
+    </textarea>
 
-        <label for="body">Post Content</label>
-        <textarea class="form-control" name="post_content" id="body" rows="10"></textarea>
-    </div>
-    <div class="form-group">
+  </div>
+  <div class="form-group">
 
-        <input type="submit" class="btn btn-primary" name="creat_post" value="Publish Post">
-    </div>
+    <input type="submit" class="btn btn-primary" name="creat_post" value="Publish Post">
+  </div>
 
 </form>
