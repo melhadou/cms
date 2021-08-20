@@ -81,7 +81,8 @@ if (isset($_POST['edit_user'])) {
     </div>
     <div class="form-group">
         <label for="user_password">Password</label>
-        <input type="password" name="user_password" id="user_password" class="form-control">
+        <input type="password" name="user_password" id="user_password" class="form-control"
+            value="<?php echo $user_password ?>">
 
     </div>
     <div class="form-group">

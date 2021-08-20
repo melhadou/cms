@@ -58,9 +58,17 @@ showCategories();
     <div class="form-group">
         <label for="status">Post status</label>
         <select name="post_status" id="status" class="form-control">
-            <option selected hidden disabled style="display:none">Chose One</option>
-            <option value="draft">Draft</option>
-            <option value="published">Publish</option>
+            <option value="<?php echo $post_status ?>"><?php echo $post_status ?></option>
+            <?php
+
+if ($post_status == 'draft') {
+    echo "<option value='published'>Publish</option>";
+} else {
+    echo "<option value='draft'>Darft</option>";
+}
+
+?>
+
         </select>
     </div>
     <div class="form-group">
@@ -72,8 +80,9 @@ showCategories();
         <input type="text" class="form-control" name="post_tags" id="tags">
     </div>
     <div class="form-group">
-        <label for="content">Post Content</label>
-        <textarea class="form-control" name="post_content" id="content" rows="10"></textarea>
+
+        <label for="body">Post Content</label>
+        <textarea class="form-control" name="post_content" id="body" rows="10"></textarea>
     </div>
     <div class="form-group">
 
