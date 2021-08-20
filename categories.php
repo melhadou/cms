@@ -8,13 +8,13 @@
 <!-- Page Content -->
 <div class="container">
 
-    <div class="row">
+  <div class="row">
 
-        <!-- Blog Entries Column -->
-        <div class="col-md-8">
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
 
 
-            <?php
+      <?php
 if (isset($_GET['c_id'])) {
     $c_id = $_GET['c_id'];
 }
@@ -31,43 +31,46 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
     $post_content = substr($row['post_content'], 0, 100);
 
     ?>
-            <h1 class="page-header">
-                Page Heading
-                <small>Secondary Text</small>
-            </h1>
+      <h1 class="page-header">
+        Page Heading
+        <small>Secondary Text</small>
+      </h1>
 
 
 
-            <!-- First Blog Post -->
+      <!-- First Blog Post -->
 
 
 
-            <h2>
-                <a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title; ?></a>
-            </h2>
-            <p class="lead">
-                by <a href="index.php"><?php echo $post_author; ?></a>
-            </p>
-            <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
-            <hr>
-            <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
-            <hr>
-            <p><?php echo $post_content; ?></p>
-            <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span
-                    class="glyphicon glyphicon-chevron-right"></span></a>
-            <?php }?>
+      <h2>
+        <a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title; ?></a>
+      </h2>
+      <p class="lead">
+        by <a href="index.php"><?php echo $post_author; ?></a>
+      </p>
+      <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+      <hr>
+      <a href="post.php?p_id=<?php echo $post_id;
+    ?>">
+        <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>">
+      </a>
+      <hr>
+      <p><?php echo $post_content; ?></p>
+      <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span
+          class="glyphicon glyphicon-chevron-right"></span></a>
+      <?php }?>
 
 
 
 
-        </div>
-
-        <!-- Blog Sidebar Widgets Column -->
-
-        <?php include "includes/sidebar.php";?>
     </div>
-    <!-- /.row -->
 
-    <hr>
+    <!-- Blog Sidebar Widgets Column -->
 
-    <?php include "includes/footer.php";?>
+    <?php include "includes/sidebar.php";?>
+  </div>
+  <!-- /.row -->
+
+  <hr>
+
+  <?php include "includes/footer.php";?>
