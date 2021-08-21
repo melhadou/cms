@@ -56,6 +56,29 @@ if (isset($_SESSION['user_role'])) {
 
 
       </ul>
+      <?php if (isset($_SESSION['user_role'])) {?>
+      <ul class="nav navbar-right top-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            <?php
+echo $_SESSION['firstname'];
+    echo " ";
+    echo $_SESSION['lastname'];
+
+    ?>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="includes/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+            </li>
+          </ul>
+          <?php
+}
+
+?>
+        </li>
+      </ul>
     </div>
     <!-- /.navbar-collapse -->
   </div>
