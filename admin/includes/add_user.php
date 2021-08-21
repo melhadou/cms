@@ -11,6 +11,20 @@ if (isset($_POST['creat_user'])) {
     $user_image = $_FILES['user_image']['name'];
     $user_image_temp = $_FILES['user_image']['tmp_name'];
 
+    //get randsalt from db;
+
+    $query = "SELECT randSalt FROM users";
+    $select_randsalt_query = mysqli_query($connection, $query);
+    if (!$select_randsalt_query) {
+        die("QUERY FAILD" . mysqli_error($connection));
+    }
+
+    $row = mysqli_fetch_array($select_randsalt_query);
+    $salt = $row['randSalt'];
+
+    // encrypting password befor sending it to db
+    $user_password = crypt($user_password, $salt);
+
     //uploid image to images folder
     move_uploaded_file($user_image_temp, "../users_images/$user_image");
 
@@ -34,50 +48,50 @@ if (isset($_POST['creat_user'])) {
 
 <form action="" method="POST" enctype="multipart/form-data">
 
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" name="username" id="username">
-    </div>
-    <div class="form-group">
-        <label for="user_password">Password</label>
-        <input type="password" name="user_password" id="user_password" class="form-control">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" name="username" id="username">
+  </div>
+  <div class="form-group">
+    <label for="user_password">Password</label>
+    <input type="password" name="user_password" id="user_password" class="form-control">
 
-    </div>
+  </div>
 
-    <div class="form-group">
+  <div class="form-group">
 
-        <label for="user_firstname">First Name</label>
-        <input type="text" class="form-control" name="user_firstname" id="user_firstname">
-    </div>
-    <div class="form-group">
-
-
-        <label for="user_lastname">Last Name</label>
-        <input type="text" class="form-control" name="user_lastname" id="user_lastname">
-    </div>
-
-    <div class="form-group">
-
-        <label for="user_email">Email</label>
-        <input type="email" class="form-control" name="user_email" id="user_email">
-    </div>
-    <div class="form-group">
-        <label for="user_role">Role</label>
-        <select name="user_role" id="user_role" class="form-control">
-            <option selected hidden style="display:none">Select One</option>
-            <option value="admin">Admin</option>
-            <option value="subscriber">Subscriber</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="image">User Image</label>
-        <input type="file" class="form-control" name="user_image" id="image">
-    </div>
+    <label for="user_firstname">First Name</label>
+    <input type="text" class="form-control" name="user_firstname" id="user_firstname">
+  </div>
+  <div class="form-group">
 
 
-    <div class="form-group">
+    <label for="user_lastname">Last Name</label>
+    <input type="text" class="form-control" name="user_lastname" id="user_lastname">
+  </div>
 
-        <input type="submit" class="btn btn-primary" name="creat_user" value="Creat User">
-    </div>
+  <div class="form-group">
+
+    <label for="user_email">Email</label>
+    <input type="email" class="form-control" name="user_email" id="user_email">
+  </div>
+  <div class="form-group">
+    <label for="user_role">Role</label>
+    <select name="user_role" id="user_role" class="form-control">
+      <option selected hidden style="display:none">Select One</option>
+      <option value="admin">Admin</option>
+      <option value="subscriber">Subscriber</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="image">User Image</label>
+    <input type="file" class="form-control" name="user_image" id="image">
+  </div>
+
+
+  <div class="form-group">
+
+    <input type="submit" class="btn btn-primary" name="creat_user" value="Creat User">
+  </div>
 
 </form>

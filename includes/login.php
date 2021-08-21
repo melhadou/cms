@@ -26,17 +26,6 @@ if (isset($_POST['login'])) {
         $db_user_role = $row['user_role'];
     }}
 
-//get randsalt from db;
-
-$query = "SELECT randSalt FROM users";
-$select_randsalt_query = mysqli_query($connection, $query);
-if (!$select_randsalt_query) {
-    die("QUERY FAILD" . mysqli_error($connection));
-}
-
-$row = mysqli_fetch_array($select_randsalt_query);
-$salt = $row['randSalt'];
-
 // decrypting password befor sending it to db
 $password = crypt($password, $db_user_password);
 
