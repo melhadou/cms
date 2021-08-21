@@ -37,8 +37,8 @@ if (!$select_randsalt_query) {
 $row = mysqli_fetch_array($select_randsalt_query);
 $salt = $row['randSalt'];
 
-// encrypting password befor sending it to db
-$user_password = crypt($user_password, $salt);
+// decrypting password befor sending it to db
+$password = crypt($password, $db_user_password);
 
 if ($username === $db_username && $password === $db_user_password) {
 
