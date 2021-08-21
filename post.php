@@ -82,8 +82,10 @@ if (isset($_POST['creat_comment'])) {
     } else {
 
         echo "<script>
-        alert('This Fields Cannot Be empthy');
-        </script>";
+        function notempthy() {
+                      const pp = document.querySelector('.error');
+                      pp.innerText = 'This Fields Should not be emthy';}
+            </script>";
     }}
 ?>
 
@@ -91,7 +93,11 @@ if (isset($_POST['creat_comment'])) {
 
       <div class="well">
         <h4>Leave a Comment:</h4>
-
+        <p class="error" style="color:red">
+        </p>
+        <script>
+        notempthy()
+        </script>
         <form role="form" action="" method="POST">
           <div class="form-group">
             <label for="comment_author">Author:</label>

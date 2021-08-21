@@ -11,32 +11,40 @@ if (isset($_POST['submit'])) {
     $user_password = $_POST['password'];
     $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
+    if (!empty($username) && !empty($user_password) && !empty($user_firstname) && !empty($user_lastname)) {
 
 //Escapes special characters in a string for use in an SQL statement
 
-    $username = mysqli_real_escape_string($connection, $_POST['username']);
-    $user_email = mysqli_real_escape_string($connection, $_POST['email']);
-    $user_password = mysqli_real_escape_string($connection, $_POST['password']);
-    $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
-    $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
+        $username = mysqli_real_escape_string($connection, $_POST['username']);
+        $user_email = mysqli_real_escape_string($connection, $_POST['email']);
+        $user_password = mysqli_real_escape_string($connection, $_POST['password']);
+        $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
+        $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
 
 //get randsalt from db;
 
-    $query = "SELECT randSalt FROM users";
-    $select_randsalt_query = mysqli_query($connection, $query);
-    if (!$select_randsalt_query) {
-        die("QUERY FAILD" . mysqli_error($connection));
-    }
+        $query = "SELECT randSalt FROM users";
+        $select_randsalt_query = mysqli_query($connection, $query);
+        if (!$select_randsalt_query) {
+            die("QUERY FAILD" . mysqli_error($connection));
+        }
 
-    $row = mysqli_fetch_array($select_randsalt_query);
-    $rand = $row['randSalt'];
+        $row = mysqli_fetch_array($select_randsalt_query);
+        $rand = $row['randSalt'];
 
-    $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
-    $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
+        $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
+        $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
 
-    $register_user_query = mysqli_query($connection, $query);
-    if (!$register_user_query) {
-        die("QUERY FAILD" . mysqli_error($connection));
+        $register_user_query = mysqli_query($connection, $query);
+        if (!$register_user_query) {
+            die("QUERY FAILD" . mysqli_error($connection));
+        }
+    } else {
+        echo "<script>
+    function notempthy() {
+                  const pp = document.querySelector('.error');
+                  pp.innerText = 'This Fields Should not be emthy';}
+        </script>";
     }
 }
 
@@ -55,6 +63,12 @@ if (isset($_POST['submit'])) {
         <div class="col-xs-6 col-xs-offset-3">
           <div class="form-wrap">
             <h1>Register</h1>
+            <p class="error" style="color:red">
+            </p>
+            <script>
+            notempthy()
+            </script>
+
             <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
               <div class="form-group">
                 <label for="username" class="sr-only">username</label>
