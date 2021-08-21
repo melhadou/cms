@@ -58,8 +58,10 @@ if (isset($_POST['checkBoxArray'])) {
         <th>Tags</th>
         <th>Comments</th>
         <th>Date</th>
-        <th>Delete</th>
+        <th>View Post</th>
         <th>Edit</th>
+        <th>Delete</th>
+
       </tr>
     </thead>
     <tbody>
@@ -85,7 +87,7 @@ while ($row = mysqli_fetch_assoc($select_posts)) {
       <?php
 echo "<td> $post_id</td>";
     echo "<td> $post_author</td>";
-    echo "<td> $post_title</td>";
+    echo "<td>$post_title</td>";
 
     $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
     $select_categories = mysqli_query($connection, $query);
@@ -100,8 +102,10 @@ echo "<td> $post_id</td>";
     echo "<td> $post_tags</td>";
     echo "<td> $post_comment_count</td>";
     echo "<td> $post_date</td>";
-    echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
+    echo "<td> <a href='../post.php?p_id={$post_id}' target='_blank'>View Post</a></td>";
     echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+    echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
+
     echo "</tr>";
 }
 ?>
