@@ -19,8 +19,6 @@ while ($row = mysqli_fetch_assoc($edit_user_query)) {
     $user_role = $row['user_role'];
     $user_image = $row['user_image'];
 
-    // decrypting password befor sending it to db
-    $the_user_password = crypt($the_user_password, $user_password);
 }
 ?>
 <?php
@@ -49,7 +47,7 @@ if (isset($_POST['edit_user'])) {
     $salt = $row['randSalt'];
 
     // encrypting password befor sending it to db
-    $user_password = crypt($user_password, $salt);
+    $hashed_password = crypt($user_password, $salt);
 
     //uploid image to user images folder
     move_uploaded_file($user_image_temp, "../users_images/$user_image");
@@ -69,7 +67,7 @@ if (isset($_POST['edit_user'])) {
 
     $query = "UPDATE users SET";
     $query .= " username = '{$username}' ";
-    $query .= ", user_password = '{$user_password}' ";
+    $query .= ", user_password = '{$hashed_password}' ";
     $query .= ", user_firstname = '{$user_firstname}' ";
     $query .= ", user_lastname = '{$user_lastname}' ";
     $query .= ", user_email = '{$user_email}' ";
@@ -100,7 +98,7 @@ if (isset($_POST['edit_user'])) {
   <div class="form-group">
     <label for="user_password">Password</label>
     <input type="password" name="user_password" id="user_password" class="form-control"
-      value="<?php echo $the_user_password ?>">
+      value="<?php echo $user_password ?>">
 
   </div>
   <div class="form-group">
