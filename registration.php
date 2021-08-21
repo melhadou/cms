@@ -120,7 +120,7 @@ if (!isset($_SESSION['username'])) {
   <hr>
   <?php
 } else {
-
+    echo "<h1 class='text-center' > You Need To Log Out First</h1>";
 }
 ?>
 
