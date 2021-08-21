@@ -1,5 +1,6 @@
 <?php include "includes/db.php";?>
 <?php include "includes/header.php";?>
+<?php include "includes/nav.php";?>
 <?php
 if (!isset($_SESSION['username'])) {
 
@@ -61,7 +62,7 @@ if (!isset($_SESSION['username'])) {
     ?>
 <!-- Navigation -->
 
-<?php include "includes/nav.php";?>
+
 
 
 <!-- Page Content -->

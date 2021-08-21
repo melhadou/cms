@@ -19,7 +19,10 @@
   </div>
 
   <!-- Login Section -->
+  <?php
+if (!isset($_SESSION['username'])) {
 
+    ?>
   <div class="well">
     <h4>Login</h4>
 
@@ -42,17 +45,22 @@
       <br>
       <?php
 
-if (!isset($_SESSION['user_role'])) {
-    echo "<a  class='btn btn-primary' href='registration.php' role='button' >Sign Up</a>";
-}
+    if (!isset($_SESSION['user_role'])) {
+        echo "<a  class='btn btn-primary' href='registration.php' role='button' >Sign Up</a>";
+    }
 
-?>
+    ?>
 
 
 
     </form>
-    <!-- /.input-group -->
+
   </div>
+  <?php
+}
+
+?>
+  <!-- end of login section -->
 
 
 
