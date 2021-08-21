@@ -33,7 +33,10 @@ if (!isset($_SESSION['username'])) {
             }
 
             $row = mysqli_fetch_array($select_randsalt_query);
-            $rand = $row['randSalt'];
+            $salt = $row['randSalt'];
+
+            // encrypting password befor sending it to db
+            $user_password = crypt($user_password, $salt);
 
             $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
             $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
