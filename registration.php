@@ -1,54 +1,64 @@
 <?php include "includes/db.php";?>
 <?php include "includes/header.php";?>
+<?php
+if (!isset($_SESSION['username'])) {
 
-
+    ?>
 <?php
 // salt = N9NHuW5V2XsbUA8kYPFwPx
 
-if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $user_email = $_POST['email'];
-    $user_password = $_POST['password'];
-    $user_firstname = $_POST['user_firstname'];
-    $user_lastname = $_POST['user_lastname'];
-    if (!empty($username) && !empty($user_password) && !empty($user_firstname) && !empty($user_lastname)) {
+    if (isset($_POST['submit'])) {
+        $username = $_POST['username'];
+        $user_email = $_POST['email'];
+        $user_password = $_POST['password'];
+        $user_firstname = $_POST['user_firstname'];
+        $user_lastname = $_POST['user_lastname'];
+        if (!empty($username) && !empty($user_password) && !empty($user_firstname) && !empty($user_lastname)) {
 
 //Escapes special characters in a string for use in an SQL statement
 
-        $username = mysqli_real_escape_string($connection, $_POST['username']);
-        $user_email = mysqli_real_escape_string($connection, $_POST['email']);
-        $user_password = mysqli_real_escape_string($connection, $_POST['password']);
-        $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
-        $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
+            $username = mysqli_real_escape_string($connection, $_POST['username']);
+            $user_email = mysqli_real_escape_string($connection, $_POST['email']);
+            $user_password = mysqli_real_escape_string($connection, $_POST['password']);
+            $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
+            $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
 
 //get randsalt from db;
 
-        $query = "SELECT randSalt FROM users";
-        $select_randsalt_query = mysqli_query($connection, $query);
-        if (!$select_randsalt_query) {
-            die("QUERY FAILD" . mysqli_error($connection));
-        }
+            $query = "SELECT randSalt FROM users";
+            $select_randsalt_query = mysqli_query($connection, $query);
+            if (!$select_randsalt_query) {
+                die("QUERY FAILD" . mysqli_error($connection));
+            }
 
-        $row = mysqli_fetch_array($select_randsalt_query);
-        $rand = $row['randSalt'];
+            $row = mysqli_fetch_array($select_randsalt_query);
+            $rand = $row['randSalt'];
 
-        $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
-        $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
+            $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
+            $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
 
-        $register_user_query = mysqli_query($connection, $query);
-        if (!$register_user_query) {
-            die("QUERY FAILD" . mysqli_error($connection));
-        }
-    } else {
-        echo "<script>
+            $register_user_query = mysqli_query($connection, $query);
+            if (!$register_user_query) {
+                die("QUERY FAILD" . mysqli_error($connection));
+            }
+            $meassage = "you successfully registered wait for admin approval";
+        } else {
+
+            echo "<script>
     function notempthy() {
-                  const pp = document.querySelector('.error');
+                  const pp = document.querySelector('#error');
                   pp.innerText = 'This Fields Should not be emthy';}
-        </script>";
-    }
-}
+                  function clearFeilds(){
+                const username =  document.querySelector('#username');
+                const pp = document.querySelector('#error');
+                 username.addEventListener('keydown',()=>{
+                    pp.innerText = '';
+                  })}
 
-?>
+        </script>";
+        }}
+
+    ?>
 <!-- Navigation -->
 
 <?php include "includes/nav.php";?>
@@ -63,11 +73,14 @@ if (isset($_POST['submit'])) {
         <div class="col-xs-6 col-xs-offset-3">
           <div class="form-wrap">
             <h1>Register</h1>
-            <p class="error" style="color:red">
+            <p id="error" class="text-center" style="color:red">
+            <p class="text-center" style="color:green">
+              <?php echo $meassage; ?>
             </p>
             <script>
             notempthy()
             </script>
+
 
             <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
               <div class="form-group">
@@ -75,6 +88,9 @@ if (isset($_POST['submit'])) {
                 <input type="text" name="username" id="username" class="form-control"
                   placeholder="Enter Desired Username">
               </div>
+              <script>
+              clearFeilds()
+              </script>
               <div class="form-group">
                 <input type="text" class="form-control" name="user_firstname" placeholder="Enter Your First Name">
               </div>
@@ -102,7 +118,11 @@ if (isset($_POST['submit'])) {
 
 
   <hr>
+  <?php
+} else {
 
+}
+?>
 
 
   <?php include "includes/footer.php";?>
