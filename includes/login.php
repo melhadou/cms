@@ -1,6 +1,5 @@
 <?php include "db.php";?>
 <?php session_start();?>
-
 <?php
 
 if (isset($_POST['login'])) {
