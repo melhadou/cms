@@ -21,6 +21,29 @@ if (isset($_POST['checkBoxArray'])) {
                 confirm($delete_post_query);
                 header("Location: posts.php");
                 break;
+            case 'clone':
+
+                $query = "SELECT * FROM posts WHERE post_id = $checkBoxValue";
+                $select_clone_posts = mysqli_query($connection, $query);
+                while ($row = mysqli_fetch_assoc($select_clone_posts)) {
+                    $post_id = $row['post_id'];
+                    $post_title = $row['post_title'];
+                    $post_author = $row['post_author'];
+                    $post_category_id = $row['post_category_id'];
+                    $post_status = $row['post_status'];
+                    $post_image = $row['post_image'];
+                    $post_tags = $row['post_tags'];
+                    $post_comment_count = $row['post_comment_count'];
+                    $post_date = $row['post_date'];
+                }
+
+                $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count) ";
+                $query .= "VALUES('{$post_category_id}' , '{$post_title}' , '{$post_author}' , now() , '{$post_image}' , '{$post_content}' ,'{$post_tags}' ,  '{$post_status}' ,'{$post_comment_count}')";
+
+                $clone_post_query = mysqli_query($connection, $query);
+                confirm($clone_post_query);
+                // header("Location: posts.php");
+                break;
         }
 
     }
@@ -37,6 +60,7 @@ if (isset($_POST['checkBoxArray'])) {
         <option value="published">Publish</option>
         <option value="draft">Draft</option>
         <option value="delete">Delete</option>
+        <option value="clone">clone</option>
       </select>
     </div>
 
