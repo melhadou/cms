@@ -48,7 +48,7 @@ if (isset($_GET['p_author'])) {
             ?></a>
       </h2>
       <p class="lead">
-        by <a href="author_posts.php?p_author=<?php echo $post_author; ?>"><?php echo $post_author; ?></a>
+        All Posts By <?php echo $post_author; ?>
       </p>
       <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
       <hr>
