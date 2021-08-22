@@ -13,6 +13,8 @@
     <!-- Blog Entries Column -->
     <div class="col-md-8">
       <?php
+// define  how much post you want to show in the front page;
+$pre_page = 5;
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
@@ -23,14 +25,14 @@ if (isset($_GET['page'])) {
 if ($page == '' || $page == '1') {
     $page_1 = '0';
 } else {
-    $page_1 = ($page * 5) - 5;
+    $page_1 = ($page * $pre_page) - $pre_page;
 }
 $query = "SELECT * FROM posts WHERE post_status = 'published'";
 $count_all_posts_querys = mysqli_query($connection, $query);
 $count = mysqli_num_rows($count_all_posts_querys);
-$count = ceil($count / 5);
+$count = ceil($count / $pre_page);
 
-$query = "SELECT * FROM posts WHERE post_status = 'published'  ORDER BY post_id DESC LIMIT $page_1,5";
+$query = "SELECT * FROM posts WHERE post_status = 'published'  ORDER BY post_id DESC LIMIT $page_1,$pre_page";
 $select_all_posts_querys = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
