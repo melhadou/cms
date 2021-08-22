@@ -13,10 +13,12 @@ $("#selectAllBoxes").click(function (event) {
     });
   }
 });
-
-function onlineUsers() {
-  $.get("functions.php?online_users=results", (data) => {
-    $(".onlineusers").text(data);
-  });
-}
-onlineUsers();
+// broken code . not working
+// function onlineUsers() {
+//   $.get("functions.php?online_users", (data) => {
+//     $(".onlineusers").text(`${data}`);
+//   });
+// }
+// setInterval(() => {
+//   onlineUsers();
+// }, 500);
