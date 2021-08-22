@@ -14,23 +14,7 @@
     <div class="col-md-8">
       <?php
 
-if (isset($_GET['page'])) {
-    $page = $_GET['page'];
-} else {
-    $page = '';
-}
-
-if ($page == '' || $page == '1') {
-    $page_1 = '0';
-} else {
-    $page_1 = ($page * 5) - 5;
-}
-$query = "SELECT * FROM posts WHERE post_status = 'published'";
-$count_all_posts_querys = mysqli_query($connection, $query);
-$count = mysqli_num_rows($count_all_posts_querys);
-$count = ceil($count / 5);
-
-$query = "SELECT * FROM posts WHERE post_status = 'published'  ORDER BY post_id DESC LIMIT $page_1,5";
+$query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC";
 $select_all_posts_querys = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
@@ -87,15 +71,5 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
   <!-- /.row -->
 
   <hr>
-  <ul class="pager">
-    <?php
-
-for ($i = 1; $i <= $count; $i++) {
-    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
-}
-
-?>
-
-  </ul>
 
   <?php include "includes/footer.php";?>
