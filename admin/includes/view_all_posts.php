@@ -44,6 +44,12 @@ if (isset($_POST['checkBoxArray'])) {
                 confirm($clone_post_query);
                 // header("Location: posts.php");
                 break;
+            case 'reset_views':
+                $query = "UPDATE posts SET post_views_count = 0 WHERE post_id = $checkBoxValue";
+                $reset_post_views_query = mysqli_query($connection, $query);
+                confirm($reset_post_views_query);
+                header("Location: posts.php");
+                break;
         }
 
     }
@@ -60,7 +66,8 @@ if (isset($_POST['checkBoxArray'])) {
         <option value="published">Publish</option>
         <option value="draft">Draft</option>
         <option value="delete">Delete</option>
-        <option value="clone">clone</option>
+        <option value="clone">Clone</option>
+        <option value="reset_views">Reset Views Count</option>
       </select>
     </div>
 
@@ -85,6 +92,7 @@ if (isset($_POST['checkBoxArray'])) {
         <th>View Post</th>
         <th>Edit</th>
         <th>Delete</th>
+        <th>Views Count</th>
 
       </tr>
     </thead>
@@ -104,6 +112,7 @@ while ($row = mysqli_fetch_assoc($select_posts)) {
     $post_tags = $row['post_tags'];
     $post_comment_count = $row['post_comment_count'];
     $post_date = $row['post_date'];
+    $post_views_count = $row['post_views_count'];
 
     echo "<tr>";
     ?>
@@ -120,16 +129,18 @@ echo "<td> $post_id</td>";
         $cat_id = $row['cat_id'];
         echo "<td> $cat_title</td>";
     }
-
     echo "<td> $post_status</td>";
     echo "<td><img src='../images/$post_image' width='100' </td>";
-    echo "<td> $post_tags</td>";
-    echo "<td> $post_comment_count</td>";
+    echo "
+      <td> $post_tags</td>";
+    echo "<td  class='text-center'> $post_comment_count</td>";
     echo "<td> $post_date</td>";
+
     echo "<td> <a href='../post.php?p_id={$post_id}' target='_blank'>View Post</a></td>";
     echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-    echo "<td><a onClick=\"javascript: return confirm('Are You Sur You Want To Delete'); \" href='posts.php?delete={$post_id}'>Delete</a></td>";
-
+    echo "<td><a onClick=\"javascript: return confirm('Are You Sur You Want To Delete');
+          \"href='posts.php?delete={$post_id}'>Delete</a></td>";
+    echo "<td class='text-center'>$post_views_count</td>";
     echo "</tr>";
 }
 ?>

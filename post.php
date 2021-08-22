@@ -44,7 +44,7 @@ if (isset($_GET['p_id'])) {
         by <a href="author_posts.php?p_author=<?php echo $post_author; ?>"><?php echo $post_author ?></a>
       </p>
 
-      <p><span class="glyphicon glyphicon-eye-open"></span> <?php echo $post_views_count ?></p>
+      <p><span class='glyphicon glyphicon-eye-open'></span> <?php echo $post_views_count ?></p>
 
       <p><span class="glyphicon glyphicon-time"></span> Posted on
         <?php echo $post_date ?></p>
