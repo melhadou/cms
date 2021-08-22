@@ -15,19 +15,22 @@
       <?php
 if (isset($_GET['p_id'])) {
     $p_id = $_GET['p_id'];
-}
 
-$query = "SELECT * FROM posts WHERE post_id = {$p_id}";
-$select_post_querys = mysqli_query($connection, $query);
+    $query = "UPDATE posts SET post_views_count = post_views_count + 1  WHERE post_id = {$p_id}";
+    $update_post_views_querys = mysqli_query($connection, $query);
 
-while ($row = mysqli_fetch_assoc($select_post_querys)) {
-    $post_title = $row['post_title'];
-    $post_author = $row['post_author'];
-    $post_date = $row['post_date'];
-    $post_image = $row['post_image'];
-    $post_content = $row['post_content'];
+    $query = "SELECT * FROM posts WHERE post_id = {$p_id}";
+    $select_post_querys = mysqli_query($connection, $query);
 
-    ?>
+    while ($row = mysqli_fetch_assoc($select_post_querys)) {
+        $post_title = $row['post_title'];
+        $post_author = $row['post_author'];
+        $post_date = $row['post_date'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_views_count = $row['post_views_count'];
+
+        ?>
 
 
       <!-- First Blog Post -->
@@ -40,7 +43,11 @@ while ($row = mysqli_fetch_assoc($select_post_querys)) {
       <p class="lead">
         by <a href="author_posts.php?p_author=<?php echo $post_author; ?>"><?php echo $post_author ?></a>
       </p>
-      <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
+
+      <p><span class="glyphicon glyphicon-eye-open"></span> <?php echo $post_views_count ?></p>
+
+      <p><span class="glyphicon glyphicon-time"></span> Posted on
+        <?php echo $post_date ?></p>
       <hr>
       <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
       <hr>
@@ -50,7 +57,9 @@ while ($row = mysqli_fetch_assoc($select_post_querys)) {
 
 
 
-      <?php }?>
+      <?php }} else {
+    header("Location: index.php");
+}?>
       <hr>
 
       <!-- Leave a Comment -->
