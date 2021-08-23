@@ -1,34 +1,38 @@
 <?php
+if ($_SESSION['user_role'] == 'admin') {
 
-if (isset($_POST['creat_post'])) {
+    ?>
+<?php
 
-    $post_title = $_POST['post_title'];
-    $post_author = $_POST['post_author'];
-    $post_category_id = $_POST['post_category_id'];
-    $post_status = $_POST['post_status'];
+    if (isset($_POST['creat_post'])) {
 
-    $post_image = $_FILES['post_image']['name'];
-    $post_image_temp = $_FILES['post_image']['tmp_name'];
+        $post_title = $_POST['post_title'];
+        $post_author = $_POST['post_author'];
+        $post_category_id = $_POST['post_category_id'];
+        $post_status = $_POST['post_status'];
 
-    $post_tags = $_POST['post_tags'];
-    $post_content = $_POST['post_content'];
-    $post_date = date('d-m-y');
-    $post_comment_count = '';
+        $post_image = $_FILES['post_image']['name'];
+        $post_image_temp = $_FILES['post_image']['tmp_name'];
 
-    //uploid image to images folder
+        $post_tags = $_POST['post_tags'];
+        $post_content = $_POST['post_content'];
+        $post_date = date('d-m-y');
+        $post_comment_count = '';
 
-    move_uploaded_file($post_image_temp, "../images/$post_image");
+        //uploid image to images folder
 
-    $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count) ";
-    $query .= "VALUES('{$post_category_id}' , '{$post_title}' , '{$post_author}' , now() , '{$post_image}' , '{$post_content}' ,'{$post_tags}' ,  '{$post_status}' ,'{$post_comment_count}')";
+        move_uploaded_file($post_image_temp, "../images/$post_image");
 
-    $creat_post_query = mysqli_query($connection, $query);
-    confirm($creat_post_query);
-    $the_post_id = mysqli_insert_id($connection);
-    echo "<p class='bg-success'>Post Created: View <a href='../post.php?p_id={$the_post_id}'>{$post_title}</a><p>";
-}
+        $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count) ";
+        $query .= "VALUES('{$post_category_id}' , '{$post_title}' , '{$post_author}' , now() , '{$post_image}' , '{$post_content}' ,'{$post_tags}' ,  '{$post_status}' ,'{$post_comment_count}')";
 
-?>
+        $creat_post_query = mysqli_query($connection, $query);
+        confirm($creat_post_query);
+        $the_post_id = mysqli_insert_id($connection);
+        echo "<p class='bg-success'>Post Created: View <a href='../post.php?p_id={$the_post_id}'>{$post_title}</a><p>";
+    }
+
+    ?>
 
 
 
@@ -48,8 +52,8 @@ if (isset($_POST['creat_post'])) {
     <select name="post_category_id" id="post_category_id" class="form-control">
       <?php
 //show categories
-showCategories();
-?>
+    showCategories();
+    ?>
     </select>
   </div>
   <div class="form-group">
@@ -86,3 +90,8 @@ showCategories();
   </div>
 
 </form>
+<?php
+} else {
+    echo "You cant See This Page";
+}
+?>

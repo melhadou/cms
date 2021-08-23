@@ -1,3 +1,7 @@
+<?php
+if ($_SESSION['user_role'] == 'admin') {
+
+    ?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
@@ -22,11 +26,11 @@
       <a href="profile.php" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
         <?php
 
-echo $_SESSION['firstname'];
-echo " ";
-echo $_SESSION['lastname'];
+    echo $_SESSION['firstname'];
+    echo " ";
+    echo $_SESSION['lastname'];
 
-?>
+    ?>
         <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li>
@@ -84,3 +88,8 @@ echo $_SESSION['lastname'];
   </div>
   <!-- /.navbar-collapse -->
 </nav>
+<?php
+} else {
+    echo "You cant See This Page";
+}
+?>
