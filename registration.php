@@ -6,7 +6,6 @@ if (!isset($_SESSION['username'])) {
 
     ?>
 <?php
-// salt = N9NHuW5V2XsbUA8kYPFwPx
 
     if (isset($_POST['submit'])) {
         $username = $_POST['username'];

@@ -35,19 +35,8 @@ if (isset($_POST['edit_user'])) {
     $user_image = $_FILES['user_image']['name'];
     $user_image_temp = $_FILES['user_image']['tmp_name'];
 
-    //get randsalt from db;
-
-    $query = "SELECT randSalt FROM users";
-    $select_randsalt_query = mysqli_query($connection, $query);
-    if (!$select_randsalt_query) {
-        die("QUERY FAILD" . mysqli_error($connection));
-    }
-
-    $row = mysqli_fetch_array($select_randsalt_query);
-    $salt = $row['randSalt'];
-
     // encrypting password befor sending it to db
-    $hashed_password = crypt($user_password, $salt);
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
 
     //uploid image to user images folder
     move_uploaded_file($user_image_temp, "../users_images/$user_image");

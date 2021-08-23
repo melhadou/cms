@@ -25,9 +25,6 @@ if (isset($_POST['login'])) {
         $db_user_role = $row['user_role'];
     }}
 
-// decrypting password befor sending it to db
-// $password = crypt($password, $db_user_password);
-
 if (password_verify($password, $db_user_password)) {
 
     $_SESSION['username'] = $db_username;
