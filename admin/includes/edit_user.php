@@ -8,78 +8,79 @@ if ($_SESSION['user_role'] == 'admin') {
     if (isset($_GET['edit_user'])) {
 
         $u_id = $_GET['edit_user'];
-    }
 
-    $query = "SELECT * FROM users WHERE user_id = {$u_id}";
-    $edit_user_query = mysqli_query($connection, $query);
-    confirm($edit_user_query);
-    while ($row = mysqli_fetch_assoc($edit_user_query)) {
-        $user_id = $row['user_id'];
-        $username = $row['username'];
-        $user_password = $row['user_password'];
-        $user_firstname = $row['user_firstname'];
-        $user_lastname = $row['user_lastname'];
-        $user_email = $row['user_email'];
-        $user_role = $row['user_role'];
-        $user_image = $row['user_image'];
+        $query = "SELECT * FROM users WHERE user_id = {$u_id}";
+        $edit_user_query = mysqli_query($connection, $query);
+        confirm($edit_user_query);
+        while ($row = mysqli_fetch_assoc($edit_user_query)) {
+            $user_id = $row['user_id'];
+            $username = $row['username'];
+            $user_password = $row['user_password'];
+            $user_firstname = $row['user_firstname'];
+            $user_lastname = $row['user_lastname'];
+            $user_email = $row['user_email'];
+            $user_role = $row['user_role'];
+            $user_image = $row['user_image'];
 
-    }
-    ?>
+        }
+        ?>
 <?php
 // edit the data , & send it back to db
 
-    if (isset($_POST['edit_user'])) {
+        if (isset($_POST['edit_user'])) {
 
-        $username = $_POST['username'];
-        $user_password = $_POST['user_password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
-        $user_role = $_POST['user_role'];
-        $user_image = $_FILES['user_image']['name'];
-        $user_image_temp = $_FILES['user_image']['tmp_name'];
+            $username = $_POST['username'];
+            $user_password = $_POST['user_password'];
+            $user_firstname = $_POST['user_firstname'];
+            $user_lastname = $_POST['user_lastname'];
+            $user_email = $_POST['user_email'];
+            $user_role = $_POST['user_role'];
+            $user_image = $_FILES['user_image']['name'];
+            $user_image_temp = $_FILES['user_image']['tmp_name'];
 
-        // encrypting password befor sending it to db
-        $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+            // encrypting password befor sending it to db
+            $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
 
-        //uploid image to user images folder
-        move_uploaded_file($user_image_temp, "../users_images/$user_image");
+            //uploid image to user images folder
+            move_uploaded_file($user_image_temp, "../users_images/$user_image");
 
-        //check if there is no image
-        if (empty($user_image)) {
+            //check if there is no image
+            if (empty($user_image)) {
 
-            $query = "SELECT * FROM users WHERE user_id = {$u_id}";
-            $select_img = mysqli_query($connection, $query);
+                $query = "SELECT * FROM users WHERE user_id = {$u_id}";
+                $select_img = mysqli_query($connection, $query);
 
-            confirm($select_img);
-            while ($row = mysqli_fetch_assoc($select_img)) {
-                $user_image = $row['user_image'];
+                confirm($select_img);
+                while ($row = mysqli_fetch_assoc($select_img)) {
+                    $user_image = $row['user_image'];
+                }
+
             }
+            // if (!empty($user_password)) {
+            //     $query_password = "SELECT user_password FROM users WHERE user_id = $user_id";
+            //     $send_password_query = mysqli_query($connection, $query_password);
+            //     $row = mysqli_fetch_assoc($send_password_query);
+            //     $db_user_password = $row['user_password'];
+            // }
+
+            $query = "UPDATE users SET";
+            $query .= " username = '{$username}' ";
+            $query .= ", user_password = '{$hashed_password}' ";
+            $query .= ", user_firstname = '{$user_firstname}' ";
+            $query .= ", user_lastname = '{$user_lastname}' ";
+            $query .= ", user_email = '{$user_email}' ";
+            $query .= ", user_role = '{$user_role}' ";
+            $query .= ", user_image =  '{$user_image}'";
+            $query .= " WHERE user_id = {$u_id}";
+
+            $edit_user_query = mysqli_query($connection, $query);
+            confirm($edit_user_query);
+            echo "User Updated: Check" . " " . "<a href='users.php'>{$username}</a>";
 
         }
-        // if (!empty($user_password)) {
-        //     $query_password = "SELECT user_password FROM users WHERE user_id = $user_id";
-        //     $send_password_query = mysqli_query($connection, $query_password);
-        //     $row = mysqli_fetch_assoc($send_password_query);
-        //     $db_user_password = $row['user_password'];
-        // }
-
-        $query = "UPDATE users SET";
-        $query .= " username = '{$username}' ";
-        $query .= ", user_password = '{$hashed_password}' ";
-        $query .= ", user_firstname = '{$user_firstname}' ";
-        $query .= ", user_lastname = '{$user_lastname}' ";
-        $query .= ", user_email = '{$user_email}' ";
-        $query .= ", user_role = '{$user_role}' ";
-        $query .= ", user_image =  '{$user_image}'";
-        $query .= " WHERE user_id = {$u_id}";
-
-        $edit_user_query = mysqli_query($connection, $query);
-        confirm($edit_user_query);
-        echo "User Updated: Check" . " " . "<a href='users.php'>{$username}</a>";
-
+    } else {
+        header("Location: index.php");
     }
-
     ?>
 
 
