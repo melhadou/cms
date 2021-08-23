@@ -84,10 +84,10 @@ if (isset($_POST['creat_comment'])) {
         if (!$creat_comment_query) {
             die('QUERY FAILED' . mysqli_error($connection));
         }
-
-        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-        $query .= "WHERE post_id = $comment_post_id";
-        $update_comment_query = mysqli_query($connection, $query);
+        //old comment increamanting logic
+        // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+        // $query .= "WHERE post_id = $comment_post_id";
+        // $update_comment_query = mysqli_query($connection, $query);
 
     } else {
 
