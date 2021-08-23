@@ -38,8 +38,22 @@ if ($_SESSION['user_role'] == 'admin') {
             $user_image = $_FILES['user_image']['name'];
             $user_image_temp = $_FILES['user_image']['tmp_name'];
 
-            // encrypting password befor sending it to db
-            $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+            //check if there is no password
+            if (empty($user_password)) {
+
+                $query = "SELECT * FROM users WHERE username = '{$the_username}'";
+                $select_user_password = mysqli_query($connection, $query);
+                if (!$select_user_password) {
+                    die("QUERY FAILED" . mysqli_error($connection));
+                }
+                while ($row = mysqli_fetch_assoc($select_user_password)) {
+                    $user_password = $row['user_password'];
+                }
+
+            } else {
+                // encrypting password befor sending it to db
+                $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+            }
 
             //uploid image to user images folder
             move_uploaded_file($user_image_temp, "../users_images/$user_image");
@@ -97,8 +111,7 @@ if ($_SESSION['user_role'] == 'admin') {
   </div>
   <div class="form-group">
     <label for="user_password">Password</label>
-    <input type="password" name="user_password" id="user_password" class="form-control"
-      value="<?php echo $user_password ?>">
+    <input type="password" name="user_password" id="user_password" class="form-control">
 
   </div>
   <div class="form-group">

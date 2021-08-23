@@ -18,7 +18,6 @@ if (isset($_SESSION['username'])) {
         $user_password = $row['user_password'];
         $user_lastname = $row['user_lastname'];
         $user_email = $row['user_email'];
-        $user_role = $row['user_role'];
         $user_image = $row['user_image'];}
 }
 
@@ -33,7 +32,6 @@ if (isset($_POST['edit_profile'])) {
     $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
     $user_email = $_POST['user_email'];
-    $user_role = $_POST['user_role'];
     $user_image = $_FILES['user_image']['name'];
     $user_image_temp = $_FILES['user_image']['tmp_name'];
 
@@ -53,6 +51,22 @@ if (isset($_POST['edit_profile'])) {
         }
 
     }
+    //check if there is no password
+    if (empty($user_password)) {
+
+        $query = "SELECT * FROM users WHERE username = '{$the_username}'";
+        $select_user_password = mysqli_query($connection, $query);
+        if (!$select_user_password) {
+            die("QUERY FAILED" . mysqli_error($connection));
+        }
+        while ($row = mysqli_fetch_assoc($select_user_password)) {
+            $user_password = $row['user_password'];
+        }
+
+    } else {
+        // encrypting password befor sending it to db
+        $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+    }
 
     $query = "UPDATE users SET";
     $query .= " username = '{$username}' ";
@@ -60,7 +74,6 @@ if (isset($_POST['edit_profile'])) {
     $query .= ", user_firstname = '{$user_firstname}' ";
     $query .= ", user_lastname = '{$user_lastname}' ";
     $query .= ", user_email = '{$user_email}' ";
-    $query .= ", user_role = '{$user_role}' ";
     $query .= ", user_image =  '{$user_image}' ";
     $query .= "WHERE username = '{$the_username}' ";
 
@@ -122,21 +135,6 @@ if (empty($_SESSION['username'])) {
               <label for="user_email">Email</label>
               <input type="email" class="form-control" name="user_email" id="user_email"
                 value="<?php echo $user_email; ?>">
-            </div>
-            <div class="form-group">
-              <label for="user_role">Role</label>
-              <select name="user_role" id="user_role" class="form-control">
-                <option value='<?php echo $user_role; ?>'><?php echo $user_role; ?></option>
-                <?php
-if ($user_role == 'admin') {
-    echo "<option value='subscriber'>Subscriber</option>";
-
-} else {
-    echo "<option value='admin'>admin</option>";
-}
-
-?>
-              </select>
             </div>
             <div class="form-group">
               <label>Old User Image</label>
