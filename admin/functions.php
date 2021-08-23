@@ -50,7 +50,7 @@ function delete_cat()
 }
 
 function FindAllCategories()
-{
+{if (isset($_SESSION['user_role'])) {
     global $connection;
     $query = "SELECT * FROM categories";
     $select_categories = mysqli_query($connection, $query);
@@ -65,11 +65,11 @@ function FindAllCategories()
         echo "</tr>";
 
     }
-    confirm($select_categories);
+    confirm($select_categories);}
 
 }
 function delete_post()
-{
+{if (isset($_SESSION['user_role'])) {
     global $connection;
     if (isset($_GET['delete'])) {
 
@@ -84,11 +84,11 @@ function delete_post()
 
         confirm($delete_query);
     }
-
+}
 }
 
 function showCategories()
-{
+{if (isset($_SESSION['user_role'])) {
     global $connection;
     $query = "SELECT * FROM categories ";
     $select_categories = mysqli_query($connection, $query);
@@ -98,7 +98,7 @@ function showCategories()
         $cat_id = $row['cat_id'];
         echo "<option value='{$cat_id}'>{$cat_title}</option>";
     }
-
+}
 }
 
 // give table name   . and return how much data is there , exemple: count posts .
@@ -142,7 +142,7 @@ function comment_counter($comment_post_id)
 {
     global $connection;
 
-    $query = "SELECT * FROM comment WHERE comment_post_id = {$comment_post_id}";
+    $query = "SELECT * FROM comments WHERE comment_post_id = {$comment_post_id}";
     $comment_counter_query = mysqli_query($connection, $query);
     $comment_count = mysqli_num_rows($comment_counter_query);
     return $comment_count;
