@@ -1,6 +1,7 @@
-ClassicEditor.create(document.querySelector("#body")).catch((error) => {
-  console.error(error);
-});
+// ck editor code
+// ClassicEditor.create(document.querySelector("#body")).catch((error) => {
+//   console.error(error);
+// });
 
 $("#selectAllBoxes").click(function (event) {
   if (this.checked) {
