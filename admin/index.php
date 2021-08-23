@@ -1,6 +1,7 @@
 <?php
 include "includes/admin_header.php";
-?>
+if ($_SESSION['user_role'] == 'admin') {
+    ?>
 
 <div id="wrapper">
 
@@ -21,13 +22,13 @@ include "includes/admin_header.php";
             <small>
               <?php
 
-if (empty($_SESSION['username'])) {
-    echo "Author";
-} else {
-    echo $_SESSION['username'];
-}
+    if (empty($_SESSION['username'])) {
+        echo "Author";
+    } else {
+        echo $_SESSION['username'];
+    }
 
-?>
+    ?>
             </small>
 
           </h1>
@@ -136,29 +137,29 @@ if (empty($_SESSION['username'])) {
       <!-- end admin widget-->
       <?php
 // draft posts counter
-$qeury = "SELECT * FROM posts WHERE post_status = 'draft'";
-$draft_posts_query = mysqli_query($connection, $qeury);
-$draft_posts_count = mysqli_num_rows($draft_posts_query);
+    $qeury = "SELECT * FROM posts WHERE post_status = 'draft'";
+    $draft_posts_query = mysqli_query($connection, $qeury);
+    $draft_posts_count = mysqli_num_rows($draft_posts_query);
 // published posts counter
-$qeury = "SELECT * FROM posts WHERE post_status = 'published'";
-$published_posts_query = mysqli_query($connection, $qeury);
-$published_posts_count = mysqli_num_rows($published_posts_query);
+    $qeury = "SELECT * FROM posts WHERE post_status = 'published'";
+    $published_posts_query = mysqli_query($connection, $qeury);
+    $published_posts_count = mysqli_num_rows($published_posts_query);
 
 //unnaproved comments counter
-$qeury = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
-$unapproved_comment_query = mysqli_query($connection, $qeury);
-$unapproved_comment_count = mysqli_num_rows($unapproved_comment_query);
+    $qeury = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
+    $unapproved_comment_query = mysqli_query($connection, $qeury);
+    $unapproved_comment_count = mysqli_num_rows($unapproved_comment_query);
 
 // upproved comments
-$query = "SELECT * FROM comments WHERE comment_status = 'approved' ";
-$approved_comment_query = mysqli_query($connection, $query);
-$approved_comment_count = mysqli_num_rows($approved_comment_query);
+    $query = "SELECT * FROM comments WHERE comment_status = 'approved' ";
+    $approved_comment_query = mysqli_query($connection, $query);
+    $approved_comment_count = mysqli_num_rows($approved_comment_query);
 
 //subscribers count
-$qeury = "SELECT * FROM users WHERE user_role = 'subscriber'";
-$subscriber_users_query = mysqli_query($connection, $qeury);
-$subscriber_users_count = mysqli_num_rows($subscriber_users_query);
-?>
+    $qeury = "SELECT * FROM users WHERE user_role = 'subscriber'";
+    $subscriber_users_query = mysqli_query($connection, $qeury);
+    $subscriber_users_count = mysqli_num_rows($subscriber_users_query);
+    ?>
 
       <div class="row">
 
@@ -175,13 +176,13 @@ $subscriber_users_count = mysqli_num_rows($subscriber_users_query);
 
             <?php
 
-$element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Approved Comments', 'Pending Comments', 'Categories'];
-$element_count = [$post_count, $published_posts_count, $draft_posts_count, $comment_count, $approved_comment_count, $unapproved_comment_count, $categories_count];
-for ($i = 0; $i < 7; $i++) {
-    echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
-}
+    $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Approved Comments', 'Pending Comments', 'Categories'];
+    $element_count = [$post_count, $published_posts_count, $draft_posts_count, $comment_count, $approved_comment_count, $unapproved_comment_count, $categories_count];
+    for ($i = 0; $i < 7; $i++) {
+        echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+    }
 
-?>
+    ?>
 
 
           ]);
@@ -209,4 +210,4 @@ for ($i = 0; $i < 7; $i++) {
   </div>
   <!-- /#page-wrapper -->
 
-  <?php include "includes/admin_footer.php";?>
+  <?php include "includes/admin_footer.php";}?>

@@ -139,7 +139,7 @@ echo "<td> $post_id</td>";
         echo "
       <td> $post_tags</td>";
 
-        echo "<td  class='text-center'>" . comment_counter($post_id) . "</td>";
+        echo "<td  class='text-center'> <a href='post_comments.php?post_id={$post_id}'>" . comment_counter($post_id) . "</a></td>";
         echo "<td> $post_date</td>";
         echo "<td> <a href='../post.php?p_id={$post_id}' target='_blank'>View Post</a></td>";
         echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";

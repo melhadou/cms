@@ -1,88 +1,89 @@
 <?php
 include "includes/admin_header.php";
-?>
+if ($_SESSION['user_role'] == 'admin') {
+    ?>
 <?php
 
-if (isset($_SESSION['username'])) {
+    if (isset($_SESSION['username'])) {
 
-    $the_username = $_SESSION['username'];
+        $the_username = $_SESSION['username'];
 
-    $query = "SELECT * FROM users WHERE username = '{$the_username}'";
+        $query = "SELECT * FROM users WHERE username = '{$the_username}'";
 
-    $select_user_query = mysqli_query($connection, $query);
-    confirm($select_user_query);
-    while ($row = mysqli_fetch_assoc($select_user_query)) {
-        $user_id = $row['user_id'];
-        $username = $row['username'];
-        $user_firstname = $row['user_firstname'];
-        $user_password = $row['user_password'];
-        $user_lastname = $row['user_lastname'];
-        $user_email = $row['user_email'];
-        $user_image = $row['user_image'];}
-}
+        $select_user_query = mysqli_query($connection, $query);
+        confirm($select_user_query);
+        while ($row = mysqli_fetch_assoc($select_user_query)) {
+            $user_id = $row['user_id'];
+            $username = $row['username'];
+            $user_firstname = $row['user_firstname'];
+            $user_password = $row['user_password'];
+            $user_lastname = $row['user_lastname'];
+            $user_email = $row['user_email'];
+            $user_image = $row['user_image'];}
+    }
 
-?>
+    ?>
 <?php
 // edit the data , & send it back to db
 
-if (isset($_POST['edit_profile'])) {
+    if (isset($_POST['edit_profile'])) {
 
-    $username = $_POST['username'];
-    $user_password = $_POST['user_password'];
-    $user_firstname = $_POST['user_firstname'];
-    $user_lastname = $_POST['user_lastname'];
-    $user_email = $_POST['user_email'];
-    $user_image = $_FILES['user_image']['name'];
-    $user_image_temp = $_FILES['user_image']['tmp_name'];
+        $username = $_POST['username'];
+        $user_password = $_POST['user_password'];
+        $user_firstname = $_POST['user_firstname'];
+        $user_lastname = $_POST['user_lastname'];
+        $user_email = $_POST['user_email'];
+        $user_image = $_FILES['user_image']['name'];
+        $user_image_temp = $_FILES['user_image']['tmp_name'];
 
-    //uploid image to user images folder
-    move_uploaded_file($user_image_temp, "../users_images/$user_image");
+        //uploid image to user images folder
+        move_uploaded_file($user_image_temp, "../users_images/$user_image");
 
-    //check if there is no image
-    if (empty($user_image)) {
+        //check if there is no image
+        if (empty($user_image)) {
 
-        $query = "SELECT * FROM users WHERE username = '{$the_username}'";
-        $select_img = mysqli_query($connection, $query);
-        if (!$select_img) {
-            die("QUERY FAILED" . mysqli_error($connection));
+            $query = "SELECT * FROM users WHERE username = '{$the_username}'";
+            $select_img = mysqli_query($connection, $query);
+            if (!$select_img) {
+                die("QUERY FAILED" . mysqli_error($connection));
+            }
+            while ($row = mysqli_fetch_assoc($select_img)) {
+                $user_image = $row['user_image'];
+            }
+
         }
-        while ($row = mysqli_fetch_assoc($select_img)) {
-            $user_image = $row['user_image'];
+        //check if there is no password
+        if (empty($user_password)) {
+
+            $query = "SELECT * FROM users WHERE username = '{$the_username}'";
+            $select_user_password = mysqli_query($connection, $query);
+            if (!$select_user_password) {
+                die("QUERY FAILED" . mysqli_error($connection));
+            }
+            while ($row = mysqli_fetch_assoc($select_user_password)) {
+                $user_password = $row['user_password'];
+            }
+
+        } else {
+            // encrypting password befor sending it to db
+            $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
         }
+
+        $query = "UPDATE users SET";
+        $query .= " username = '{$username}' ";
+        $query .= ", user_password = '{$user_password}' ";
+        $query .= ", user_firstname = '{$user_firstname}' ";
+        $query .= ", user_lastname = '{$user_lastname}' ";
+        $query .= ", user_email = '{$user_email}' ";
+        $query .= ", user_image =  '{$user_image}' ";
+        $query .= "WHERE username = '{$the_username}' ";
+
+        $edit_profile_query = mysqli_query($connection, $query);
+        confirm($edit_profile_query);
 
     }
-    //check if there is no password
-    if (empty($user_password)) {
 
-        $query = "SELECT * FROM users WHERE username = '{$the_username}'";
-        $select_user_password = mysqli_query($connection, $query);
-        if (!$select_user_password) {
-            die("QUERY FAILED" . mysqli_error($connection));
-        }
-        while ($row = mysqli_fetch_assoc($select_user_password)) {
-            $user_password = $row['user_password'];
-        }
-
-    } else {
-        // encrypting password befor sending it to db
-        $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
-    }
-
-    $query = "UPDATE users SET";
-    $query .= " username = '{$username}' ";
-    $query .= ", user_password = '{$user_password}' ";
-    $query .= ", user_firstname = '{$user_firstname}' ";
-    $query .= ", user_lastname = '{$user_lastname}' ";
-    $query .= ", user_email = '{$user_email}' ";
-    $query .= ", user_image =  '{$user_image}' ";
-    $query .= "WHERE username = '{$the_username}' ";
-
-    $edit_profile_query = mysqli_query($connection, $query);
-    confirm($edit_profile_query);
-
-}
-
-?>
+    ?>
 
 <div id="wrapper">
 
@@ -100,13 +101,13 @@ if (isset($_POST['edit_profile'])) {
             Welcome
             <small><?php
 
-if (empty($_SESSION['username'])) {
-    echo "Author";
-} else {
-    echo $_SESSION['username'];
-}
+    if (empty($_SESSION['username'])) {
+        echo "Author";
+    } else {
+        echo $_SESSION['username'];
+    }
 
-?></small>
+    ?></small>
           </h1>
 
           <form action="" method="POST" enctype="multipart/form-data">
@@ -165,4 +166,4 @@ if (empty($_SESSION['username'])) {
   </div>
   <!-- /#page-wrapper -->
 
-  <?php include "includes/admin_footer.php";?>
+  <?php include "includes/admin_footer.php";}?>
