@@ -24,19 +24,21 @@ if (!isset($_SESSION['username'])) {
             $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
             $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
 
+            $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+
 //get randsalt from db;
 
-            $query = "SELECT randSalt FROM users";
-            $select_randsalt_query = mysqli_query($connection, $query);
-            if (!$select_randsalt_query) {
-                die("QUERY FAILD" . mysqli_error($connection));
-            }
+            // $query = "SELECT randSalt FROM users";
+            // $select_randsalt_query = mysqli_query($connection, $query);
+            // if (!$select_randsalt_query) {
+            //     die("QUERY FAILD" . mysqli_error($connection));
+            // }
 
-            $row = mysqli_fetch_array($select_randsalt_query);
-            $salt = $row['randSalt'];
+            // $row = mysqli_fetch_array($select_randsalt_query);
+            // $salt = $row['randSalt'];
 
-            // encrypting password befor sending it to db
-            $user_password = crypt($user_password, $salt);
+            // // encrypting password befor sending it to db
+            // $user_password = crypt($user_password, $salt);
 
             $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
             $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
