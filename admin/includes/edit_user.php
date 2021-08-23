@@ -57,6 +57,12 @@ if ($_SESSION['user_role'] == 'admin') {
             }
 
         }
+        // if (!empty($user_password)) {
+        //     $query_password = "SELECT user_password FROM users WHERE user_id = $user_id";
+        //     $send_password_query = mysqli_query($connection, $query_password);
+        //     $row = mysqli_fetch_assoc($send_password_query);
+        //     $db_user_password = $row['user_password'];
+        // }
 
         $query = "UPDATE users SET";
         $query .= " username = '{$username}' ";
