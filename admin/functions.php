@@ -11,7 +11,8 @@ function confirm($result)
 
 }
 function insert_categories()
-{
+{if (isset($_SESSION['user_role'])) {
+
     global $connection;
     if (isset($_POST['submit'])) {
         $cat_title = $_POST[('cat_title')];
@@ -25,11 +26,12 @@ function insert_categories()
             confirm($creat_cat_query);
         }
     }
-
+}
 }
 
 function delete_cat()
-{
+{if (isset($_SESSION['user_role'])) {
+
     global $connection;
     if (isset($_GET['delete'])) {
 
@@ -44,7 +46,7 @@ function delete_cat()
 
         confirm($delete_query);
     }
-
+}
 }
 
 function FindAllCategories()
@@ -112,35 +114,29 @@ function counter($table_name)
 function users_online()
 {
 
-    if (isset($_GET['usersonline'])) {
-        global $connection;
-        if (!$connection) {
-            global $connection;
-            session_start();
-            include "../includes/db.php";
-            $session = session_id();
+    global $connection;
 
-            $time = time();
-            $time_out_in_seconds = 30;
-            $time_out = $time - $time_out_in_seconds;
+    $session = session_id();
 
-            $query = "SELECT * FROM users_online WHERE session = '$session'";
-            $send_query = mysqli_query($connection, $query);
-            $count = mysqli_num_rows($send_query);
+    $time = time();
+    $time_out_in_seconds = 30;
+    $time_out = $time - $time_out_in_seconds;
 
-            if ($count == null) {
-                mysqli_query($connection, "INSERT INTO users_online(session, time) VALUES('$session','$time')");
-            } else {
-                mysqli_query($connection, "UPDATE users_online SET time = '$time' WHERE session = '$session'");
+    $query = "SELECT * FROM users_online WHERE session = '$session'";
+    $send_query = mysqli_query($connection, $query);
+    $count = mysqli_num_rows($send_query);
 
-            }
-            $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out'");
-            $count_users = mysqli_num_rows($users_online_query);
-            echo $count_users = $_GET['results'];
-        }}
+    if ($count == null) {
+        mysqli_query($connection, "INSERT INTO users_online(session, time) VALUES('$session','$time')");
+    } else {
+        mysqli_query($connection, "UPDATE users_online SET time = '$time' WHERE session = '$session'");
+
+    }
+    $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out'");
+    $count_users = mysqli_num_rows($users_online_query);
+    return $count_users;
 
 }
-users_online();
 
 function comment_counter($comment_post_id)
 {

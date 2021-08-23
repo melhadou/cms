@@ -15,10 +15,7 @@ if ($_SESSION['user_role'] == 'admin') {
   </div>
   <!-- Top Menu Items -->
   <ul class="nav navbar-right top-nav">
-    <!-- <li><a>Users Online: //echo users_online(); </a></li> -->
-    <li><a>Users Online: <span class="onlineusers"></span>
-      </a></li>
-
+    <li><a>Users Online: <?php echo users_online(); ?></a></li>
     <li>
       <a href="../index.php" target="_blank">Website</a>
     </li>

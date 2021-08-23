@@ -17,17 +17,9 @@ $("#selectAllBoxes").click(function (event) {
 // broken code . not working
 // function onlineUsers() {
 //   $.get("functions.php?usersonline=results", (data) => {
-//     $(".onlineusers").text(`${data}`);
+//$(".onlineusers").text(`${data}`);
 //   });
 // }
 // setInterval(() => {
 //   onlineUsers();
 // }, 500);
-function onlineUsers() {
-  $.get("functions.php?usersonline=results", function (data) {
-    $(".onlineusers").text(`${data}`);
-  });
-}
-setInterval(function () {
-  onlineUsers();
-}, 500);
