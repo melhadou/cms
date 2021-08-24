@@ -48,6 +48,18 @@ if (isset($_GET['p_author'])) {
             ?></a>
       </h2>
       <p class="lead">
+        <?php
+//selecting post author from db
+
+            $query = "SELECT * FROM users WHERE user_id = $post_author";
+            $select_user_query = mysqli_query($connection, $query);
+            while ($row = mysqli_fetch_assoc($select_user_query)) {
+
+                $post_author = $row['user_firstname'] . " " . $row['user_lastname'];
+
+            }
+            ?>
+
         All Posts By <?php echo $post_author; ?>
       </p>
       <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
