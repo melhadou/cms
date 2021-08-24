@@ -45,7 +45,7 @@ if ($_SESSION['user_role'] == 'admin') {
             <!-- Update Categories -->
             <?php
 if (isset($_GET['edit'])) {
-        $cat_id = $_GET['edit'];
+        $cat_id = escape($_GET['edit']);
         include "includes/update_categories.php";
     }
 

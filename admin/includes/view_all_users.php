@@ -27,13 +27,13 @@ if ($_SESSION['user_role'] == 'admin') {
     $select_user = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_user)) {
-        $user_id = $row['user_id'];
-        $username = $row['username'];
-        $user_firstname = $row['user_firstname'];
-        $user_lastname = $row['user_lastname'];
-        $user_email = $row['user_email'];
-        $user_role = $row['user_role'];
-        $user_image = $row['user_image'];
+        $user_id = escape($row['user_id']);
+        $username = escape($row['username']);
+        $user_firstname = escape($row['user_firstname']);
+        $user_lastname = escape($row['user_lastname']);
+        $user_email = escape($row['user_email']);
+        $user_role = escape($row['user_role']);
+        $user_image = escape($row['user_image']);
 
         echo "<tr>";
         echo "<td> $user_id</td>";
@@ -55,7 +55,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
 // change role to admin
     if (isset($_GET['to_admin'])) {
-        $the_user_id = $_GET['to_admin'];
+        $the_user_id = escape($_GET['to_admin']);
 
         $query = "UPDATE users SET user_role  = 'admin' WHERE user_id = $the_user_id ";
 
@@ -66,7 +66,7 @@ if ($_SESSION['user_role'] == 'admin') {
     }
 // change role to subscriber
     if (isset($_GET['to_subs'])) {
-        $the_user_id = $_GET['to_subs'];
+        $the_user_id = escape($_GET['to_subs']);
 
         $query = "UPDATE users SET user_role  = 'subscriber' WHERE user_id = $the_user_id ";
 
@@ -80,7 +80,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_GET['delete'])) {
 
-        $the_user_id = $_GET['delete'];
+        $the_user_id = escape($_GET['delete']);
 
         $query = "DELETE FROM users WHERE user_id = {$the_user_id}";
 

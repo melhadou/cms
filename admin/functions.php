@@ -10,9 +10,8 @@ function confirm($result)
 {
     global $connection;
     if (!$result) {
-        die("QUERY FAILED" . mysqli_error($connection));
+        return die("QUERY FAILED" . mysqli_error($connection));
     }
-    return $result;
 
 }
 function insert_categories()
@@ -20,7 +19,7 @@ function insert_categories()
 
     global $connection;
     if (isset($_POST['submit'])) {
-        $cat_title = $_POST[('cat_title')];
+        $cat_title = escape($_POST[('cat_title')]);
 
         if ($cat_title == "" || empty($cat_title)) {
             echo "You need to Type Somthing";
@@ -40,7 +39,7 @@ function delete_cat()
     global $connection;
     if (isset($_GET['delete'])) {
 
-        $the_cat_id = $_GET['delete'];
+        $the_cat_id = escape($_GET['delete']);
 
         $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id}";
 
@@ -60,8 +59,8 @@ function FindAllCategories()
     $query = "SELECT * FROM categories";
     $select_categories = mysqli_query($connection, $query);
     while ($row = mysqli_fetch_assoc($select_categories)) {
-        $cat_title = $row['cat_title'];
-        $cat_id = $row['cat_id'];
+        $cat_title = escape($row['cat_title']);
+        $cat_id = escape($row['cat_id']);
         echo "<tr>";
         echo "<td>{$cat_id}</td>";
         echo "<td>{$cat_title}</td>";
@@ -78,7 +77,7 @@ function delete_post()
     global $connection;
     if (isset($_GET['delete'])) {
 
-        $the_post_id = $_GET['delete'];
+        $the_post_id = escape($_GET['delete']);
 
         $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
 
@@ -99,8 +98,8 @@ function showCategories()
     $select_categories = mysqli_query($connection, $query);
     confirm($select_categories);
     while ($row = mysqli_fetch_assoc($select_categories)) {
-        $cat_title = $row['cat_title'];
-        $cat_id = $row['cat_id'];
+        $cat_title = escape($row['cat_title']);
+        $cat_id = escape($row['cat_id']);
         echo "<option value='{$cat_id}'>{$cat_title}</option>";
     }
 }
@@ -112,7 +111,7 @@ function counter($table_name)
     global $connection;
     $query = "SELECT * FROM {$table_name}";
     $send_query = mysqli_query($connection, $query);
-    $result_count = mysqli_num_rows($send_query);
+    $result_count = escape(mysqli_num_rows($send_query));
     return $result_count;
 }
 
@@ -125,11 +124,11 @@ function users_online()
 
     $time = time();
     $time_out_in_seconds = 30;
-    $time_out = $time - $time_out_in_seconds;
+    $time_out = escape($time - $time_out_in_seconds);
 
     $query = "SELECT * FROM users_online WHERE session = '$session'";
     $send_query = mysqli_query($connection, $query);
-    $count = mysqli_num_rows($send_query);
+    $count = escape(mysqli_num_rows($send_query));
 
     if ($count == null) {
         mysqli_query($connection, "INSERT INTO users_online(session, time) VALUES('$session','$time')");
@@ -138,7 +137,7 @@ function users_online()
 
     }
     $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out'");
-    $count_users = mysqli_num_rows($users_online_query);
+    $count_users = escape(mysqli_num_rows($users_online_query));
     return $count_users;
 
 }
@@ -149,6 +148,6 @@ function comment_counter($comment_post_id)
 
     $query = "SELECT * FROM comments WHERE comment_post_id = {$comment_post_id}";
     $comment_counter_query = mysqli_query($connection, $query);
-    $comment_count = mysqli_num_rows($comment_counter_query);
+    $comment_count = escape(mysqli_num_rows($comment_counter_query));
     return $comment_count;
 }
