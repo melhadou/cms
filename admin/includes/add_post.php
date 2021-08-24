@@ -17,14 +17,15 @@ if ($_SESSION['user_role'] == 'admin') {
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-        $post_comment_count = '';
+        $post_comment_count = '0';
+        $post_views_count = '0';
 
         //uploid image to images folder
 
         move_uploaded_file($post_image_temp, "../images/$post_image");
 
-        $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count) ";
-        $query .= "VALUES('{$post_category_id}' , '{$post_title}' , '{$post_author}' , now() , '{$post_image}' , '{$post_content}' ,'{$post_tags}' ,  '{$post_status}' ,'{$post_comment_count}')";
+        $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count,post_views_count) ";
+        $query .= "VALUES('{$post_category_id}' , '{$post_title}' , '{$post_author}' , now() , '{$post_image}' , '{$post_content}' ,'{$post_tags}' ,  '{$post_status}' ,'{$post_comment_count}',{$post_views_count})";
 
         $creat_post_query = mysqli_query($connection, $query);
         confirm($creat_post_query);
@@ -58,7 +59,19 @@ if ($_SESSION['user_role'] == 'admin') {
   </div>
   <div class="form-group">
     <label for="author">Post author</label>
-    <input type="text" class="form-control" name="post_author" id="author">
+    <select name="post_author" id="author" class="form-control">
+      <?php
+//show categories
+    $query = "SELECT * FROM users ";
+    $select_user_query = mysqli_query($connection, $query);
+    confirm($select_user_query);
+    while ($row = mysqli_fetch_assoc($select_user_query)) {
+        $username = $row['username'];
+        $user_id = $row['user_id'];
+        echo "<option value='{$user_id}'>{$username}</option>";
+    }
+    ?>
+    </select>
   </div>
   <div class="form-group">
     <label for="status">Post status</label>
