@@ -16,21 +16,21 @@ if (isset($_POST['login'])) {
         die("QEURY FAILD " . mysqli_error($connection));
     }
     while ($row = mysqli_fetch_assoc($select_username_query)) {
-        $db_user_id = escape($row['user_id']);
-        $db_username = escape($row['username']);
-        $db_user_password = escape($row['user_password']);
-        $db_user_firstname = escape($row['user_firstname']);
-        $db_user_lastname = escape($row['user_lastname']);
-        $db_user_email = escape($row['user_email']);
-        $db_user_role = escape($row['user_role']);
+        $db_user_id = mysqli_real_escape_string($connection, $row['user_id']);
+        $db_username = mysqli_real_escape_string($connection, $row['username']);
+        $db_user_password = mysqli_real_escape_string($connection, $row['user_password']);
+        $db_user_firstname = mysqli_real_escape_string($connection, $row['user_firstname']);
+        $db_user_lastname = mysqli_real_escape_string($connection, $row['user_lastname']);
+        $db_user_email = mysqli_real_escape_string($connection, $row['user_email']);
+        $db_user_role = mysqli_real_escape_string($connection, $row['user_role']);
     }}
 
 if (password_verify($password, $db_user_password)) {
 
-    $_SESSION['username'] = escape($db_username);
-    $_SESSION['firstname'] = escape($db_user_firstname);
-    $_SESSION['lastname'] = escape($db_user_lastname);
-    $_SESSION['user_role'] = escape($db_user_role);
+    $_SESSION['username'] = mysqli_real_escape_string($connection, $db_username);
+    $_SESSION['firstname'] = mysqli_real_escape_string($connection, $db_user_firstname);
+    $_SESSION['lastname'] = mysqli_real_escape_string($connection, $db_user_lastname);
+    $_SESSION['user_role'] = mysqli_real_escape_string($connection, $db_user_role);
 
     header("Location: ../admin");
 } else {header("Location: ../index.php");}

@@ -15,7 +15,7 @@
       <?php
 
 if (isset($_POST['submit'])) {
-    $search = escape($_POST['search']);
+    $search = mysqli_real_escape_string($connection, $_POST['search']);
 
     $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
     $search_query = mysqli_query($connection, $query);
@@ -30,13 +30,13 @@ if (isset($_POST['submit'])) {
         echo "<h3> No Results Found for: {$search}</h3>";
     } else {
         while ($row = mysqli_fetch_assoc($search_query)) {
-            $post_title = escape($row['post_title']);
-            $post_id = escape($row['post_id']);
-            $post_author = escape($row['post_author']);
-            $post_date = escape($row['post_date']);
-            $post_image = escape($row['post_image']);
-            $post_content = escape(substr($row['post_content'], 0, 400));
-            $post_status = escape($row['post_status']);
+            $post_title = mysqli_real_escape_string($connection, $row['post_title']);
+            $post_id = mysqli_real_escape_string($connection, $row['post_id']);
+            $post_author = mysqli_real_escape_string($connection, $row['post_author']);
+            $post_date = mysqli_real_escape_string($connection, $row['post_date']);
+            $post_image = mysqli_real_escape_string($connection, $row['post_image']);
+            $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
+            $post_status = mysqli_real_escape_string($connection, $row['post_status']);
 
             if ($post_status != 'published') {
                 echo "<h1>Sorry! No Post Yet!!</h1>";
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
                 $select_user_query = mysqli_query($connection, $query);
                 while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-                    $post_author = escape($row['user_firstname'] . " " . $row['user_lastname']);
+                    $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
                 }
                 ?>

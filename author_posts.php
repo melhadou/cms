@@ -14,19 +14,19 @@
     <div class="col-md-8">
       <?php
 if (isset($_GET['p_author'])) {
-    $p_author = escape($_GET['p_author']);
+    $p_author = mysqli_real_escape_string($connection, $_GET['p_author']);
     $query = "SELECT * FROM posts WHERE post_author = '{$p_author}' ORDER BY post_id DESC";
 
     $select_all_posts_querys = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
-        $post_title = escape($row['post_title']);
-        $post_id = escape($row['post_id']);
-        $post_author = escape($row['post_author']);
-        $post_date = escape($row['post_date']);
-        $post_image = escape($row['post_image']);
-        $post_status = escape($row['post_status']);
-        $post_content = escape(substr($row['post_content'], 0, 400));
+        $post_title = mysqli_real_escape_string($connection, $row['post_title']);
+        $post_id = mysqli_real_escape_string($connection, $row['post_id']);
+        $post_author = mysqli_real_escape_string($connection, $row['post_author']);
+        $post_date = mysqli_real_escape_string($connection, $row['post_date']);
+        $post_image = mysqli_real_escape_string($connection, $row['post_image']);
+        $post_status = mysqli_real_escape_string($connection, $row['post_status']);
+        $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
 
         if ($post_status == 'published') {
 
@@ -55,7 +55,7 @@ if (isset($_GET['p_author'])) {
             $select_user_query = mysqli_query($connection, $query);
             while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-                $post_author = escape($row['user_firstname'] . " " . $row['user_lastname']);
+                $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
             }
             ?>

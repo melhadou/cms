@@ -14,7 +14,7 @@
     <div class="col-md-8">
       <?php
 if (isset($_GET['p_id'])) {
-    $p_id = escape($_GET['p_id']);
+    $p_id = mysqli_real_escape_string($connection, $_GET['p_id']);
 
     $query = "UPDATE posts SET post_views_count = post_views_count + 1  WHERE post_id = {$p_id}";
     $update_post_views_querys = mysqli_query($connection, $query);
@@ -23,12 +23,12 @@ if (isset($_GET['p_id'])) {
     $select_post_querys = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_post_querys)) {
-        $post_title = escape($row['post_title']);
-        $post_author = escape($row['post_author']);
-        $post_date = escape($row['post_date']);
-        $post_image = escape($row['post_image']);
-        $post_content = escape($row['post_content']);
-        $post_views_count = escape($row['post_views_count']);
+        $post_title = mysqli_real_escape_string($connection, $row['post_title']);
+        $post_author = mysqli_real_escape_string($connection, $row['post_author']);
+        $post_date = mysqli_real_escape_string($connection, $row['post_date']);
+        $post_image = mysqli_real_escape_string($connection, $row['post_image']);
+        $post_content = mysqli_real_escape_string($connection, $row['post_content']);
+        $post_views_count = mysqli_real_escape_string($connection, $row['post_views_count']);
 
         ?>
 
@@ -50,7 +50,7 @@ if (isset($_GET['p_id'])) {
         $select_user_query = mysqli_query($connection, $query);
         while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-            $post_author = escape($row['user_firstname'] . " " . $row['user_lastname']);
+            $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
         }
         ?>
@@ -80,11 +80,11 @@ if (isset($_GET['p_id'])) {
 
 if (isset($_POST['creat_comment'])) {
 
-    $comment_post_id = escape($_GET['p_id']);
-    $comment_author = escape($_POST['comment_author']);
-    $comment_email = escape($_POST['comment_email']);
-    $comment_content = escape($_POST['comment_content']);
-    $comment_status = escape('unapproved');
+    $comment_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
+    $comment_author = mysqli_real_escape_string($connection, $_POST['comment_author']);
+    $comment_email = mysqli_real_escape_string($connection, $_POST['comment_email']);
+    $comment_content = mysqli_real_escape_string($connection, $_POST['comment_content']);
+    $comment_status = mysqli_real_escape_string($connection, 'unapproved');
     $comment_date;
 
     if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
@@ -150,7 +150,7 @@ if (isset($_POST['creat_comment'])) {
 
       <?php
 
-$comment_post_id = escape($_GET['p_id']);
+$comment_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
 
 $query = "SELECT * FROM comments WHERE comment_post_id = $comment_post_id ";
 $query .= "AND comment_status = 'approved' ";
@@ -160,9 +160,9 @@ if (!$show_comment_query) {
     die('QUERY FAILED' . mysqli_error($connection));
 }
 while ($row = mysqli_fetch_assoc($show_comment_query)) {
-    $comment_content = escape($row['comment_content']);
-    $comment_author = escape($row['comment_author']);
-    $comment_date = escape($row['comment_date']);
+    $comment_content = mysqli_real_escape_string($connection, $row['comment_content']);
+    $comment_author = mysqli_real_escape_string($connection, $row['comment_author']);
+    $comment_date = mysqli_real_escape_string($connection, $row['comment_date']);
 
     ?>
 

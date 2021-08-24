@@ -17,7 +17,7 @@
 $pre_page = 5;
 
 if (isset($_GET['page'])) {
-    $page = escape($_GET['page']);
+    $page = mysqli_real_escape_string($connection, $_GET['page']);
 } else {
     $page = '';
 }
@@ -25,24 +25,24 @@ if (isset($_GET['page'])) {
 if ($page == '' || $page == '1') {
     $page_1 = '0';
 } else {
-    $page_1 = escape(($page * $pre_page) - $pre_page);
+    $page_1 = mysqli_real_escape_string($connection, ($page * $pre_page) - $pre_page);
 }
 $query = "SELECT * FROM posts WHERE post_status = 'published'";
 $count_all_posts_querys = mysqli_query($connection, $query);
-$count = escape(mysqli_num_rows($count_all_posts_querys));
+$count = mysqli_real_escape_string($connection, mysqli_num_rows($count_all_posts_querys));
 $count = ceil($count / $pre_page);
 
 $query = "SELECT * FROM posts WHERE post_status = 'published'  ORDER BY post_id DESC LIMIT $page_1,$pre_page";
 $select_all_posts_querys = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
-    $post_title = escape($row['post_title']);
-    $post_id = escape($row['post_id']);
-    $post_author = escape($row['post_author']);
-    $post_date = escape($row['post_date']);
-    $post_image = escape($row['post_image']);
-    $post_status = escape($row['post_status']);
-    $post_content = escape(substr($row['post_content'], 0, 400));
+    $post_title = mysqli_real_escape_string($connection, $row['post_title']);
+    $post_id = mysqli_real_escape_string($connection, $row['post_id']);
+    $post_author = mysqli_real_escape_string($connection, $row['post_author']);
+    $post_date = mysqli_real_escape_string($connection, $row['post_date']);
+    $post_image = mysqli_real_escape_string($connection, $row['post_image']);
+    $post_status = mysqli_real_escape_string($connection, $row['post_status']);
+    $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
 
     if ($post_status == 'published') {
 
@@ -72,7 +72,7 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
         $select_user_query = mysqli_query($connection, $query);
         while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-            $post_author = escape($row['user_firstname'] . " " . $row['user_lastname']);
+            $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
         }
         ?>

@@ -16,19 +16,19 @@
 
       <?php
 if (isset($_GET['c_id'])) {
-    $c_id = escape($_GET['c_id']);
+    $c_id = mysqli_real_escape_string($connection, $_GET['c_id']);
 }
 
 $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
 $select_all_posts_querys = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
-    $post_title = escape($row['post_title']);
-    $post_id = escape($row['post_id']);
-    $post_author = escape($row['post_author']);
-    $post_date = escape($row['post_date']);
-    $post_image = escape($row['post_image']);
-    $post_content = escape(substr($row['post_content'], 0, 400));
+    $post_title = mysqli_real_escape_string($connection, $row['post_title']);
+    $post_id = mysqli_real_escape_string($connection, $row['post_id']);
+    $post_author = mysqli_real_escape_string($connection, $row['post_author']);
+    $post_date = mysqli_real_escape_string($connection, $row['post_date']);
+    $post_image = mysqli_real_escape_string($connection, $row['post_image']);
+    $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
 
     ?>
       <h1 class="page-header">
@@ -54,7 +54,7 @@ while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
     $select_user_query = mysqli_query($connection, $query);
     while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-        $post_author = escape($row['user_firstname'] . " " . $row['user_lastname']);
+        $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
     }
     ?>
