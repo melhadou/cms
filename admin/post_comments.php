@@ -96,9 +96,9 @@ if (isset($_GET['post_id'])) {
             }
 
             echo "<td> $comment_date</td>";
-            echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
-            echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
-            echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
+            echo "<td><a href='post_comments.php?approve=$comment_id&post_id=$post_id'>Approve</a></td>";
+            echo "<td><a href='post_comments.php?unapprove=$comment_id&post_id=$post_id'>Unapprove</a></td>";
+            echo "<td><a href='post_comments.php?delete=$comment_id&post_id=$post_id'>Delete</a></td>";
 
             echo "</tr>";
         }
@@ -113,7 +113,7 @@ if (isset($_GET['post_id'])) {
 
             $unapprove_comment_query = mysqli_query($connection, $query);
             // refraiche the page , to show data after unapproving a comment
-            header("Location: comments.php");
+            header("Location: post_comments.php?post_id=$post_id");
             confirm($unapprove_comment_query);
         }
 // approve comments
@@ -124,7 +124,7 @@ if (isset($_GET['post_id'])) {
 
             $approve_comment_query = mysqli_query($connection, $query);
             // refraiche the page , to show data after approving a comment
-            header("Location: comments.php");
+            header("Location: post_comments.php?post_id=$post_id");
             confirm($approve_comment_query);
         }
 
@@ -139,7 +139,7 @@ if (isset($_GET['post_id'])) {
             $delete_comment_query = mysqli_query($connection, $query);
 
             // refraiche the page , to show data after deleting a comment
-            header("Location: comments.php");
+            header("Location: post_comments.php?post_id=$post_id");
 
             confirm($delete_commment_query);
         }
