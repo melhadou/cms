@@ -171,8 +171,8 @@ if ($_SESSION['user_role'] == 'admin') {
     <input type="text" class="form-control" name="post_tags" id="tags" value="<?php echo $post_tags; ?>">
   </div>
   <div class="form-group">
-    <label for="body">Post Content</label>
-    <textarea class="form-control" name="post_content" id="body" rows="10"><?php echo $post_content; ?></textarea>
+    <label for="editor">Post Content</label>
+    <textarea name="post_content" id="editor" rows="15"><?php echo $post_content; ?></textarea>
   </div>
   <div class="form-group">
 

@@ -90,9 +90,8 @@ if ($_SESSION['user_role'] == 'admin') {
   </div>
   <div class="form-group">
 
-    <label for="body">Post Content</label>
-
-    <textarea class="form-control" name="post_content" id="body">
+    <label for="editor">Post Content</label>
+    <textarea name="post_content" id="editor">
 
     </textarea>
 
