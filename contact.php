@@ -2,68 +2,29 @@
 <?php include "includes/header.php";?>
 <?php include "includes/nav.php";?>
 <?php
-if (!isset($_SESSION['username'])) {
 
-    ?>
+?>
 <?php
 
-    if (isset($_POST['submit'])) {
-        $username = $_POST['username'];
-        $user_email = $_POST['email'];
-        $user_password = $_POST['password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        if (!empty($username) && !empty($user_password) && !empty($user_firstname) && !empty($user_lastname)) {
+if (isset($_POST['send'])) {
+    $subject = mysqli_real_escape_string($connection, $_POST['subject']);
+    $email = mysqli_real_escape_string($connection, $_POST['email']);
+    $message = mysqli_real_escape_string($connection, $_POST['message']);
 
-//Escapes special characters in a string for use in an SQL statement
+    $msg = $message;
 
-            $username = mysqli_real_escape_string($connection, $_POST['username']);
-            $user_email = mysqli_real_escape_string($connection, $_POST['email']);
-            $user_password = mysqli_real_escape_string($connection, $_POST['password']);
-            $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
-            $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
+    // use wordwrap() if lines are longer than 70 characters
+    $msg = wordwrap($msg, 70);
 
-            $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+    // send email
+    mail("melhadouchi387@gmail.com", $subject, $msg);
+    if (!empty($subject) && !empty($meassage) && !empty($email)) {
 
-//get randsalt from db;
+        // the message
 
-            // $query = "SELECT randSalt FROM users";
-            // $select_randsalt_query = mysqli_query($connection, $query);
-            // if (!$select_randsalt_query) {
-            //     die("QUERY FAILD" . mysqli_error($connection));
-            // }
+    }}
 
-            // $row = mysqli_fetch_array($select_randsalt_query);
-            // $salt = $row['randSalt'];
-
-            // // encrypting password befor sending it to db
-            // $user_password = crypt($user_password, $salt);
-
-            $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
-            $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
-
-            $register_user_query = mysqli_query($connection, $query);
-            if (!$register_user_query) {
-                die("QUERY FAILD" . mysqli_error($connection));
-            }
-            $meassage = "you successfully registered wait for admin approval";
-        } else {
-
-            echo "<script>
-    function notempthy() {
-                  const pp = document.querySelector('#error');
-                  pp.innerText = 'This Fields Should not be emthy';}
-                  function clearFeilds(){
-                const username =  document.querySelector('#username');
-                const pp = document.querySelector('#error');
-                 username.addEventListener('keydown',()=>{
-                    pp.innerText = '';
-                  })}
-
-        </script>";
-        }}
-
-    ?>
+?>
 <!-- Navigation -->
 
 
@@ -77,36 +38,24 @@ if (!isset($_SESSION['username'])) {
       <div class="row">
         <div class="col-xs-6 col-xs-offset-3">
           <div class="form-wrap">
-            <h1>Register</h1>
-            <p id="error" class="text-center" style="color:red">
-            <p class="text-center" style="color:green">
-              <?php echo $meassage; ?>
-            </p>
-            <script>
-            notempthy()
-            </script>
+            <h1>Contact Us</h1>
 
 
-            <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+            <form role="form" action="" method="post" id="login-form" autocomplete="off">
               <div class="form-group">
-                <label for="username" class="sr-only">Subject</label>
-                <input type="text" name="username" id="username" class="form-control"
-                  placeholder="Enter Desired Username">
+                <label for="subject" class="sr-only">Subject</label>
+                <input type="text" name="subject" id="subject" class="form-control" placeholder="Enter Your Subject">
               </div>
-              <script>
-              clearFeilds()
-              </script>
               <div class="form-group">
                 <label for="email" class="sr-only">Email</label>
                 <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
               </div>
               <div class="form-group">
-                <label for="body">Your Message</label>
-                <textarea name="body" id="body" class="form-control" rows="10"></textarea>
+                <textarea name="message" id="message" class="form-control" rows="10"
+                  placeholder="Your Message"></textarea>
               </div>
-
-              <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block"
-                value="Register">
+              <input type="submit" name="send" id="btn-login" class="btn btn-custom btn-lg btn-block"
+                value="Send Message">
             </form>
 
           </div>
@@ -118,9 +67,7 @@ if (!isset($_SESSION['username'])) {
 
   <hr>
   <?php
-} else {
-    header("Location: index.php");
-}
+
 ?>
 
 
