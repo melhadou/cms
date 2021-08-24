@@ -124,6 +124,13 @@ if ($_SESSION['user_role'] == 'admin') {
       <th><input type="checkbox" class="checkBoxes" name="checkBoxArray[]" value="<?php echo $post_id; ?>"></th>
       <?php
 echo "<td> $post_id</td>";
+//showing username
+        $query = "SELECT * FROM users WHERE user_id = $post_author";
+        $select_user_query = mysqli_query($connection, $query);
+        confirm($select_user_query);
+        while ($row = mysqli_fetch_assoc($select_user_query)) {
+            $post_author = $row['user_firstname'] . " " . $row['user_lastname'];
+        }
         echo "<td> $post_author</td>";
         echo "<td>$post_title</td>";
 
