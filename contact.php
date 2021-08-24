@@ -17,7 +17,7 @@ if (isset($_POST['send'])) {
     $msg = wordwrap($msg, 70);
 
     // send email
-    mail("melhadouchi387@gmail.com", $subject, $msg);
+    mail("test@email.com", $subject, $msg);
     if (!empty($subject) && !empty($meassage) && !empty($email)) {
 
         // the message
