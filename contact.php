@@ -89,7 +89,7 @@ if (!isset($_SESSION['username'])) {
 
             <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
               <div class="form-group">
-                <label for="username" class="sr-only">username</label>
+                <label for="username" class="sr-only">Subject</label>
                 <input type="text" name="username" id="username" class="form-control"
                   placeholder="Enter Desired Username">
               </div>
@@ -97,18 +97,12 @@ if (!isset($_SESSION['username'])) {
               clearFeilds()
               </script>
               <div class="form-group">
-                <input type="text" class="form-control" name="user_firstname" placeholder="Enter Your First Name">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="user_lastname" placeholder="Enter Your Last Name">
-              </div>
-              <div class="form-group">
                 <label for="email" class="sr-only">Email</label>
                 <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
               </div>
               <div class="form-group">
-                <label for="password" class="sr-only">Password</label>
-                <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                <label for="body">Your Message</label>
+                <textarea name="body" id="body" class="form-control" rows="10"></textarea>
               </div>
 
               <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block"
