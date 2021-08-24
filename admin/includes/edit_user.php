@@ -7,20 +7,20 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_GET['edit_user'])) {
 
-        $u_id = $_GET['edit_user'];
+        $u_id = escape($_GET['edit_user']);
 
         $query = "SELECT * FROM users WHERE user_id = {$u_id}";
         $edit_user_query = mysqli_query($connection, $query);
         confirm($edit_user_query);
         while ($row = mysqli_fetch_assoc($edit_user_query)) {
-            $user_id = $row['user_id'];
-            $username = $row['username'];
-            $user_password = $row['user_password'];
-            $user_firstname = $row['user_firstname'];
-            $user_lastname = $row['user_lastname'];
-            $user_email = $row['user_email'];
-            $user_role = $row['user_role'];
-            $user_image = $row['user_image'];
+            $user_id = escape($row['user_id']);
+            $username = escape($row['username']);
+            $user_password = escape($row['user_password']);
+            $user_firstname = escape($row['user_firstname']);
+            $user_lastname = escape($row['user_lastname']);
+            $user_email = escape($row['user_email']);
+            $user_role = escape($row['user_role']);
+            $user_image = escape($row['user_image']);
 
         }
         ?>
@@ -29,14 +29,14 @@ if ($_SESSION['user_role'] == 'admin') {
 
         if (isset($_POST['edit_user'])) {
 
-            $username = $_POST['username'];
-            $user_password = $_POST['user_password'];
-            $user_firstname = $_POST['user_firstname'];
-            $user_lastname = $_POST['user_lastname'];
-            $user_email = $_POST['user_email'];
-            $user_role = $_POST['user_role'];
-            $user_image = $_FILES['user_image']['name'];
-            $user_image_temp = $_FILES['user_image']['tmp_name'];
+            $username = escape($_POST['username']);
+            $user_password = escape($_POST['user_password']);
+            $user_firstname = escape($_POST['user_firstname']);
+            $user_lastname = escape($_POST['user_lastname']);
+            $user_email = escape($_POST['user_email']);
+            $user_role = escape($_POST['user_role']);
+            $user_image = escape($_FILES['user_image']['name']);
+            $user_image_temp = escape($_FILES['user_image']['tmp_name']);
 
             //check if there is no password
             if (empty($user_password)) {
@@ -47,7 +47,7 @@ if ($_SESSION['user_role'] == 'admin') {
                     die("QUERY FAILED" . mysqli_error($connection));
                 }
                 while ($row = mysqli_fetch_assoc($select_user_password)) {
-                    $user_password = $row['user_password'];
+                    $user_password = escape($row['user_password']);
                 }
 
             } else {
@@ -66,7 +66,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
                 confirm($select_img);
                 while ($row = mysqli_fetch_assoc($select_img)) {
-                    $user_image = $row['user_image'];
+                    $user_image = escape($row['user_image']);
                 }
 
             }

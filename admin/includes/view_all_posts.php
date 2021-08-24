@@ -6,7 +6,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_POST['checkBoxArray'])) {
         foreach ($_POST['checkBoxArray'] as $checkBoxValue) {
-            $bulk_option = $_POST['bulk_option'];
+            $bulk_option = escape($_POST['bulk_option']);
 
             switch ($bulk_option) {
                 case 'published':
@@ -30,16 +30,16 @@ if ($_SESSION['user_role'] == 'admin') {
                     $query = "SELECT * FROM posts WHERE post_id = $checkBoxValue";
                     $select_clone_posts = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_assoc($select_clone_posts)) {
-                        $post_id = $row['post_id'];
-                        $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
-                        $post_category_id = $row['post_category_id'];
-                        $post_status = $row['post_status'];
-                        $post_image = $row['post_image'];
-                        $post_tags = $row['post_tags'];
-                        $post_comment_count = $row['post_comment_count'];
-                        $post_date = $row['post_date'];
-                        $post_views_count = $row['post_views_count'];
+                        $post_id = escape($row['post_id']);
+                        $post_title = escape($row['post_title']);
+                        $post_author = escape($row['post_author']);
+                        $post_category_id = escape($row['post_category_id']);
+                        $post_status = escape($row['post_status']);
+                        $post_image = escape($row['post_image']);
+                        $post_tags = escape($row['post_tags']);
+                        $post_comment_count = escape($row['post_comment_count']);
+                        $post_date = escape($row['post_date']);
+                        $post_views_count = escape($row['post_views_count']);
                     }
 
                     $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count,post_views_count) ";

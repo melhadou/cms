@@ -7,20 +7,20 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_GET['p_id'])) {
 
-        $the_post_id = $_GET['p_id'];
+        $the_post_id = escape($_GET['p_id']);
     }
 
     $query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
     $edit_post_query = mysqli_query($connection, $query);
     confirm($edit_post_query);
     while ($row = mysqli_fetch_assoc($edit_post_query)) {
-        $post_title = $row['post_title'];
-        $post_author = $row['post_author'];
-        $post_category_id = $row['post_category_id'];
-        $post_status = $row['post_status'];
-        $post_image = $row['post_image'];
-        $post_tags = $row['post_tags'];
-        $post_content = $row['post_content'];
+        $post_title = escape($row['post_title']);
+        $post_author = escape($row['post_author']);
+        $post_category_id = escape($row['post_category_id']);
+        $post_status = escape($row['post_status']);
+        $post_image = escape($row['post_image']);
+        $post_tags = escape($row['post_tags']);
+        $post_content = escape($row['post_content']);
     }
     ?>
 <?php
@@ -28,16 +28,16 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_POST['edit_post'])) {
 
-        $post_title = $_POST['post_title'];
-        $post_author = $_POST['post_author'];
-        $post_category_id = $_POST['post_category_id'];
-        $post_status = $_POST['post_status'];
+        $post_title = escape($_POST['post_title']);
+        $post_author = escape($_POST['post_author']);
+        $post_category_id = escape($_POST['post_category_id']);
+        $post_status = escape($_POST['post_status']);
 
-        $post_image = $_FILES['post_image']['name'];
-        $post_image_temp = $_FILES['post_image']['tmp_name'];
+        $post_image = escape($_FILES['post_image']['name']);
+        $post_image_temp = escape($_FILES['post_image']['tmp_name']);
 
-        $post_tags = $_POST['post_tags'];
-        $post_content = $_POST['post_content'];
+        $post_tags = escape($_POST['post_tags']);
+        $post_content = escape($_POST['post_content']);
         $post_date = date('d-m-y');
         // $post_comment_count = '';
         // $post_views_count = '';
@@ -54,7 +54,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
             confirm($select_img);
             while ($row = mysqli_fetch_assoc($select_img)) {
-                $post_image = $row['post_image'];
+                $post_image = escape($row['post_image']);
             }
 
         }
@@ -94,7 +94,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
     $query = "SELECT cat_title FROM categories WHERE cat_id = $post_category_id ";
     $send_cat_query = mysqli_query($connection, $query);
-    $row = mysqli_fetch_assoc($send_cat_query);
+    $row = escape(mysqli_fetch_assoc($send_cat_query));
     echo $cat_title = $row['cat_title'];
     ?></option>
       <?php
@@ -103,8 +103,8 @@ if ($_SESSION['user_role'] == 'admin') {
     $select_categories = mysqli_query($connection, $query);
     confirm($select_categories);
     while ($row = mysqli_fetch_assoc($select_categories)) {
-        $cat_title = $row['cat_title'];
-        $cat_id = $row['cat_id'];
+        $cat_title = escape($row['cat_title']);
+        $cat_id = escape($row['cat_id']);
         if ($post_category_id != $cat_id) {
             echo "<option value='{$cat_id}'>{$cat_title}</option>";
         }
@@ -123,8 +123,8 @@ if ($_SESSION['user_role'] == 'admin') {
     $select_user_query = mysqli_query($connection, $query);
     confirm($select_user_query);
     while ($row = mysqli_fetch_assoc($select_user_query)) {
-        $post_username = $row['username'];
-        $user_id = $row['user_id'];
+        $post_username = escape($row['username']);
+        $user_id = escape($row['user_id']);
     }
     ?>
       <option value="<?php echo $user_id; ?>"><?php echo $post_username; ?></option>
@@ -134,8 +134,8 @@ if ($_SESSION['user_role'] == 'admin') {
     $select_user_query = mysqli_query($connection, $query);
     confirm($select_user_query);
     while ($row = mysqli_fetch_assoc($select_user_query)) {
-        $username = $row['username'];
-        $user_id = $row['user_id'];
+        $username = escape($row['username']);
+        $user_id = escape($row['user_id']);
         if ($post_username != $username) {
             echo "<option value='{$user_id}'>{$username}</option>";
         }

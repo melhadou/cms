@@ -6,19 +6,19 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_POST['creat_post'])) {
 
-        $post_title = $_POST['post_title'];
-        $post_author = $_POST['post_author'];
-        $post_category_id = $_POST['post_category_id'];
-        $post_status = $_POST['post_status'];
+        $post_title = escape($_POST['post_title']);
+        $post_author = escape($_POST['post_author']);
+        $post_category_id = escape($_POST['post_category_id']);
+        $post_status = escape($_POST['post_status']);
 
-        $post_image = $_FILES['post_image']['name'];
-        $post_image_temp = $_FILES['post_image']['tmp_name'];
+        $post_image = escape($_FILES['post_image']['name']);
+        $post_image_temp = escape($_FILES['post_image']['tmp_name']);
 
-        $post_tags = $_POST['post_tags'];
-        $post_content = $_POST['post_content'];
+        $post_tags = escape($_POST['post_tags']);
+        $post_content = escape($_POST['post_content']);
         $post_date = date('d-m-y');
-        $post_comment_count = '0';
-        $post_views_count = '0';
+        $post_comment_count = escape('0');
+        $post_views_count = escape('0');
 
         //uploid image to images folder
 
@@ -29,7 +29,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
         $creat_post_query = mysqli_query($connection, $query);
         confirm($creat_post_query);
-        $the_post_id = mysqli_insert_id($connection);
+        $the_post_id = escape(mysqli_insert_id($connection));
         echo "<p class='bg-success'>Post Created: View <a href='../post.php?p_id={$the_post_id}'>{$post_title}</a><p>";
     }
 
@@ -66,8 +66,8 @@ if ($_SESSION['user_role'] == 'admin') {
     $select_user_query = mysqli_query($connection, $query);
     confirm($select_user_query);
     while ($row = mysqli_fetch_assoc($select_user_query)) {
-        $username = $row['username'];
-        $user_id = $row['user_id'];
+        $username = escape($row['username']);
+        $user_id = escape($row['user_id']);
         echo "<option value='{$user_id}'>{$username}</option>";
     }
     ?>

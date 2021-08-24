@@ -1,6 +1,11 @@
 <?php
 include "../includes/db.php";
 
+function escape($string)
+{
+    global $connection;
+    return mysqli_real_escape_string($connection, trim($string));
+}
 function confirm($result)
 {
     global $connection;
