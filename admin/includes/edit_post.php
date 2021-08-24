@@ -116,7 +116,33 @@ if ($_SESSION['user_role'] == 'admin') {
   </div>
   <div class="form-group">
     <label for="author">Post author</label>
-    <input type="text" class="form-control" name="post_author" id="author" value="<?php echo $post_author; ?>">
+    <select name="post_author" id="author" class="form-control">
+      <?php
+//show categories
+    $query = "SELECT * FROM users WHERE user_id = $post_author ";
+    $select_user_query = mysqli_query($connection, $query);
+    confirm($select_user_query);
+    while ($row = mysqli_fetch_assoc($select_user_query)) {
+        $post_username = $row['username'];
+        $user_id = $row['user_id'];
+    }
+    ?>
+      <option value="<?php echo $user_id; ?>"><?php echo $post_username; ?></option>
+      <?php
+//show categories
+    $query = "SELECT * FROM users ";
+    $select_user_query = mysqli_query($connection, $query);
+    confirm($select_user_query);
+    while ($row = mysqli_fetch_assoc($select_user_query)) {
+        $username = $row['username'];
+        $user_id = $row['user_id'];
+        if ($post_username != $username) {
+            echo "<option value='{$user_id}'>{$username}</option>";
+        }
+
+    }
+    ?>
+    </select>
   </div>
   <div class="form-group">
     <label for="status">Post status</label>
