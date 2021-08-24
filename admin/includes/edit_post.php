@@ -39,7 +39,8 @@ if ($_SESSION['user_role'] == 'admin') {
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-        $post_comment_count = '';
+        // $post_comment_count = '';
+        // $post_views_count = '';
 
         //uploid image to images folder
 
@@ -68,6 +69,7 @@ if ($_SESSION['user_role'] == 'admin') {
         $query .= ", post_content = '{$post_content}' ";
         $query .= ", post_tags = '{$post_tags}' ";
         $query .= ", post_status = '{$post_status}' ";
+        // $query .= ", post_views_count = '{$post_views_count}' ";
 
         $query .= "WHERE post_id = $the_post_id ";
 
@@ -88,9 +90,26 @@ if ($_SESSION['user_role'] == 'admin') {
   <div class="form-group">
     <label for="post_category_id">Post Category</label>
     <select name="post_category_id" id="post_category_id" class="form-control">
+      <option value="<?php echo $post_category_id ?>"><?php
+
+    $query = "SELECT cat_title FROM categories WHERE cat_id = $post_category_id ";
+    $send_cat_query = mysqli_query($connection, $query);
+    $row = mysqli_fetch_assoc($send_cat_query);
+    echo $cat_title = $row['cat_title'];
+    ?></option>
       <?php
 //show categories
-    showCategories();
+    $query = "SELECT * FROM categories";
+    $select_categories = mysqli_query($connection, $query);
+    confirm($select_categories);
+    while ($row = mysqli_fetch_assoc($select_categories)) {
+        $cat_title = $row['cat_title'];
+        $cat_id = $row['cat_id'];
+        if ($post_category_id != $cat_id) {
+            echo "<option value='{$cat_id}'>{$cat_title}</option>";
+        }
+
+    }
     ?>
     </select>
 
