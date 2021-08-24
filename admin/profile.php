@@ -6,20 +6,21 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_SESSION['username'])) {
 
-        $the_username = $_SESSION['username'];
+        $the_username = escape($_SESSION['username']);
 
         $query = "SELECT * FROM users WHERE username = '{$the_username}'";
 
         $select_user_query = mysqli_query($connection, $query);
         confirm($select_user_query);
         while ($row = mysqli_fetch_assoc($select_user_query)) {
-            $user_id = $row['user_id'];
-            $username = $row['username'];
-            $user_firstname = $row['user_firstname'];
-            $user_password = $row['user_password'];
-            $user_lastname = $row['user_lastname'];
-            $user_email = $row['user_email'];
-            $user_image = $row['user_image'];}
+            $user_id = escape($row['user_id']);
+            $username = escape($row['username']);
+            $user_firstname = escape($row['user_firstname']);
+            $user_password = escape($row['user_password']);
+            $user_lastname = escape($row['user_lastname']);
+            $user_email = escape($row['user_email']);
+            $user_image = escape($row['user_image']);
+        }
     }
 
     ?>
@@ -28,13 +29,13 @@ if ($_SESSION['user_role'] == 'admin') {
 
     if (isset($_POST['edit_profile'])) {
 
-        $username = $_POST['username'];
-        $user_password = $_POST['user_password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
-        $user_image = $_FILES['user_image']['name'];
-        $user_image_temp = $_FILES['user_image']['tmp_name'];
+        $username = escape($_POST['username']);
+        $user_password = escape($_POST['user_password']);
+        $user_firstname = escape($_POST['user_firstname']);
+        $user_lastname = escape($_POST['user_lastname']);
+        $user_email = escape($_POST['user_email']);
+        $user_image = escape($_FILES['user_image']['name']);
+        $user_image_temp = escape($_FILES['user_image']['tmp_name']);
 
         //uploid image to user images folder
         move_uploaded_file($user_image_temp, "../users_images/$user_image");
@@ -48,7 +49,7 @@ if ($_SESSION['user_role'] == 'admin') {
                 die("QUERY FAILED" . mysqli_error($connection));
             }
             while ($row = mysqli_fetch_assoc($select_img)) {
-                $user_image = $row['user_image'];
+                $user_image = escape($row['user_image']);
             }
 
         }
@@ -61,7 +62,7 @@ if ($_SESSION['user_role'] == 'admin') {
                 die("QUERY FAILED" . mysqli_error($connection));
             }
             while ($row = mysqli_fetch_assoc($select_user_password)) {
-                $user_password = $row['user_password'];
+                $user_password = escape($row['user_password']);
             }
 
         } else {

@@ -79,8 +79,8 @@ $select_sidbar_cat_querys = mysqli_query($connection, $query);
           <?php
 
 while ($row = mysqli_fetch_assoc($select_sidbar_cat_querys)) {
-    $cat_title = $row['cat_title'];
-    $cat_id = $row['cat_id'];
+    $cat_title = escape($row['cat_title']);
+    $cat_id = escape($row['cat_id']);
 
     echo "<li><a href='categories.php?c_id={$cat_id}'>{$cat_title}</a></li>";
 

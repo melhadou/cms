@@ -20,8 +20,8 @@ $query = "SELECT * FROM categories";
 $select_all_cat_querys = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_all_cat_querys)) {
-    $cat_title = $row['cat_title'];
-    $cat_id = $row['cat_id'];
+    $cat_title = escape($row['cat_title']);
+    $cat_id = escape($row['cat_id']);
 
     echo "<li><a href='categories.php?c_id={$cat_id}'>{$cat_title}</a></li>";
 
@@ -44,7 +44,7 @@ if (isset($_SESSION['user_role'])) {
 if (isset($_SESSION['user_role'])) {
     if ($_SESSION['user_role'] == 'admin') {
         if (isset($_GET['p_id'])) {
-            $the_post_id = $_GET['p_id'];
+            $the_post_id = escape($_GET['p_id']);
             echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
         }
     }
