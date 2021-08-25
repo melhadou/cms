@@ -17,7 +17,12 @@
 if (isset($_POST['submit'])) {
     $search = mysqli_real_escape_string($connection, $_POST['search']);
 
-    $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' AND post_status = 'published'";
+    if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+        $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%'";
+    } else {
+        $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' AND post_status = 'published'";
+    }
+
     $search_query = mysqli_query($connection, $query);
 
     // if search query return false ==>
@@ -38,11 +43,7 @@ if (isset($_POST['submit'])) {
             $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
             $post_status = mysqli_real_escape_string($connection, $row['post_status']);
 
-            if ($post_status != 'published') {
-                echo "<h1>Sorry! No Post Yet!!</h1>";
-            } else {
-
-                ?>
+            ?>
       <h1 class="page-header">
         Page Heading
         <small>Secondary Text</small>
@@ -60,22 +61,22 @@ if (isset($_POST['submit'])) {
       <p class="lead">
         <?php
 //selecting post author from db
-                $user_id = $post_author;
+            $user_id = $post_author;
 
-                $query = "SELECT * FROM users WHERE user_id = $post_author";
-                $select_user_query = mysqli_query($connection, $query);
-                while ($row = mysqli_fetch_assoc($select_user_query)) {
+            $query = "SELECT * FROM users WHERE user_id = $post_author";
+            $select_user_query = mysqli_query($connection, $query);
+            while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-                    $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
+                $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
-                }
-                ?>
+            }
+            ?>
         by <a href="author_posts.php?p_author=<?php echo $user_id; ?>"><?php echo $post_author; ?></a>
       </p>
       <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
       <hr>
       <a href="post.php?p_id=<?php echo $post_id;
-                ?>">
+            ?>">
         <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>">
       </a>
       <hr>
@@ -84,7 +85,7 @@ if (isset($_POST['submit'])) {
           class="glyphicon glyphicon-chevron-right"></span></a>
 
 
-      <?php }}}
+      <?php }}
 
 }?>
 
