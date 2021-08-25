@@ -52,10 +52,10 @@ $("#selectAllBoxes").click(function (event) {
 });
 // broken code . not working
 // function onlineUsers() {
-//   $.get("functions.php?usersonline=results", (req) => {
-//     $(".onlineusers").text(`${req}`);
+//   $.get("functions.php?usersonline=results", function (req) {
+//     $(".onlineusers").text(req);
 //   });
 // }
-// setInterval(() => {
+// setInterval(function () {
 //   onlineUsers();
 // }, 500);
