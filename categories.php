@@ -23,7 +23,13 @@ if (isset($_GET['c_id'])) {
     $is_cat_exist = mysqli_num_rows($check_cat_query);
     if ($is_cat_exist != '0') {
 
-        $query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
+        //show posts in category to admin
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+            $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
+        } else {
+            $query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
+        }
+
         $select_all_posts_querys = mysqli_query($connection, $query);
         if (mysqli_num_rows($select_all_posts_querys) < 1) {
             echo "<h1 class='text-center'>No Posts In This Category Yet</h1>";
