@@ -19,7 +19,7 @@ if (isset($_GET['p_id'])) {
     $query = "UPDATE posts SET post_views_count = post_views_count + 1  WHERE post_id = {$p_id}";
     $update_post_views_querys = mysqli_query($connection, $query);
 
-    $query = "SELECT * FROM posts WHERE post_id = {$p_id}";
+    $query = "SELECT * FROM posts WHERE post_id = {$p_id} AND post_status = 'published'";
     $select_post_querys = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_post_querys)) {

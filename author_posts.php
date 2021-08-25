@@ -15,7 +15,7 @@
       <?php
 if (isset($_GET['p_author'])) {
     $p_author = mysqli_real_escape_string($connection, $_GET['p_author']);
-    $query = "SELECT * FROM posts WHERE post_author = '{$p_author}' ORDER BY post_id DESC";
+    $query = "SELECT * FROM posts WHERE post_author = '{$p_author}' AND post_status = 'published' ORDER BY post_id DESC";
 
     $select_all_posts_querys = mysqli_query($connection, $query);
 

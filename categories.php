@@ -19,7 +19,7 @@ if (isset($_GET['c_id'])) {
     $c_id = mysqli_real_escape_string($connection, $_GET['c_id']);
 }
 
-$query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
+$query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
 $select_all_posts_querys = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
