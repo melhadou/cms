@@ -52,8 +52,8 @@ $("#selectAllBoxes").click(function (event) {
 });
 // broken code . not working
 // function onlineUsers() {
-//   $.get("functions.php?usersonline=results", (data) => {
-//$(".onlineusers").text(`${data}`);
+//   $.get("functions.php?usersonline=results", (req) => {
+//     $(".onlineusers").text(`${req}`);
 //   });
 // }
 // setInterval(() => {

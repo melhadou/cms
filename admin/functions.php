@@ -121,7 +121,6 @@ function users_online()
     global $connection;
 
     $session = session_id();
-
     $time = time();
     $time_out_in_seconds = 30;
     $time_out = $time - $time_out_in_seconds;
@@ -137,6 +136,7 @@ function users_online()
 
     }
     $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out'");
+
     $count_users = mysqli_num_rows($users_online_query);
     return $count_users;
 
