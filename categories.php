@@ -25,16 +25,19 @@ if (isset($_GET['c_id'])) {
 
         $query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
         $select_all_posts_querys = mysqli_query($connection, $query);
+        if (mysqli_num_rows($select_all_posts_querys) < 1) {
+            echo "<h1 class='text-center'>No Posts In This Category Yet</h1>";
+        } else {
 
-        while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
-            $post_title = mysqli_real_escape_string($connection, $row['post_title']);
-            $post_id = mysqli_real_escape_string($connection, $row['post_id']);
-            $post_author = mysqli_real_escape_string($connection, $row['post_author']);
-            $post_date = mysqli_real_escape_string($connection, $row['post_date']);
-            $post_image = mysqli_real_escape_string($connection, $row['post_image']);
-            $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
+            while ($row = mysqli_fetch_assoc($select_all_posts_querys)) {
+                $post_title = mysqli_real_escape_string($connection, $row['post_title']);
+                $post_id = mysqli_real_escape_string($connection, $row['post_id']);
+                $post_author = mysqli_real_escape_string($connection, $row['post_author']);
+                $post_date = mysqli_real_escape_string($connection, $row['post_date']);
+                $post_image = mysqli_real_escape_string($connection, $row['post_image']);
+                $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
 
-            ?>
+                ?>
       <h1 class="page-header">
         Page Heading
         <small>Secondary Text</small>
@@ -49,29 +52,31 @@ if (isset($_GET['c_id'])) {
       <p class="lead">
         <?php
 //selecting post author from db
-            $user_id = $post_author;
+                $user_id = $post_author;
 
-            $query = "SELECT * FROM users WHERE user_id = $post_author";
-            $select_user_query = mysqli_query($connection, $query);
-            while ($row = mysqli_fetch_assoc($select_user_query)) {
+                $query = "SELECT * FROM users WHERE user_id = $post_author";
+                $select_user_query = mysqli_query($connection, $query);
+                while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-                $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
+                    $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
-            }
-            ?>
+                }
+                ?>
         by <a href="author_posts.php?p_author=<?php echo $user_id; ?>"><?php echo $post_author; ?></a>
       </p>
       <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
       <hr>
       <a href="post.php?p_id=<?php echo $post_id;
-            ?>">
+                ?>">
         <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>">
       </a>
       <hr>
       <p><?php echo $post_content; ?></p>
       <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span
           class="glyphicon glyphicon-chevron-right"></span></a>
-      <?php }} else {
+      <?php }
+        }
+    } else {
         header("Location: index.php");
     }
 }
