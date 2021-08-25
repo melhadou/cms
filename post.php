@@ -18,19 +18,25 @@ if (isset($_GET['p_id'])) {
 
     $query = "UPDATE posts SET post_views_count = post_views_count + 1  WHERE post_id = {$p_id}";
     $update_post_views_querys = mysqli_query($connection, $query);
-
-    $query = "SELECT * FROM posts WHERE post_id = {$p_id} AND post_status = 'published'";
+    if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+        $query = "SELECT * FROM posts WHERE post_id = {$p_id}";
+    } else {
+        $query = "SELECT * FROM posts WHERE post_id = {$p_id} AND post_status = 'published'";
+    }
     $select_post_querys = mysqli_query($connection, $query);
+    if (mysqli_num_rows($select_post_querys) < 1) {
+        header("Location: index.php");
+    } else {
 
-    while ($row = mysqli_fetch_assoc($select_post_querys)) {
-        $post_title = mysqli_real_escape_string($connection, $row['post_title']);
-        $post_author = mysqli_real_escape_string($connection, $row['post_author']);
-        $post_date = mysqli_real_escape_string($connection, $row['post_date']);
-        $post_image = mysqli_real_escape_string($connection, $row['post_image']);
-        $post_content = mysqli_real_escape_string($connection, $row['post_content']);
-        $post_views_count = mysqli_real_escape_string($connection, $row['post_views_count']);
+        while ($row = mysqli_fetch_assoc($select_post_querys)) {
+            $post_title = mysqli_real_escape_string($connection, $row['post_title']);
+            $post_author = mysqli_real_escape_string($connection, $row['post_author']);
+            $post_date = mysqli_real_escape_string($connection, $row['post_date']);
+            $post_image = mysqli_real_escape_string($connection, $row['post_image']);
+            $post_content = mysqli_real_escape_string($connection, $row['post_content']);
+            $post_views_count = mysqli_real_escape_string($connection, $row['post_views_count']);
 
-        ?>
+            ?>
 
 
       <!-- First Blog Post -->
@@ -44,16 +50,16 @@ if (isset($_GET['p_id'])) {
 
         <?php
 //selecting post author from db
-        $user_id = $post_author;
+            $user_id = $post_author;
 
-        $query = "SELECT * FROM users WHERE user_id = $post_author";
-        $select_user_query = mysqli_query($connection, $query);
-        while ($row = mysqli_fetch_assoc($select_user_query)) {
+            $query = "SELECT * FROM users WHERE user_id = $post_author";
+            $select_user_query = mysqli_query($connection, $query);
+            while ($row = mysqli_fetch_assoc($select_user_query)) {
 
-            $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
+                $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
 
-        }
-        ?>
+            }
+            ?>
         by <a href="author_posts.php?p_author=<?php echo $user_id; ?>"><?php echo $post_author; ?></a>
       </p>
 
@@ -70,17 +76,17 @@ if (isset($_GET['p_id'])) {
 
 
 
-      <?php }} else {
-    header("Location: index.php");
-}?>
+      <?php }
+
+    }
+    ?>
 
       <hr>
       <?php
 $query = "SELECT * FROM posts WHERE post_id = $p_id";
-$check_query = mysqli_query($connection, $query);
-$row = mysqli_fetch_assoc($check_query);
-$post_status = $row['post_status'];
-if ($post_status == 'published') {
+    $check_query = mysqli_query($connection, $query);
+    $row = mysqli_fetch_assoc($check_query);
+    $post_status = $row['post_status'];
 
     ?>
       <!-- Leave a Comment -->
@@ -182,13 +188,10 @@ if ($post_status == 'published') {
           </h4><?php echo $comment_content; ?>
         </div>
       </div>
-      <?php }?>
+      <?php }
+}?>
     </div>
 
-    <?php } else {
-    header("Location: index.php");
-
-}?>
 
 
 
