@@ -35,6 +35,7 @@ if (!isset($_SESSION['user_role'])) {
 
   <!-- Custom CSS -->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 
 
   <!-- Custom Fonts -->
