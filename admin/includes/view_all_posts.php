@@ -156,8 +156,8 @@ echo "<td> $post_id</td>";
         echo "<td> $post_date</td>";
         echo "<td> <a href='../post.php?p_id={$post_id}' target='_blank'>View Post</a></td>";
         echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-        echo "<td><a onClick=\"javascript: return confirm('Are You Sur You Want To Delete');
-          \"href='posts.php?delete={$post_id}'>Delete</a></td>";
+        echo "<td><a href='' class='delete_link' >Delete</a></td>";
+        // echo "<td><a onClick=\"javascript: return confirm('Are You Sur You Want To Delete'); \"href='posts.php?delete={$post_id}'>Delete</a></td>";
         echo "<td class='text-center'>$post_views_count</td>";
         echo "</tr>";
     }
@@ -174,3 +174,10 @@ echo "<td> $post_id</td>";
     echo "You cant See This Page";
 }
 ?>
+<script>
+$(document).ready(function() {
+  $(".delete_link").on("click", () => {
+    alert('it works');
+  })
+});
+</script>
