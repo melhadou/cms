@@ -81,7 +81,13 @@ if ($_SESSION['user_role'] == 'admin') {
 
         $edit_profile_query = mysqli_query($connection, $query);
         confirm($edit_profile_query);
-
+        if ($_SESSION['username'] != $username) {
+            $_SESSION['username'] = mysqli_real_escape_string($connection, $username);
+        }if ($_SESSION['firstname'] != $user_firstname) {
+            $_SESSION['firstname'] = mysqli_real_escape_string($connection, $user_firstname);
+        }if ($_SESSION['lastname'] != $user_lastname) {
+            $_SESSION['lastname'] = mysqli_real_escape_string($connection, $user_lastname);
+        }
     }
 
     ?>
