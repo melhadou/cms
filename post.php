@@ -73,44 +73,52 @@ if (isset($_GET['p_id'])) {
       <?php }} else {
     header("Location: index.php");
 }?>
-      <hr>
 
+      <hr>
+      <?php
+$query = "SELECT * FROM posts WHERE post_id = $p_id";
+$check_query = mysqli_query($connection, $query);
+$row = mysqli_fetch_assoc($check_query);
+$post_status = $row['post_status'];
+if ($post_status == 'published') {
+
+    ?>
       <!-- Leave a Comment -->
       <?php
 
-if (isset($_POST['creat_comment'])) {
+    if (isset($_POST['creat_comment'])) {
 
-    $comment_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
-    $comment_author = mysqli_real_escape_string($connection, $_POST['comment_author']);
-    $comment_email = mysqli_real_escape_string($connection, $_POST['comment_email']);
-    $comment_content = mysqli_real_escape_string($connection, $_POST['comment_content']);
-    $comment_status = mysqli_real_escape_string($connection, 'unapproved');
-    $comment_date;
+        $comment_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
+        $comment_author = mysqli_real_escape_string($connection, $_POST['comment_author']);
+        $comment_email = mysqli_real_escape_string($connection, $_POST['comment_email']);
+        $comment_content = mysqli_real_escape_string($connection, $_POST['comment_content']);
+        $comment_status = mysqli_real_escape_string($connection, 'unapproved');
+        $comment_date;
 
-    if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
-        $query = "INSERT INTO comments(comment_content,comment_post_id,comment_author,comment_email,comment_status,comment_date) ";
+        if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+            $query = "INSERT INTO comments(comment_content,comment_post_id,comment_author,comment_email,comment_status,comment_date) ";
 
-        $query .= "VALUES('{$comment_content}','{$comment_post_id}','{$comment_author}','{$comment_email}','{$comment_status}',now() ) ";
+            $query .= "VALUES('{$comment_content}','{$comment_post_id}','{$comment_author}','{$comment_email}','{$comment_status}',now() ) ";
 
-        $creat_comment_query = mysqli_query($connection, $query);
+            $creat_comment_query = mysqli_query($connection, $query);
 
-        if (!$creat_comment_query) {
-            die('QUERY FAILED' . mysqli_error($connection));
-        }
-        //old comment increamanting logic
-        // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-        // $query .= "WHERE post_id = $comment_post_id";
-        // $update_comment_query = mysqli_query($connection, $query);
+            if (!$creat_comment_query) {
+                die('QUERY FAILED' . mysqli_error($connection));
+            }
+            //old comment increamanting logic
+            // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+            // $query .= "WHERE post_id = $comment_post_id";
+            // $update_comment_query = mysqli_query($connection, $query);
 
-    } else {
+        } else {
 
-        echo "<script>
+            echo "<script>
         function notempthy() {
                       const pp = document.querySelector('.error');
                       pp.innerText = 'This Fields Should not be emthy';}
             </script>";
-    }}
-?>
+        }}
+    ?>
 
 
 
@@ -150,21 +158,21 @@ if (isset($_POST['creat_comment'])) {
 
       <?php
 
-$comment_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
+    $comment_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
 
-$query = "SELECT * FROM comments WHERE comment_post_id = $comment_post_id ";
-$query .= "AND comment_status = 'approved' ";
-$query .= "ORDER BY comment_id DESC";
-$show_comment_query = mysqli_query($connection, $query);
-if (!$show_comment_query) {
-    die('QUERY FAILED' . mysqli_error($connection));
-}
-while ($row = mysqli_fetch_assoc($show_comment_query)) {
-    $comment_content = mysqli_real_escape_string($connection, $row['comment_content']);
-    $comment_author = mysqli_real_escape_string($connection, $row['comment_author']);
-    $comment_date = mysqli_real_escape_string($connection, $row['comment_date']);
+    $query = "SELECT * FROM comments WHERE comment_post_id = $comment_post_id ";
+    $query .= "AND comment_status = 'approved' ";
+    $query .= "ORDER BY comment_id DESC";
+    $show_comment_query = mysqli_query($connection, $query);
+    if (!$show_comment_query) {
+        die('QUERY FAILED' . mysqli_error($connection));
+    }
+    while ($row = mysqli_fetch_assoc($show_comment_query)) {
+        $comment_content = mysqli_real_escape_string($connection, $row['comment_content']);
+        $comment_author = mysqli_real_escape_string($connection, $row['comment_author']);
+        $comment_date = mysqli_real_escape_string($connection, $row['comment_date']);
 
-    ?>
+        ?>
 
       <div class='media'>
         <a class='pull-left'><img class='media-object' src='http://placehold.it/64x64' alt=''></a>
@@ -177,7 +185,10 @@ while ($row = mysqli_fetch_assoc($show_comment_query)) {
       <?php }?>
     </div>
 
+    <?php } else {
+    header("Location: index.php");
 
+}?>
 
 
 
