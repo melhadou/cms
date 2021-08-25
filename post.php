@@ -18,6 +18,7 @@ if (isset($_GET['p_id'])) {
 
     $query = "UPDATE posts SET post_views_count = post_views_count + 1  WHERE post_id = {$p_id}";
     $update_post_views_querys = mysqli_query($connection, $query);
+    //chow post to admin , even if they are draft
     if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
         $query = "SELECT * FROM posts WHERE post_id = {$p_id}";
     } else {
