@@ -1,9 +1,10 @@
 <?php
+
 if ($_SESSION['user_role'] == 'admin') {
 
     ?>
 <?php
-
+include "delete_modal.php";
     if (isset($_POST['checkBoxArray'])) {
         foreach ($_POST['checkBoxArray'] as $checkBoxValue) {
             $bulk_option = escape($_POST['bulk_option']);

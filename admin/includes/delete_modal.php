@@ -16,12 +16,13 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        Modal body..
+        Are You Sur You Want To Delete this Post
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <a href="" class="btn btn-danger delete_modal_link">Delete</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
 
     </div>
