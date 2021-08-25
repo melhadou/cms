@@ -37,23 +37,27 @@ if ($_SESSION['user_role'] == 'admin') {
             $user_role = escape($_POST['user_role']);
             $user_image = escape($_FILES['user_image']['name']);
             $user_image_temp = escape($_FILES['user_image']['tmp_name']);
-
-            //check if there is no password
-            if (empty($user_password)) {
-
-                $query = "SELECT * FROM users WHERE username = '{$the_username}'";
-                $select_user_password = mysqli_query($connection, $query);
-                if (!$select_user_password) {
-                    die("QUERY FAILED" . mysqli_error($connection));
-                }
-                while ($row = mysqli_fetch_assoc($select_user_password)) {
-                    $user_password = escape($row['user_password']);
-                }
-
-            } else {
-                // encrypting password befor sending it to db
-                $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+            ?>
+<script>
+if (password == '') {
+  <?php
+//check if there is no password
+            $query = "SELECT * FROM users WHERE username = '{$the_username}'";
+            $select_user_password = mysqli_query($connection, $query);
+            if (!$select_user_password) {
+                die("QUERY FAILED" . mysqli_error($connection));
             }
+            while ($row = mysqli_fetch_assoc($select_user_password)) {
+                $hashed_password = escape($row['user_password']);
+            }
+            ?>
+} else {
+  <?php
+// encrypting password befor sending it to db
+            $hashed_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+            ?>
+}
+</script><?php
 
             //uploid image to user images folder
             move_uploaded_file($user_image_temp, "../users_images/$user_image");
@@ -114,6 +118,12 @@ if ($_SESSION['user_role'] == 'admin') {
     <input type="password" name="user_password" id="user_password" class="form-control">
 
   </div>
+  <script>
+  $(document).ready(function() {
+    let password = $("#user_password").val();
+  })
+  </script>
+
   <div class="form-group">
     <label for="user_firstname">First Name</label>
     <input type="text" class="form-control" name="user_firstname" id="user_firstname"
