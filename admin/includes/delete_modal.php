@@ -16,7 +16,8 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        Are You Sur You Want To Delete this Post
+        <h3> Are You Sure You Want To Delete this Post</h3>
+
       </div>
 
       <!-- Modal footer -->
