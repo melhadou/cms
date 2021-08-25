@@ -44,10 +44,6 @@ if (isset($_POST['submit'])) {
             $post_status = mysqli_real_escape_string($connection, $row['post_status']);
 
             ?>
-      <h1 class="page-header">
-        Page Heading
-        <small>Secondary Text</small>
-      </h1>
 
 
 

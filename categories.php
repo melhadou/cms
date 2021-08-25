@@ -44,10 +44,7 @@ if (isset($_GET['c_id'])) {
                 $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
 
                 ?>
-      <h1 class="page-header">
-        Page Heading
-        <small>Secondary Text</small>
-      </h1>
+
       <!-- First Blog Post -->
 
 
