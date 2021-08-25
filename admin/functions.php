@@ -136,11 +136,11 @@ function users_online()
 
     }
     $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out'");
-
     $count_users = mysqli_num_rows($users_online_query);
-    echo $count_users;
+    return $count_users;
 
 }
+
 function comment_counter($comment_post_id)
 {
     global $connection;

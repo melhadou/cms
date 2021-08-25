@@ -18,6 +18,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
     <li><a>Users Online: <?php echo users_online(); ?></a></li>
 
+
     <li>
       <a href="../index.php" target="_blank">Website</a>
     </li>
