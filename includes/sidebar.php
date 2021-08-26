@@ -19,12 +19,19 @@
   </div>
 
   <!-- Login Section -->
-  <?php
-if (!isset($_SESSION['username'])) {
 
-    ?>
   <div class="well">
-    <h4>Login</h4>
+
+    <?php
+if (isset($_SESSION['user_role'])) {
+    echo " <h4>Loged In As " . $_SESSION['firstname'] . " " . $_SESSION['lastname'] . "</h4>";
+    ?>
+    <a href="includes/logout.php" class="btn btn-primary">Logout</a>
+
+    <?php
+
+} else {
+    ?><h4>Login</h4>
 
     <form action="includes/login.php" method="POST">
 
@@ -55,11 +62,12 @@ if (!isset($_SESSION['username'])) {
 
     </form>
 
-  </div>
-  <?php
-}
+    <?php
 
+}
 ?>
+  </div>
+
   <!-- end of login section -->
 
 
