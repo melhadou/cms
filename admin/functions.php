@@ -1,11 +1,13 @@
 <?php
 include "../includes/db.php";
 
+/************ escape data befor sedning it to db ******* */
 function escape($string)
 {
     global $connection;
     return mysqli_real_escape_string($connection, trim($string));
 }
+/************ confirm the query  ************ */
 function confirm($result)
 {
     global $connection;
@@ -14,6 +16,7 @@ function confirm($result)
     }
 
 }
+/******** insert category to db ******* */
 function insert_categories()
 {if (isset($_SESSION['user_role'])) {
 
@@ -32,7 +35,7 @@ function insert_categories()
     }
 }
 }
-
+/****  delete category from db ********** */
 function delete_cat()
 {if (isset($_SESSION['user_role'])) {
 
@@ -53,6 +56,7 @@ function delete_cat()
 }
 }
 
+/************ show catgeory from db ********* */
 function FindAllCategories()
 {if (isset($_SESSION['user_role'])) {
     global $connection;
@@ -72,6 +76,7 @@ function FindAllCategories()
     confirm($select_categories);}
 
 }
+/************* delete post from db*********** */
 function delete_post()
 {if (isset($_SESSION['user_role'])) {
     global $connection;
@@ -91,6 +96,7 @@ function delete_post()
 }
 }
 
+/******* show categorys ********* */
 function showCategories()
 {if (isset($_SESSION['user_role'])) {
     global $connection;
@@ -115,6 +121,7 @@ function counter($table_name)
     return $result_count;
 }
 
+/******** check how much users are online ****** */
 function users_online()
 {
 
@@ -140,7 +147,7 @@ function users_online()
     return $count_users;
 
 }
-
+/****** get how much of passed argument exist in db ********** */
 function comment_counter($comment_post_id)
 {
     global $connection;
@@ -159,6 +166,31 @@ function checkStatus($table, $table_column, $table_column_data)
     $check_posts_query = mysqli_query($connection, $qeury);
     $posts_count = escape(mysqli_num_rows($check_posts_query));
     return $posts_count;
+}
+/********* check if password is strong ****** */
+function checkPassword($pwd)
+{
+
+    if (strlen($pwd) < 8) {
+        $errors = error_type("Password too short!");
+    }
+
+    if (!preg_match("#[0-9]+#", $pwd)) {
+        $errors = error_type("Password must include at least one number!");
+    }
+
+    if (!preg_match("#[a-zA-Z]+#", $pwd)) {
+        $errors = error_type("Password must include at least one letter!");
+    }
+
+    return $errors;
+}
+
+/****** check email is valid *********** */
+function isValidEmail($email)
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL)
+    && preg_match('/@.+\./', $email);
 }
 
 /*************** check if user is admin *************** */
@@ -198,5 +230,56 @@ function isEmailExist($email)
         return true;
     } else {
         return false;
+    }
+}
+
+/************* show errot typee in registration page ***************/
+function error_type($msg)
+{
+    return "<script>
+              function notempthy() {
+                            const pp = document.querySelector('#error');
+                            pp.innerText = '$msg';}
+                            function clearFeilds(){
+                          const username =  document.querySelector('#username');
+                          const pp = document.querySelector('#error');
+                           username.addEventListener('keydown',()=>{
+                              pp.innerText = '';
+                            })}
+
+                  </script>";
+}
+
+/*****************register users ***********************/
+function signup($username, $user_password, $user_firstname, $user_lastname, $user_email)
+{
+    global $connection;
+
+    //Escapes special characters in a string for use in an SQL statement
+
+    $username = escape($_POST['username']);
+    $user_email = escape($_POST['email']);
+    $user_password = escape($_POST['password']);
+    $user_firstname = escape($_POST['user_firstname']);
+    $user_lastname = escape($_POST['user_lastname']);
+    //crypt password
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+    if (!isUserExist($username)) {
+        if (!isEmailExist($user_email)) {
+
+            $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
+            $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
+
+            $register_user_query = mysqli_query($connection, $query);
+            if (!$register_user_query) {
+                die("QUERY FAILD" . mysqli_error($connection));
+            }
+            $meassage = "you successfully registered wait for admin approval";
+        } else {
+            echo error_type('This email Exist , try another one');
+        }
+    } else {
+        echo error_type('This username Exist , try another one');
+
     }
 }
