@@ -1,39 +1,39 @@
 <?php
-if ($_SESSION['user_role'] == 'admin') {
+// if ($_SESSION['user_role'] == 'admin') {
 
-    ?>
+?>
 <?php
 
-    if (isset($_POST['creat_post'])) {
+if (isset($_POST['creat_post'])) {
 
-        $post_title = escape($_POST['post_title']);
-        $post_author = escape($_POST['post_author']);
-        $post_category_id = escape($_POST['post_category_id']);
-        $post_status = escape($_POST['post_status']);
+    $post_title = escape($_POST['post_title']);
+    $post_author = escape($_POST['post_author']);
+    $post_category_id = escape($_POST['post_category_id']);
+    $post_status = escape($_POST['post_status']);
 
-        $post_image = escape($_FILES['post_image']['name']);
-        $post_image_temp = escape($_FILES['post_image']['tmp_name']);
+    $post_image = escape($_FILES['post_image']['name']);
+    $post_image_temp = escape($_FILES['post_image']['tmp_name']);
 
-        $post_tags = escape($_POST['post_tags']);
-        $post_content = escape($_POST['post_content']);
-        $post_date = date('d-m-y');
-        $post_comment_count = escape('0');
-        $post_views_count = escape('0');
+    $post_tags = escape($_POST['post_tags']);
+    $post_content = escape($_POST['post_content']);
+    $post_date = date('d-m-y');
+    $post_comment_count = escape('0');
+    $post_views_count = escape('0');
 
-        //uploid image to images folder
+    //uploid image to images folder
 
-        move_uploaded_file($post_image_temp, "../images/$post_image");
+    move_uploaded_file($post_image_temp, "../images/$post_image");
 
-        $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count,post_views_count) ";
-        $query .= "VALUES('{$post_category_id}' , '{$post_title}' , '{$post_author}' , now() , '{$post_image}' , '{$post_content}' ,'{$post_tags}' ,  '{$post_status}' ,'{$post_comment_count}',{$post_views_count})";
+    $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status,post_comment_count,post_views_count) ";
+    $query .= "VALUES('{$post_category_id}' , '{$post_title}' , '{$post_author}' , now() , '{$post_image}' , '{$post_content}' ,'{$post_tags}' ,  '{$post_status}' ,'{$post_comment_count}',{$post_views_count})";
 
-        $creat_post_query = mysqli_query($connection, $query);
-        confirm($creat_post_query);
-        $the_post_id = escape(mysqli_insert_id($connection));
-        echo "<p class='bg-success'>Post Created: View <a href='../post.php?p_id={$the_post_id}'>{$post_title}</a><p>";
-    }
+    $creat_post_query = mysqli_query($connection, $query);
+    confirm($creat_post_query);
+    $the_post_id = escape(mysqli_insert_id($connection));
+    echo "<p class='bg-success'>Post Created: View <a href='../post.php?p_id={$the_post_id}'>{$post_title}</a><p>";
+}
 
-    ?>
+?>
 
 
 
@@ -53,8 +53,8 @@ if ($_SESSION['user_role'] == 'admin') {
     <select name="post_category_id" id="post_category_id" class="form-control">
       <?php
 //show categories
-    showCategories();
-    ?>
+showCategories();
+?>
     </select>
   </div>
   <div class="form-group">
@@ -62,15 +62,15 @@ if ($_SESSION['user_role'] == 'admin') {
     <select name="post_author" id="author" class="form-control">
       <?php
 //show categories
-    $query = "SELECT * FROM users ";
-    $select_user_query = mysqli_query($connection, $query);
-    confirm($select_user_query);
-    while ($row = mysqli_fetch_assoc($select_user_query)) {
-        $username = escape($row['username']);
-        $user_id = escape($row['user_id']);
-        echo "<option value='{$user_id}'>{$username}</option>";
-    }
-    ?>
+$query = "SELECT * FROM users ";
+$select_user_query = mysqli_query($connection, $query);
+confirm($select_user_query);
+while ($row = mysqli_fetch_assoc($select_user_query)) {
+    $username = escape($row['username']);
+    $user_id = escape($row['user_id']);
+    echo "<option value='{$user_id}'>{$username}</option>";
+}
+?>
     </select>
   </div>
   <div class="form-group">
@@ -103,7 +103,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
 </form>
 <?php
-} else {
-    echo "You cant See This Page";
-}
+// } else {
+//     echo "You cant See This Page";
+// }
 ?>

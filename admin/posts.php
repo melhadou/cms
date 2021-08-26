@@ -1,7 +1,7 @@
 <?php
 include "includes/admin_header.php";
-if ($_SESSION['user_role'] == 'admin') {
-    ?>
+// if ($_SESSION['user_role'] == 'admin') {
+?>
 
 
 <div id="wrapper">
@@ -20,40 +20,40 @@ if ($_SESSION['user_role'] == 'admin') {
             Welcome
             <small><?php
 
-    if (empty($_SESSION['username'])) {
-        echo "Author";
-    } else {
-        echo $_SESSION['username'];
-    }
+if (empty($_SESSION['username'])) {
+    echo "Author";
+} else {
+    echo $_SESSION['username'];
+}
 
-    ?></small>
+?></small>
           </h1>
 
           <?php
 
-    if (isset($_GET['source'])) {
+if (isset($_GET['source'])) {
 
-        $source = escape($_GET['source']);
-    } else {
-        $source = '';
-    }
-    switch ($source) {
-        case 'add_post';
-            include "includes/add_post.php";
-            break;
-        case 'edit_post';
-            include "includes/edit_post.php";
-            break;
-        case '200';
-            echo 'nice 200';
-            break;
-        default:
-            include "includes/view_all_posts.php";
-            break;
+    $source = escape($_GET['source']);
+} else {
+    $source = '';
+}
+switch ($source) {
+    case 'add_post';
+        include "includes/add_post.php";
+        break;
+    case 'edit_post';
+        include "includes/edit_post.php";
+        break;
+    case '200';
+        echo 'nice 200';
+        break;
+    default:
+        include "includes/view_all_posts.php";
+        break;
 
-    }
+}
 
-    ?>
+?>
 
 
         </div>
@@ -67,4 +67,5 @@ if ($_SESSION['user_role'] == 'admin') {
   <!-- /#page-wrapper -->
 
   <?php include "includes/admin_footer.php";
-}?>
+// }
+?>

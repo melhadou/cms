@@ -1,7 +1,7 @@
 <?php
 include "includes/admin_header.php";
-if ($_SESSION['user_role'] == 'admin') {
-    ?>
+// if ($_SESSION['user_role'] == 'admin') {
+?>
 
 <div id="wrapper">
 
@@ -19,13 +19,13 @@ if ($_SESSION['user_role'] == 'admin') {
             Welcome
             <small><?php
 
-    if (empty($_SESSION['username'])) {
-        echo "Author";
-    } else {
-        echo $_SESSION['username'];
-    }
+if (empty($_SESSION['username'])) {
+    echo "Author";
+} else {
+    echo $_SESSION['username'];
+}
 
-    ?></small>
+?></small>
           </h1>
           <div class="col-xs-6">
             <?php insert_categories();
@@ -45,11 +45,11 @@ if ($_SESSION['user_role'] == 'admin') {
             <!-- Update Categories -->
             <?php
 if (isset($_GET['edit'])) {
-        $cat_id = escape($_GET['edit']);
-        include "includes/update_categories.php";
-    }
+    $cat_id = escape($_GET['edit']);
+    include "includes/update_categories.php";
+}
 
-    ?>
+?>
           </div>
           <div class="col-xs-6">
 
@@ -63,12 +63,12 @@ if (isset($_GET['edit'])) {
               <tbody>
                 <?php
 // get categories from db
-    FindAllCategories();
-    ?>
+FindAllCategories();
+?>
                 <?php
 // delete categories from db
-    delete_cat();
-    ?>
+delete_cat();
+?>
               </tbody>
             </table>
           </div>
@@ -85,4 +85,6 @@ if (isset($_GET['edit'])) {
   </div>
   <!-- /#page-wrapper -->
 
-  <?php include "includes/admin_footer.php";}?>
+  <?php include "includes/admin_footer.php";
+// }
+?>

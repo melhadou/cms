@@ -1,36 +1,36 @@
 <?php
-if ($_SESSION['user_role'] == 'admin') {
+// if ($_SESSION['user_role'] == 'admin') {
 
-    ?>
+?>
 <?php
 
-    if (isset($_POST['creat_user'])) {
+if (isset($_POST['creat_user'])) {
 
-        $username = escape($_POST['username']);
-        $user_password = escape($_POST['user_password']);
-        $user_firstname = escape($_POST['user_firstname']);
-        $user_lastname = escape($_POST['user_lastname']);
-        $user_email = escape($_POST['user_email']);
-        $user_role = escape($_POST['user_role']);
-        $user_image = escape($_FILES['user_image']['name']);
-        $user_image_temp = escape($_FILES['user_image']['tmp_name']);
+    $username = escape($_POST['username']);
+    $user_password = escape($_POST['user_password']);
+    $user_firstname = escape($_POST['user_firstname']);
+    $user_lastname = escape($_POST['user_lastname']);
+    $user_email = escape($_POST['user_email']);
+    $user_role = escape($_POST['user_role']);
+    $user_image = escape($_FILES['user_image']['name']);
+    $user_image_temp = escape($_FILES['user_image']['tmp_name']);
 
-        // encrypting password befor sending it to db
-        $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+    // encrypting password befor sending it to db
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
 
-        //uploid image to images folder
-        move_uploaded_file($user_image_temp, "../users_images/$user_image");
+    //uploid image to images folder
+    move_uploaded_file($user_image_temp, "../users_images/$user_image");
 
-        $query = "INSERT INTO users(username,user_password,user_firstname,user_lastname,user_email,user_role,user_image) ";
-        $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_firstname}' , '{$user_lastname}' , '{$user_email}' , '{$user_role}' ,'{$user_image}') ";
+    $query = "INSERT INTO users(username,user_password,user_firstname,user_lastname,user_email,user_role,user_image) ";
+    $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_firstname}' , '{$user_lastname}' , '{$user_email}' , '{$user_role}' ,'{$user_image}') ";
 
-        $creat_user_query = mysqli_query($connection, $query);
-        confirm($creat_user_query);
-        echo "User Created: " . " " . "<a href='users.php'>{$username}</a>";
+    $creat_user_query = mysqli_query($connection, $query);
+    confirm($creat_user_query);
+    echo "User Created: " . " " . "<a href='users.php'>{$username}</a>";
 
-    }
+}
 
-    ?>
+?>
 
 
 
@@ -89,7 +89,7 @@ if ($_SESSION['user_role'] == 'admin') {
 
 </form>
 <?php
-} else {
-    echo "You cant See This Page";
-}
+// } else {
+//     echo "You cant See This Page";
+// }
 ?>
