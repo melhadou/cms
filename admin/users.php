@@ -1,7 +1,8 @@
 <?php
 include "includes/admin_header.php";
-// if ($_SESSION['user_role'] == 'admin') {
-?>
+if (isAdmin($_SESSION['username'])) {
+
+    ?>
 
 <div id="wrapper">
 
@@ -19,40 +20,40 @@ include "includes/admin_header.php";
             Welcome
             <small><?php
 
-if (empty($_SESSION['username'])) {
-    echo "Author";
-} else {
-    echo $_SESSION['username'];
-}
+    if (empty($_SESSION['username'])) {
+        echo "Author";
+    } else {
+        echo $_SESSION['username'];
+    }
 
-?></small>
+    ?></small>
           </h1>
 
           <?php
 
-if (isset($_GET['source'])) {
+    if (isset($_GET['source'])) {
 
-    $source = escape($_GET['source']);
-} else {
-    $source = '';
-}
-switch ($source) {
-    case 'add_user';
-        include "includes/add_user.php";
-        break;
-    case 'edit_user';
-        include "includes/edit_user.php";
-        break;
-    case '200';
-        echo 'nice 200';
-        break;
-    default:
-        include "includes/view_all_users.php";
-        break;
+        $source = escape($_GET['source']);
+    } else {
+        $source = '';
+    }
+    switch ($source) {
+        case 'add_user';
+            include "includes/add_user.php";
+            break;
+        case 'edit_user';
+            include "includes/edit_user.php";
+            break;
+        case '200';
+            echo 'nice 200';
+            break;
+        default:
+            include "includes/view_all_users.php";
+            break;
 
-}
+    }
 
-?>
+    ?>
 
 
         </div>
@@ -66,5 +67,7 @@ switch ($source) {
   <!-- /#page-wrapper -->
 
   <?php include "includes/admin_footer.php";
-// }
+} else {
+    header("Location: index.php");
+}
 ?>
