@@ -14,7 +14,6 @@ if (!isset($_SESSION['username'])) {
         $user_firstname = $_POST['user_firstname'];
         $user_lastname = $_POST['user_lastname'];
         if (!empty($username) && !empty($user_password) && !empty($user_firstname) && !empty($user_lastname)) {
-
 //Escapes special characters in a string for use in an SQL statement
 
             $username = mysqli_real_escape_string($connection, $_POST['username']);
@@ -22,31 +21,45 @@ if (!isset($_SESSION['username'])) {
             $user_password = mysqli_real_escape_string($connection, $_POST['password']);
             $user_firstname = mysqli_real_escape_string($connection, $_POST['user_firstname']);
             $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
-
             $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
+            if (!isUserExist($username)) {
 
 //get randsalt from db;
 
-            // $query = "SELECT randSalt FROM users";
-            // $select_randsalt_query = mysqli_query($connection, $query);
-            // if (!$select_randsalt_query) {
-            //     die("QUERY FAILD" . mysqli_error($connection));
-            // }
+                // $query = "SELECT randSalt FROM users";
+                // $select_randsalt_query = mysqli_query($connection, $query);
+                // if (!$select_randsalt_query) {
+                //     die("QUERY FAILD" . mysqli_error($connection));
+                // }
 
-            // $row = mysqli_fetch_array($select_randsalt_query);
-            // $salt = $row['randSalt'];
+                // $row = mysqli_fetch_array($select_randsalt_query);
+                // $salt = $row['randSalt'];
 
-            // // encrypting password befor sending it to db
-            // $user_password = crypt($user_password, $salt);
+                // // encrypting password befor sending it to db
+                // $user_password = crypt($user_password, $salt);
 
-            $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
-            $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
+                $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
+                $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
 
-            $register_user_query = mysqli_query($connection, $query);
-            if (!$register_user_query) {
-                die("QUERY FAILD" . mysqli_error($connection));
+                $register_user_query = mysqli_query($connection, $query);
+                if (!$register_user_query) {
+                    die("QUERY FAILD" . mysqli_error($connection));
+                }
+                $meassage = "you successfully registered wait for admin approval";
+            } else {
+                echo "<script>
+              function notempthy() {
+                            const pp = document.querySelector('#error');
+                            pp.innerText = 'This username Exist , try another one';}
+                            function clearFeilds(){
+                          const username =  document.querySelector('#username');
+                          const pp = document.querySelector('#error');
+                           username.addEventListener('keydown',()=>{
+                              pp.innerText = '';
+                            })}
+
+                  </script>";
             }
-            $meassage = "you successfully registered wait for admin approval";
         } else {
 
             echo "<script>
@@ -85,11 +98,9 @@ if (!isset($_SESSION['username'])) {
             <script>
             notempthy()
             </script>
-
-
             <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
               <div class="form-group">
-                <label for="username" class="sr-only">username</label>
+
                 <input type="text" name="username" id="username" class="form-control"
                   placeholder="Enter Desired Username">
               </div>
@@ -103,11 +114,9 @@ if (!isset($_SESSION['username'])) {
                 <input type="text" class="form-control" name="user_lastname" placeholder="Enter Your Last Name">
               </div>
               <div class="form-group">
-                <label for="email" class="sr-only">Email</label>
                 <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
               </div>
               <div class="form-group">
-                <label for="password" class="sr-only">Password</label>
                 <input type="password" name="password" id="key" class="form-control" placeholder="Password">
               </div>
 
@@ -127,7 +136,4 @@ if (!isset($_SESSION['username'])) {
 } else {
     header("Location: index.php");
 }
-?>
-
-
-  <?php include "includes/footer.php";?>
+include "includes/footer.php";?>

@@ -174,3 +174,16 @@ function isAdmin($username)
         return false;
     }
 }
+
+/********** check if user exist ********/
+function isUserExist($user)
+{
+    global $connection;
+    $query = "SELECT username FROM users WHERE username = '$user'";
+    $result = mysqli_query($connection, $query);
+    if (mysqli_num_rows($result) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
