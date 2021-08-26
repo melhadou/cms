@@ -137,28 +137,19 @@ if ($_SESSION['user_role'] == 'admin') {
       <!-- end admin widget-->
       <?php
 // draft posts counter
-    $qeury = "SELECT * FROM posts WHERE post_status = 'draft'";
-    $draft_posts_query = mysqli_query($connection, $qeury);
-    $draft_posts_count = escape(mysqli_num_rows($draft_posts_query));
+    $draft_posts_count = escape(checkStatus('posts', 'post_status', 'draft'));
 // published posts counter
-    $qeury = "SELECT * FROM posts WHERE post_status = 'published'";
-    $published_posts_query = mysqli_query($connection, $qeury);
-    $published_posts_count = escape(mysqli_num_rows($published_posts_query));
+    $published_posts_count = escape(checkStatus('posts', 'post_status', 'published'));
 
 //unnaproved comments counter
-    $qeury = "SELECT * FROM comments WHERE comment_status = 'unapproved'";
-    $unapproved_comment_query = mysqli_query($connection, $qeury);
-    $unapproved_comment_count = escape(mysqli_num_rows($unapproved_comment_query));
+
+    $unapproved_comment_count = escape(checkStatus('comments', 'comment_status', 'unapproved'));
 
 // upproved comments
-    $query = "SELECT * FROM comments WHERE comment_status = 'approved' ";
-    $approved_comment_query = mysqli_query($connection, $query);
-    $approved_comment_count = escape(mysqli_num_rows($approved_comment_query));
+    $approved_comment_count = escape(checkStatus('comments', 'comment_status', 'approved'));
 
 //subscribers count
-    $qeury = "SELECT * FROM users WHERE user_role = 'subscriber'";
-    $subscriber_users_query = mysqli_query($connection, $qeury);
-    $subscriber_users_count = escape(mysqli_num_rows($subscriber_users_query));
+    $subscriber_users_count = escape(checkStatus('users', 'user_role', 'subscriber'));
     ?>
 
       <div class="row">

@@ -150,3 +150,13 @@ function comment_counter($comment_post_id)
     $comment_count = escape(mysqli_num_rows($comment_counter_query));
     return $comment_count;
 }
+
+//********** CODE FOR INDEX PAGE********* */
+function checkStatus($table, $table_column, $table_column_data)
+{
+    global $connection;
+    $qeury = "SELECT * FROM $table WHERE $table_column = '$table_column_data'";
+    $check_posts_query = mysqli_query($connection, $qeury);
+    $posts_count = escape(mysqli_num_rows($check_posts_query));
+    return $posts_count;
+}
