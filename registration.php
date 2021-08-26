@@ -23,29 +23,44 @@ if (!isset($_SESSION['username'])) {
             $user_lastname = mysqli_real_escape_string($connection, $_POST['user_lastname']);
             $user_password = password_hash($user_password, PASSWORD_BCRYPT, array("cost" => 12));
             if (!isUserExist($username)) {
+                if (!isEmailExist($user_email)) {
 
 //get randsalt from db;
 
-                // $query = "SELECT randSalt FROM users";
-                // $select_randsalt_query = mysqli_query($connection, $query);
-                // if (!$select_randsalt_query) {
-                //     die("QUERY FAILD" . mysqli_error($connection));
-                // }
+                    // $query = "SELECT randSalt FROM users";
+                    // $select_randsalt_query = mysqli_query($connection, $query);
+                    // if (!$select_randsalt_query) {
+                    //     die("QUERY FAILD" . mysqli_error($connection));
+                    // }
 
-                // $row = mysqli_fetch_array($select_randsalt_query);
-                // $salt = $row['randSalt'];
+                    // $row = mysqli_fetch_array($select_randsalt_query);
+                    // $salt = $row['randSalt'];
 
-                // // encrypting password befor sending it to db
-                // $user_password = crypt($user_password, $salt);
+                    // // encrypting password befor sending it to db
+                    // $user_password = crypt($user_password, $salt);
 
-                $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
-                $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
+                    $query = "INSERT INTO users (username,user_password,user_email,user_role,user_firstname,user_lastname,user_image) ";
+                    $query .= "VALUES('{$username}' , '{$user_password}' , '{$user_email}' ,'subscriber', '{$user_firstname}', '{$user_lastname}', 'user_default_image.png') ";
 
-                $register_user_query = mysqli_query($connection, $query);
-                if (!$register_user_query) {
-                    die("QUERY FAILD" . mysqli_error($connection));
+                    $register_user_query = mysqli_query($connection, $query);
+                    if (!$register_user_query) {
+                        die("QUERY FAILD" . mysqli_error($connection));
+                    }
+                    $meassage = "you successfully registered wait for admin approval";
+                } else {
+                    echo "<script>
+                  function notempthy() {
+                                const pp = document.querySelector('#error');
+                                pp.innerText = 'This email Exist , try another one';}
+                                function clearFeilds(){
+                              const username =  document.querySelector('#username');
+                              const pp = document.querySelector('#error');
+                               username.addEventListener('keydown',()=>{
+                                  pp.innerText = '';
+                                })}
+
+                      </script>";
                 }
-                $meassage = "you successfully registered wait for admin approval";
             } else {
                 echo "<script>
               function notempthy() {

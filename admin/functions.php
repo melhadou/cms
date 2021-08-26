@@ -187,3 +187,16 @@ function isUserExist($user)
         return false;
     }
 }
+
+/********** check if email exist ********/
+function isEmailExist($email)
+{
+    global $connection;
+    $query = "SELECT user_email FROM users WHERE user_email = '$email'";
+    $result = mysqli_query($connection, $query);
+    if (mysqli_num_rows($result) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
