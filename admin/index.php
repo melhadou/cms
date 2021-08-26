@@ -1,7 +1,7 @@
 <?php
 include "includes/admin_header.php";
-if ($_SESSION['user_role'] == 'admin') {
-    ?>
+// if ($_SESSION['user_role'] == 'admin') {
+?>
 
 <div id="wrapper">
 
@@ -22,13 +22,13 @@ if ($_SESSION['user_role'] == 'admin') {
             <small>
               <?php
 
-    if (empty($_SESSION['username'])) {
-        echo "Author";
-    } else {
-        echo $_SESSION['username'];
-    }
+if (empty($_SESSION['username'])) {
+    echo "Author";
+} else {
+    echo $_SESSION['username'];
+}
 
-    ?>
+?>
             </small>
 
           </h1>
@@ -137,20 +137,20 @@ if ($_SESSION['user_role'] == 'admin') {
       <!-- end admin widget-->
       <?php
 // draft posts counter
-    $draft_posts_count = escape(checkStatus('posts', 'post_status', 'draft'));
+$draft_posts_count = escape(checkStatus('posts', 'post_status', 'draft'));
 // published posts counter
-    $published_posts_count = escape(checkStatus('posts', 'post_status', 'published'));
+$published_posts_count = escape(checkStatus('posts', 'post_status', 'published'));
 
 //unnaproved comments counter
 
-    $unapproved_comment_count = escape(checkStatus('comments', 'comment_status', 'unapproved'));
+$unapproved_comment_count = escape(checkStatus('comments', 'comment_status', 'unapproved'));
 
 // upproved comments
-    $approved_comment_count = escape(checkStatus('comments', 'comment_status', 'approved'));
+$approved_comment_count = escape(checkStatus('comments', 'comment_status', 'approved'));
 
 //subscribers count
-    $subscriber_users_count = escape(checkStatus('users', 'user_role', 'subscriber'));
-    ?>
+$subscriber_users_count = escape(checkStatus('users', 'user_role', 'subscriber'));
+?>
 
       <div class="row">
 
@@ -167,13 +167,13 @@ if ($_SESSION['user_role'] == 'admin') {
 
             <?php
 
-    $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Approved Comments', 'Pending Comments', 'Categories'];
-    $element_count = [$post_count, $published_posts_count, $draft_posts_count, $comment_count, $approved_comment_count, $unapproved_comment_count, $categories_count];
-    for ($i = 0; $i < 7; $i++) {
-        echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
-    }
+$element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Approved Comments', 'Pending Comments', 'Categories'];
+$element_count = [$post_count, $published_posts_count, $draft_posts_count, $comment_count, $approved_comment_count, $unapproved_comment_count, $categories_count];
+for ($i = 0; $i < 7; $i++) {
+    echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+}
 
-    ?>
+?>
 
 
           ]);
@@ -201,4 +201,6 @@ if ($_SESSION['user_role'] == 'admin') {
   </div>
   <!-- /#page-wrapper -->
 
-  <?php include "includes/admin_footer.php";}?>
+  <?php include "includes/admin_footer.php";
+// }
+?>

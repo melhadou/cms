@@ -151,7 +151,7 @@ function comment_counter($comment_post_id)
     return $comment_count;
 }
 
-//********** CODE FOR INDEX PAGE********* */
+/********** CODE FOR INDEX PAGE********* */
 function checkStatus($table, $table_column, $table_column_data)
 {
     global $connection;
@@ -159,4 +159,18 @@ function checkStatus($table, $table_column, $table_column_data)
     $check_posts_query = mysqli_query($connection, $qeury);
     $posts_count = escape(mysqli_num_rows($check_posts_query));
     return $posts_count;
+}
+
+/*************** check if user is admin *************** */
+function isAdmin($username)
+{
+    global $connection;
+    $query = "SELECT user_role FROM users WHERE username = '$username' ";
+    $result = mysqli_query($connection, $query);
+    $row = mysqli_fetch_array($result);
+    if ($row['user_role'] == 'admin') {
+        return true;
+    } else {
+        return false;
+    }
 }

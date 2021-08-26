@@ -70,6 +70,11 @@ if ($_SESSION['user_role'] == 'admin') {
       <li class="">
         <a href="comments.php"><i class="fa fa-fw fa-comments-o"></i> Comments</a>
       </li>
+      <?php
+
+    if (isAdmin($_SESSION['username'])) {
+
+        ?>
       <li>
         <a href="javascript:;" data-toggle="collapse" data-target="#users_dropdown"><i class="fa fa-fw fa-arrows-v"></i>
           Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -83,6 +88,9 @@ if ($_SESSION['user_role'] == 'admin') {
 
         </ul>
       </li>
+      <?php }
+
+    ?>
       <li class="">
         <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
       </li>
