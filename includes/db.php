@@ -1,4 +1,5 @@
 <?php
+ob_start();
 // developement
 $connection = mysqli_connect('phpcms', 'admin', 'admin', 'cms');
 // online
