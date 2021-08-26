@@ -90,13 +90,7 @@ if ($_SESSION['user_role'] == 'admin') {
   <div class="form-group">
     <label for="post_category_id">Post Category</label>
     <select name="post_category_id" id="post_category_id" class="form-control">
-      <option value="<?php echo $post_category_id ?>"><?php
 
-    $query = "SELECT cat_title FROM categories WHERE cat_id = $post_category_id ";
-    $send_cat_query = mysqli_query($connection, $query);
-    $row = escape(mysqli_fetch_assoc($send_cat_query));
-    echo $cat_title = $row['cat_title'];
-    ?></option>
       <?php
 //show categories
     $query = "SELECT * FROM categories";
@@ -105,10 +99,11 @@ if ($_SESSION['user_role'] == 'admin') {
     while ($row = mysqli_fetch_assoc($select_categories)) {
         $cat_title = escape($row['cat_title']);
         $cat_id = escape($row['cat_id']);
-        if ($post_category_id != $cat_id) {
+        if ($post_category_id == $cat_id) {
+            echo "<option selected value='{$cat_id}'>{$cat_title}</option>";
+        } else {
             echo "<option value='{$cat_id}'>{$cat_title}</option>";
         }
-
     }
     ?>
     </select>
