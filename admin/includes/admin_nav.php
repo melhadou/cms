@@ -1,7 +1,7 @@
 <?php
-// if ($_SESSION['user_role'] == 'admin') {
+if (isset($_SESSION['user_role'])) {
 
-?>
+    ?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
@@ -28,11 +28,11 @@
       <a href="profile.php" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
         <?php
 
-echo $_SESSION['firstname'];
-echo " ";
-echo $_SESSION['lastname'];
+    echo $_SESSION['firstname'];
+    echo " ";
+    echo $_SESSION['lastname'];
 
-?>
+    ?>
         <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li>
@@ -72,9 +72,9 @@ echo $_SESSION['lastname'];
       </li>
       <?php
 
-if (isAdmin($_SESSION['username'])) {
+    if (isAdmin($_SESSION['username'])) {
 
-    ?>
+        ?>
       <li>
         <a href="javascript:;" data-toggle="collapse" data-target="#users_dropdown"><i class="fa fa-fw fa-arrows-v"></i>
           Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -90,7 +90,7 @@ if (isAdmin($_SESSION['username'])) {
       </li>
       <?php }
 
-?>
+    ?>
       <li class="">
         <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
       </li>
@@ -99,7 +99,7 @@ if (isAdmin($_SESSION['username'])) {
   <!-- /.navbar-collapse -->
 </nav>
 <?php
-// } else {
-//     echo "You cant See This Page";
-// }
+} else {
+    header("Location: ../index.php");
+}
 ?>
