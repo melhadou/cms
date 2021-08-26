@@ -55,19 +55,23 @@ if (!isset($_SESSION['username'])) {
               <div class="form-group">
 
                 <input type="text" name="username" id="username" class="form-control"
-                  placeholder="Enter Desired Username">
+                  placeholder="Enter Desired Username" autocomplete="on"
+                  value="<?php echo isset($username) ? $username : ''; ?>">
               </div>
               <script>
               clearFeilds()
               </script>
               <div class="form-group">
-                <input type="text" class="form-control" name="user_firstname" placeholder="Enter Your First Name">
+                <input type="text" class="form-control" name="user_firstname" placeholder="Enter Your First Name"
+                  autocomplete="on" value="<?php echo isset($user_firstname) ? $user_firstname : ''; ?>">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="user_lastname" placeholder="Enter Your Last Name">
+                <input type="text" class="form-control" name="user_lastname" placeholder="Enter Your Last Name"
+                  autocomplete="on" value="<?php echo isset($user_lastname) ? $user_lastname : ''; ?>">
               </div>
               <div class="form-group">
-                <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com"
+                  autocomplete="on" value="<?php echo isset($user_email) ? $user_email : ''; ?>">
               </div>
               <div class="form-group">
                 <input type="password" name="password" id="key" class="form-control" placeholder="Password">
