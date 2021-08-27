@@ -26,9 +26,10 @@ if (isset($_GET['c_id'])) {
         //show posts in category to admin
         if (isAdmin($_SESSION['username'])) {
             // $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
-            $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
+            $stmt1 = mysqli_prepare($connection, "SELECT * FROM posts WHERE post_category_id = ?");
         } else {
-            $query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
+            // $query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
+            $stmt2 = mysqli_prepare($connection, "SELECT post_title, post_id , post_author, post_date, post_image ,post_content FROM posts WHERE post_category_id = ? AND post_status = ?");
         }
 
         $select_all_posts_querys = mysqli_query($connection, $query);
