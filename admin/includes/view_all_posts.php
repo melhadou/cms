@@ -162,7 +162,7 @@ echo "<td> $post_id</td>";
         <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
 
         <?php
-echo "<td><input type='submit' rel='$post_id' class='delete_link btn btn-danger' name='delete' Value='Delete'></td>";
+echo "<td><input type='submit' rel='$post_id' class='btn btn-danger' name='delete' Value='Delete'></td>";
 
         ?>
       </form>
@@ -180,6 +180,8 @@ echo "<td><input type='submit' rel='$post_id' class='delete_link btn btn-danger'
     </tbody>
   </table>
 </form>
+<!--delete modal -->
+<!--
 <script>
 $(document).ready(function() {
   $(".delete_link").on("click", function() {
@@ -189,7 +191,7 @@ $(document).ready(function() {
     $("#myModal").modal("show");
   });
 });
-</script>
+</script> -->
 <?php
 } else {
     header("Location: ../index.php");
