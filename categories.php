@@ -24,7 +24,8 @@ if (isset($_GET['c_id'])) {
     if ($is_cat_exist != '0') {
 
         //show posts in category to admin
-        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+        if (isAdmin($_SESSION['username'])) {
+            // $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
             $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
         } else {
             $query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
