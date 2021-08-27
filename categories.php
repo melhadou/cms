@@ -26,14 +26,30 @@ if (isset($_GET['c_id'])) {
         //show posts in category to admin
         if (isAdmin($_SESSION['username'])) {
             // $query = "SELECT * FROM posts WHERE post_category_id = {$c_id}";
-            $stmt1 = mysqli_prepare($connection, "SELECT * FROM posts WHERE post_category_id = ?");
+            $stmt1 = mysqli_prepare($connection, "SELECT post_title, post_id , post_author, post_date, post_image ,post_content  FROM posts WHERE post_category_id = ?");
         } else {
             // $query = "SELECT * FROM posts WHERE post_category_id = {$c_id} AND post_status = 'published'";
             $stmt2 = mysqli_prepare($connection, "SELECT post_title, post_id , post_author, post_date, post_image ,post_content FROM posts WHERE post_category_id = ? AND post_status = ?");
+            $published = 'published';
         }
 
-        $select_all_posts_querys = mysqli_query($connection, $query);
-        if (mysqli_num_rows($select_all_posts_querys) < 1) {
+        // checking which query we are getting back based on session logedin user
+        if (isset($stmt1)) {
+            mysqli_stmt_bind_param($stmt1, "i", $c_id);
+            mysqli_stmt_execute($stmt1);
+            mysqli_stmt_bind_result($stmt1, $post_title, $post_id, $post_author, $post_date, $post_image, $post_content);
+            // to get know which stmt has been exectude;
+            $stmt = $stmt1;
+
+        } else {
+            mysqli_stmt_bind_param($stmt2, "is", $c_id, $published);
+            mysqli_stmt_execute($stmt2);
+            mysqli_stmt_bind_result($stmt2, $post_title, $post_id, $post_author, $post_date, $post_image, $post_content);
+            // to get know which stmt has been exectude;
+            $stmt = $stmt2;
+        }
+
+        if (mysqli_stmt_num_rows($stmt) < 1) {
             echo "<h1 class='text-center'>No Posts In This Category Yet</h1>";
         } else {
 
