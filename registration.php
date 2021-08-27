@@ -1,6 +1,7 @@
 <?php include "includes/db.php";?>
 <?php include "includes/header.php";?>
 <?php include "includes/nav.php";?>
+<?php include "includes/login.php";?>
 <?php
 if (!isset($_SESSION['username'])) {
 
@@ -23,6 +24,7 @@ if (!isset($_SESSION['username'])) {
                 echo checkPassword($user_password);
             } else {
                 signup($username, $user_password, $user_firstname, $user_lastname, $user_email);
+                loginuser($username, $user_password);
             }
 
         } else {

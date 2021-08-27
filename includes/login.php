@@ -1,14 +1,9 @@
 <?php include "db.php";?>
 <?php session_start();?>
 <?php
-
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $username = mysqli_real_escape_string($connection, $username);
-    $password = mysqli_real_escape_string($connection, $password);
-
+function loginuser($username, $password)
+{
+    global $connection;
     $query = "SELECT * FROM users WHERE username = '{$username}' ";
 
     $select_username_query = mysqli_query($connection, $query);
@@ -23,14 +18,25 @@ if (isset($_POST['login'])) {
         $db_user_lastname = mysqli_real_escape_string($connection, $row['user_lastname']);
         $db_user_email = mysqli_real_escape_string($connection, $row['user_email']);
         $db_user_role = mysqli_real_escape_string($connection, $row['user_role']);
-    }}
+    }
 
-if (password_verify($password, $db_user_password)) {
+    if (password_verify($password, $db_user_password)) {
 
-    $_SESSION['username'] = mysqli_real_escape_string($connection, $db_username);
-    $_SESSION['firstname'] = mysqli_real_escape_string($connection, $db_user_firstname);
-    $_SESSION['lastname'] = mysqli_real_escape_string($connection, $db_user_lastname);
-    $_SESSION['user_role'] = mysqli_real_escape_string($connection, $db_user_role);
+        $_SESSION['username'] = mysqli_real_escape_string($connection, $db_username);
+        $_SESSION['firstname'] = mysqli_real_escape_string($connection, $db_user_firstname);
+        $_SESSION['lastname'] = mysqli_real_escape_string($connection, $db_user_lastname);
+        $_SESSION['user_role'] = mysqli_real_escape_string($connection, $db_user_role);
 
-    header("Location: ../admin");
-} else {header("Location: ../index.php");}
+        header("Location: ../admin");
+    } else {header("Location: ../index.php");
+    }
+}
+
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $username = mysqli_real_escape_string($connection, trim($username));
+    $password = mysqli_real_escape_string($connection, trim($password));
+    loginuser($username, $password);
+}
