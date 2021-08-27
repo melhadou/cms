@@ -80,9 +80,9 @@ function FindAllCategories()
 function delete_post()
 {if (isset($_SESSION['user_role'])) {
     global $connection;
-    if (isset($_GET['delete'])) {
+    if (isset($_POST['delete'])) {
 
-        $the_post_id = escape($_GET['delete']);
+        $the_post_id = escape($_POST['post_id']);
 
         $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
 

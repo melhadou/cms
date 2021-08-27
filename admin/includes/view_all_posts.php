@@ -155,13 +155,26 @@ echo "<td> $post_id</td>";
         echo "<td> $post_date</td>";
         echo "<td> <a href='../post.php?p_id={$post_id}' target='_blank'>View Post</a></td>";
         echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-        echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link' >Delete</a></td>";
+
+        ?>
+
+      <form method="POST">
+        <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+
+        <?php
+echo "<td><input type='submit' rel='$post_id' class='delete_link btn btn-danger' name='delete' Value='Delete'></td>";
+
+        ?>
+      </form>
+
+      <?php
+
         echo "<td class='text-center'>$post_views_count</td>";
         echo "</tr>";
     }
     ?>
       <?php
-// delete categories from db
+// delete post from db
     delete_post();
     ?>
     </tbody>
