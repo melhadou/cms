@@ -22,15 +22,15 @@ function insert_categories()
 
     global $connection;
     if (isset($_POST['submit'])) {
-        $cat_title = escape($_POST[('cat_title')]);
+        $cat_title = $_POST[('cat_title')];
 
         if ($cat_title == "" || empty($cat_title)) {
             echo "You need to Type Somthing";
         } else {
-            $query = "INSERT INTO categories(cat_title) VALUE('{$cat_title}') ";
-
-            $creat_cat_query = mysqli_query($connection, $query);
-            confirm($creat_cat_query);
+            $stmt = mysqli_prepare($connection, "INSERT INTO categories(cat_title) VALUE(?)");
+            mysqli_stmt_bind_param($stmt, 's', $cat_title);
+            mysqli_stmt_execute($stmt);
+            confirm($stmt);
         }
     }
 }
