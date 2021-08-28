@@ -50,9 +50,11 @@ function delete_cat()
     if (isset($_GET['delete'])) {
 
         $the_cat_id = escape($_GET['delete']);
+
         $stmt = mysqli_prepare($connection, "DELETE FROM categories WHERE cat_id = ?");
         mysqli_stmt_bind_param($stmt, 'i', $the_cat_id);
         mysqli_stmt_execute($stmt);
+
         mysqli_stmt_close($stmt);
 
         // refraiche the page , to show data after deleting categories
@@ -66,7 +68,8 @@ function delete_cat()
 function FindAllCategories()
 {if (isset($_SESSION['user_role'])) {
     global $connection;
-    $query = "SELECT * FROM categories";
+
+    $query = "SELECT cat_title,cat_id FROM categories";
     $select_categories = mysqli_query($connection, $query);
     while ($row = mysqli_fetch_assoc($select_categories)) {
         $cat_title = escape($row['cat_title']);
@@ -90,14 +93,13 @@ function delete_post()
 
         $the_post_id = escape($_POST['post_id']);
 
-        $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
-
-        $delete_query = mysqli_query($connection, $query);
+        $stmt = mysqli_prepare($connection, "DELETE FROM posts WHERE post_id = ?");
+        mysqli_stmt_bind_param($stmt, 'i', $the_post_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
 
         // refraiche the page , to show data after deleting a post
-        header("Location: posts.php");
-
-        confirm($delete_query);
+        redirect("posts.php");
     }
 }
 }
