@@ -18,9 +18,13 @@
 if (isset($_GET['c_id'])) {
     $c_id = mysqli_real_escape_string($connection, $_GET['c_id']);
 
-    $query = "SELECT * FROM categories WHERE cat_id = $c_id";
-    $check_cat_query = mysqli_query($connection, $query);
-    $is_cat_exist = mysqli_num_rows($check_cat_query);
+    $stmt = mysqli_prepare($connection, "SELECT * FROM categories WHERE cat_id = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $c_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
+
+    $is_cat_exist = mysqli_stmt_num_rows($stmt);
+
     if ($is_cat_exist != '0') {
 
         //show posts in category to admin
@@ -71,13 +75,16 @@ if (isset($_GET['c_id'])) {
 //selecting post author from db
         $user_id = $post_author;
 
-        $query = "SELECT * FROM users WHERE user_id = $post_author";
-        $select_user_query = mysqli_query($connection, $query);
-        while ($row = mysqli_fetch_assoc($select_user_query)) {
+        $stmt = mysqli_prepare($connection, "SELECT user_firstname,user_lastname FROM users WHERE user_id = ?");
+        mysqli_stmt_bind_param($stmt, 'i', $post_author);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $user_firstname, $user_lastname);
+        mysqli_stmt_store_result($stmt);
+        while (mysqli_stmt_fetch($stmt)):
 
-            $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
+            $post_author = $user_firstname . " " . $user_lastname;
 
-        }
+        endwhile;
         ?>
         by <a href="author_posts.php?p_author=<?php echo $user_id; ?>"><?php echo $post_author; ?></a>
       </p>
@@ -93,6 +100,7 @@ if (isset($_GET['c_id'])) {
           class="glyphicon glyphicon-chevron-right"></span></a>
       <?php
 endwhile;
+        mysqli_stmt_close($stmt);
     } else {
         header("Location: index.php");
     }

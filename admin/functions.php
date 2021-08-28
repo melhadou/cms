@@ -36,7 +36,8 @@ function insert_categories()
             $stmt = mysqli_prepare($connection, "INSERT INTO categories(cat_title) VALUE(?)");
             mysqli_stmt_bind_param($stmt, 's', $cat_title);
             mysqli_stmt_execute($stmt);
-            confirm($stmt);
+            mysqli_stmt_close($stmt);
+
         }
     }
 }
@@ -49,15 +50,14 @@ function delete_cat()
     if (isset($_GET['delete'])) {
 
         $the_cat_id = escape($_GET['delete']);
-
-        $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id}";
-
-        $delete_query = mysqli_query($connection, $query);
+        $stmt = mysqli_prepare($connection, "DELETE FROM categories WHERE cat_id = ?");
+        mysqli_stmt_bind_param($stmt, 'i', $the_cat_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
 
         // refraiche the page , to show data after deleting categories
-        header("Location: categories.php");
+        redirect("categories.php");
 
-        confirm($delete_query);
     }
 }
 }

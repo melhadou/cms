@@ -34,6 +34,8 @@ if (isset($_POST['update'])) {
         mysqli_stmt_bind_param($stmt, 'si', $the_cat_title, $cat_id);
         mysqli_stmt_execute($stmt);
         redirect('categories.php');
+        //closing stmt
+        mysqli_stmt_close($stmt);
     }
 
     ?>
