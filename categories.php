@@ -75,12 +75,12 @@ if (isset($_GET['c_id'])) {
 //selecting post author from db
         $user_id = $post_author;
 
-        $stmt = mysqli_prepare($connection, "SELECT user_firstname,user_lastname FROM users WHERE user_id = ?");
-        mysqli_stmt_bind_param($stmt, 'i', $post_author);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $user_firstname, $user_lastname);
-        mysqli_stmt_store_result($stmt);
-        while (mysqli_stmt_fetch($stmt)):
+        $stmt3 = mysqli_prepare($connection, "SELECT user_firstname,user_lastname FROM users WHERE user_id = ?");
+        mysqli_stmt_bind_param($stmt3, 'i', $post_author);
+        mysqli_stmt_execute($stmt3);
+        mysqli_stmt_bind_result($stmt3, $user_firstname, $user_lastname);
+        mysqli_stmt_store_result($stmt3);
+        while (mysqli_stmt_fetch($stmt3)):
 
             $post_author = $user_firstname . " " . $user_lastname;
 
@@ -100,7 +100,7 @@ if (isset($_GET['c_id'])) {
           class="glyphicon glyphicon-chevron-right"></span></a>
       <?php
 endwhile;
-        mysqli_stmt_close($stmt);
+
     } else {
         header("Location: index.php");
     }
@@ -120,4 +120,7 @@ endwhile;
 
   <hr>
 
-  <?php include "includes/footer.php";?>
+  <?php include "includes/footer.php";
+//closing stmt
+mysqli_stmt_close($stmt);
+?>
