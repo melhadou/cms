@@ -12,7 +12,7 @@ function confirm($result)
 {
     global $connection;
     if (!$result) {
-        return die("QUERY FAILED" . mysqli_error($connection));
+        die("QUERY FAILED" . mysqli_error($connection));
     }
 
 }
@@ -108,7 +108,7 @@ function delete_post()
 function showCategories()
 {if (isset($_SESSION['user_role'])) {
     global $connection;
-    $query = "SELECT * FROM categories ";
+    $query = "SELECT cat_title,cat_id FROM categories ";
     $select_categories = mysqli_query($connection, $query);
     confirm($select_categories);
     while ($row = mysqli_fetch_assoc($select_categories)) {
@@ -127,6 +127,7 @@ function counter($table_name)
     $send_query = mysqli_query($connection, $query);
     $result_count = mysqli_num_rows($send_query);
     return $result_count;
+
 }
 
 /******** check how much users are online ****** */
