@@ -48,7 +48,13 @@ if (isset($_SESSION['user_role'])) {
         <span class="input-group-btn">
           <button class="btn btn-primary" name="login" type="submit">Login</button>
         </span>
+
       </div>
+      <div class="input-group">
+        <br>
+        <a href="forgot.php?forgot=<?php echo uniqid(true); ?>">Forgot Password</a>
+      </div>
+
       <br>
       <?php
 
