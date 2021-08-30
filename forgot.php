@@ -6,6 +6,11 @@
 if (!ifItIsMethod('get') || !$_GET['forgot']) {
     redirect('index.php');
 }
+if (isset($_POST['submit'])) {
+    $email = $_POST['email'];
+    $length = 50;
+    $token = bin2hex(openssl_random_pseudo_bytes($length));
+}
 ?>
 
 
@@ -59,4 +64,5 @@ if (!ifItIsMethod('get') || !$_GET['forgot']) {
 
   <?php include "includes/footer.php";?>
 
+</div> <!-- /.container -->
 </div> <!-- /.container -->
