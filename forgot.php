@@ -14,6 +14,12 @@ if (isset($_POST['recover-submit'])) {
 
     if (isEmailExist($email)) {
 
+        $query = "UPDATE users SET token = ? WHERE user_email = ?";
+        $stmt = mysqli_prepare($connection, $query);
+        mysqli_stmt_bind_param($stmt, 'ss', $token, $email);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo error_type('Enter A valid email');
     } else {
