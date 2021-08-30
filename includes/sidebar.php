@@ -33,7 +33,7 @@ if (isset($_SESSION['user_role'])) {
 } else {
     ?><h4>Login</h4>
 
-    <form action="includes/login.php" method="POST">
+    <form action="login.php" method="POST">
 
       <div class="input-group">
         <label for="username">Username</label>

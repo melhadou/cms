@@ -42,16 +42,14 @@ if (isLogedIn($_SESSION['user_role'])) {
 
 ?>
         <?php
-
-if (isset($_SESSION['user_role'])) {
-    if ($_SESSION['user_role'] == 'admin') {
+if (isLogedIn($_SESSION['user_role'])) {
+    if (isAdmin($_SESSION['username'])) {
         if (isset($_GET['p_id'])) {
             $the_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
             echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
         }
     }
 }
-
 ?>
 
       </ul>
