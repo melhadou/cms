@@ -293,4 +293,11 @@ function signup($username, $user_password, $user_firstname, $user_lastname, $use
     }
 }
 
-/**************** login users ************** */
+/**************** check for logedin users **************/
+function isLogedIn($session)
+{
+    if (isset($session)) {
+        return true;
+    }
+    return false;
+}

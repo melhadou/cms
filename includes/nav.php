@@ -33,12 +33,10 @@ while ($row = mysqli_fetch_assoc($select_all_cat_querys)) {
 
 ?>
         <?php
-
-if (isset($_SESSION['user_role'])) {
-    if ($_SESSION['user_role'] == 'admin') {
-
+/* check if user is loged in > then check if he is the admin */
+if (isLogedIn($_SESSION['user_role'])) {
+    if (isAdmin($_SESSION['username'])) {
         echo "<li><a href='admin/'>Admin</a></li>";
-
     }
 }
 
@@ -55,9 +53,6 @@ if (isset($_SESSION['user_role'])) {
 }
 
 ?>
-
-
-
 
       </ul>
       <?php if (isset($_SESSION['user_role'])) {?>
