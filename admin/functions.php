@@ -301,3 +301,11 @@ function isLogedIn($session)
     }
     return false;
 }
+/****************** check if parm is a method *********************/
+function isMehtod($method = null)
+{
+    if ($_SERVER['REQUEST_METHOD'] == strtoupper($method)) {
+        return true;
+    }
+    return false;
+}
