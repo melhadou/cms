@@ -2,35 +2,36 @@
 <?php include "includes/header.php";?>
 <?php include "includes/nav.php";?>
 <?php
-if (!isset($_SESSION['username'])) {
 
-    ?>
+?>
 <?php
+if (isLogedIn($_SESSION['username'])) {
+    redirect('index.php');
+}
+if (isset($_POST['submit'])) {
+    $username = trim($_POST['username']);
+    $user_email = trim($_POST['email']);
+    $user_password = trim($_POST['password']);
+    $user_firstname = trim($_POST['user_firstname']);
+    $user_lastname = trim($_POST['user_lastname']);
 
-    if (isset($_POST['submit'])) {
-        $username = trim($_POST['username']);
-        $user_email = trim($_POST['email']);
-        $user_password = trim($_POST['password']);
-        $user_firstname = trim($_POST['user_firstname']);
-        $user_lastname = trim($_POST['user_lastname']);
-
-        if (!empty($username) && !empty($user_password) && !empty($user_firstname) && !empty($user_lastname)) {
-            if (strlen($username) < 4) {
-                echo error_type('username must be longer then 4 charcters');
-            }if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
-                echo error_type('Enter A valid email');
-            }if (checkPassword($user_password)) {
-                echo checkPassword($user_password);
-            } else {
-                signup($username, $user_password, $user_firstname, $user_lastname, $user_email);
-                login_user($username, $user_password);
-            }
-
+    if (!empty($username) && !empty($user_password) && !empty($user_firstname) && !empty($user_lastname)) {
+        if (strlen($username) < 4) {
+            echo error_type('username must be longer then 4 charcters');
+        }if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+            echo error_type('Enter A valid email');
+        }if (checkPassword($user_password)) {
+            echo checkPassword($user_password);
         } else {
-            echo error_type('This Fields Should not be emthy');
+            signup($username, $user_password, $user_firstname, $user_lastname, $user_email);
+            login_user($username, $user_password);
         }
+
+    } else {
+        echo error_type('This Fields Should not be emthy');
     }
-    ?>
+}
+?>
 <!-- Navigation -->
 
 
@@ -91,7 +92,5 @@ if (!isset($_SESSION['username'])) {
 
   <hr>
   <?php
-} else {
-    header("Location: index.php");
-}
+
 include "includes/footer.php";?>
