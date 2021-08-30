@@ -3,13 +3,23 @@
 <?php include "includes/nav.php";?>
 <?php
 
-if (!ifItIsMethod('get') || !$_GET['forgot']) {
+if (ifItIsMethod('get') && !$_GET['forgot']) {
     redirect('index.php');
 }
-if (isset($_POST['submit'])) {
+if (isset($_POST['recover-submit'])) {
+
     $email = $_POST['email'];
     $length = 50;
     $token = bin2hex(openssl_random_pseudo_bytes($length));
+
+    if (isEmailExist($email)) {
+
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo error_type('Enter A valid email');
+    } else {
+        echo error_type('Email Not Found');
+    }
+
 }
 ?>
 
@@ -25,7 +35,6 @@ if (isset($_POST['submit'])) {
           <div class="panel-body">
             <div class="text-center">
 
-
               <h3><i class="fa fa-lock fa-4x"></i></h3>
               <h2 class="text-center">Forgot Password?</h2>
               <p>You can reset your password here.</p>
@@ -33,6 +42,10 @@ if (isset($_POST['submit'])) {
 
 
 
+                <p id="error" class="text-center" style="color:red"></p>
+                <script>
+                notempthy()
+                </script>
 
                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
 

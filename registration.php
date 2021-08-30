@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
         <div class="col-xs-6 col-xs-offset-3">
           <div class="form-wrap">
             <h1>Register</h1>
-            <p id="error" class="text-center" style="color:red">
+            <p id="error" class="text-center" style="color:red"></p>
             <p class="text-center" style="color:green">
               <?php echo $meassage; ?>
             </p>
