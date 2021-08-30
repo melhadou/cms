@@ -40,6 +40,11 @@ if (isLogedIn($_SESSION['user_role'])) {
     }
 }
 
+/****** check if user isnt loged in ==> show login link ********* */
+if (!isLogedIn($_SESSION['user_role'])) {
+    echo "<li><a href='login.php'>Login</a></li>";
+}
+
 ?>
         <?php
 if (isLogedIn($_SESSION['user_role'])) {
