@@ -25,6 +25,8 @@ if (isset($_POST['recover-submit'])) {
     } else {
         echo error_type('Email Not Found');
     }
+    echo "<script>
+    function check_email() { const valid = document.querySelector('#valid_email'); valid.innerText = 'Check the confirmation email at " . $email . "';}</script>";
 
 }
 ?>
@@ -49,6 +51,10 @@ if (isset($_POST['recover-submit'])) {
 
 
                 <p id="error" class="text-center" style="color:red"></p>
+                <h3 id="valid_email" class="text-center"></h3>
+                <script>
+                check_email()
+                </script>
                 <script>
                 notempthy()
                 </script>
@@ -65,7 +71,6 @@ if (isset($_POST['recover-submit'])) {
                     <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset Password"
                       type="submit">
                   </div>
-
                   <input type="hidden" class="hide" name="token" id="token" value="">
                 </form>
 
