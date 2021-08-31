@@ -1,8 +1,19 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+
+require './vendor/autoload.php';
+require './vendor/phpmailer/phpmailer/src/Exception.php';
+require './vendor/phpmailer/phpmailer/src/PHPMailer.php';
+//Load Composer's autoloader
+
 ?>
 <?php include "includes/db.php";?>
 <?php include "includes/header.php";?>
 <?php include "includes/nav.php";?>
+<?php include "./classes/config.php";?>
+
+
+
 
 <?php
 
@@ -24,13 +35,63 @@ if (isset($_POST['recover-submit'])) {
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
 
+        // $phpmailer = new PHPMailer();
+        // $phpmailer->isSMTP();
+        // $phpmailer->Host = Config::SMTP_Host;
+        // $phpmailer->SMTPAuth = Config::SMTP_Auth;
+        // $phpmailer->Port = Config::SMTP_Host;
+        // $phpmailer->Username = Config::SMTP_Username;
+        // $phpmailer->Password = Config::SMTP_Password;
+        // $phpmailer = new PHPMailer(true);
+        // $phpmailer->isSMTP();
+        // $phpmailer->Host = 'smtp.mailtrap.io';
+        // $phpmailer->SMTPAuth = true;
+        // $phpmailer->Port = 2525;
+        // $phpmailer->Username = '42cf57afbed7a0';
+        // $phpmailer->Password = 'd237dd1572f37a';
+
+        // $phpmailer->setFrom('mohamed@gmail.com', 'mohamed');
+        // $phpmailer->addAddress($email);
+        // $phpmailer->Subject = 'test email';
+        // $phpmailer->Body = 'you got this man';
+
+//Create an instance; passing `true` enables exceptions
+        $mail = new PHPMailer(true);
+
+        //Server settings
+
+        $mail->isSMTP(); //Send using SMTP
+        $mail->Host = 'smtp.mailtrap.io'; //Set the SMTP server to send through
+        $mail->SMTPAuth = true; //Enable SMTP authentication
+        $mail->Username = '42cf57afbed7a0'; //SMTP username
+        $mail->Password = 'd237dd1572f37a'; //SMTP password
+        // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
+        $mail->Port = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+        //Recipients
+        $mail->setFrom('admin@cms.com', 'Mohamed Elhadouchi');
+        $mail->addAddress($email); //Add a recipient
+
+        //Content
+        $mail->isHTML(true); //Set email format to HTML
+        $mail->Subject = 'Here is the subject';
+        $mail->Body = 'This is the HTML message body <b>in bold!</b>';
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        if ($mail->send()) {
+            echo "<script>
+          function check_email() { const valid = document.querySelector('#valid_email'); valid.innerText = 'Check the confirmation email at " . $email . "';}</script>";
+
+        } else {
+            echo "<script>
+          function check_email() { const valid = document.querySelector('#valid_email'); valid.innerText = 'Error';}</script>";
+
+        }
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo error_type('Enter A valid email');
     } else {
         echo error_type('Email Not Found');
     }
-    echo "<script>
-    function check_email() { const valid = document.querySelector('#valid_email'); valid.innerText = 'Check the confirmation email at " . $email . "';}</script>";
 
 }
 ?>
