@@ -51,10 +51,7 @@ if (isset($_POST['recover-submit'])) {
 
 
                 <p id="error" class="text-center" style="color:red"></p>
-                <h3 id="valid_email" class="text-center"></h3>
-                <script>
-                check_email()
-                </script>
+
                 <script>
                 notempthy()
                 </script>
@@ -71,6 +68,10 @@ if (isset($_POST['recover-submit'])) {
                     <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset Password"
                       type="submit">
                   </div>
+                  <h3 id="valid_email" class="text-center"></h3>
+                  <script>
+                  check_email()
+                  </script>
                   <input type="hidden" class="hide" name="token" id="token" value="">
                 </form>
 
