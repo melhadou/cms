@@ -10,7 +10,7 @@ require './vendor/phpmailer/phpmailer/src/PHPMailer.php';
 <?php include "includes/db.php";?>
 <?php include "includes/header.php";?>
 <?php include "includes/nav.php";?>
-<?php include "./classes/config.php";?>
+
 
 
 
@@ -35,26 +35,6 @@ if (isset($_POST['recover-submit'])) {
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
 
-        // $phpmailer = new PHPMailer();
-        // $phpmailer->isSMTP();
-        // $phpmailer->Host = Config::SMTP_Host;
-        // $phpmailer->SMTPAuth = Config::SMTP_Auth;
-        // $phpmailer->Port = Config::SMTP_Host;
-        // $phpmailer->Username = Config::SMTP_Username;
-        // $phpmailer->Password = Config::SMTP_Password;
-        // $phpmailer = new PHPMailer(true);
-        // $phpmailer->isSMTP();
-        // $phpmailer->Host = 'smtp.mailtrap.io';
-        // $phpmailer->SMTPAuth = true;
-        // $phpmailer->Port = 2525;
-        // $phpmailer->Username = '42cf57afbed7a0';
-        // $phpmailer->Password = 'd237dd1572f37a';
-
-        // $phpmailer->setFrom('mohamed@gmail.com', 'mohamed');
-        // $phpmailer->addAddress($email);
-        // $phpmailer->Subject = 'test email';
-        // $phpmailer->Body = 'you got this man';
-
 //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
 
@@ -65,8 +45,7 @@ if (isset($_POST['recover-submit'])) {
         $mail->SMTPAuth = true; //Enable SMTP authentication
         $mail->Username = '42cf57afbed7a0'; //SMTP username
         $mail->Password = 'd237dd1572f37a'; //SMTP password
-        // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
-        $mail->Port = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->Port = 2525; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
         $mail->setFrom('admin@cms.com', 'Mohamed Elhadouchi');
