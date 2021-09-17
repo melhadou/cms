@@ -5,7 +5,7 @@ include "includes/db.php";?>
 
 <?php
 
-isAdminLoggedIn('/cms/admin');
+isAdminLoggedIn('cms/admin');
 
 if (ifItIsMethod('post')) {
 
@@ -13,8 +13,8 @@ if (ifItIsMethod('post')) {
 
         login_user($_POST['username'], $_POST['password']);
 
-    } else {
 
+    } else {
         redirect('login.php');
     }
 

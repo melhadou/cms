@@ -1,5 +1,5 @@
 <?php
-include "../includes/db.php";
+
 
 /************ escape data befor sedning it to db ******* */
 function escape($string)
@@ -19,7 +19,7 @@ function confirm($result)
 /*********** redirecting to specfique url *********** */
 function redirect($url)
 {
-    global $connection;
+global $connection;
     header("Location: $url");
 }
 /******** insert category to db ******* */
