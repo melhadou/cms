@@ -14,109 +14,110 @@ function confirm($result)
     if (!$result) {
         die("QUERY FAILED" . mysqli_error($connection));
     }
-
 }
 /*********** redirecting to specfique url *********** */
 function redirect($url)
 {
-global $connection;
+    global $connection;
     header("Location: $url");
 }
 /******** insert category to db ******* */
 function insert_categories()
-{if (isset($_SESSION['user_role'])) {
+{
+    if (isset($_SESSION['user_role'])) {
 
-    global $connection;
-    if (isset($_POST['submit'])) {
-        $cat_title = $_POST[('cat_title')];
+        global $connection;
+        if (isset($_POST['submit'])) {
+            $cat_title = $_POST[('cat_title')];
 
-        if ($cat_title == "" || empty($cat_title)) {
-            echo "You need to Type Somthing";
-        } else {
-            $stmt = mysqli_prepare($connection, "INSERT INTO categories(cat_title) VALUE(?)");
-            mysqli_stmt_bind_param($stmt, 's', $cat_title);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-
+            if ($cat_title == "" || empty($cat_title)) {
+                echo "You need to Type Somthing";
+            } else {
+                $stmt = mysqli_prepare($connection, "INSERT INTO categories(cat_title) VALUE(?)");
+                mysqli_stmt_bind_param($stmt, 's', $cat_title);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+            }
         }
     }
 }
-}
 /****  delete category from db ********** */
 function delete_cat()
-{if (isset($_SESSION['user_role'])) {
+{
+    if (isset($_SESSION['user_role'])) {
 
-    global $connection;
-    if (isset($_GET['delete'])) {
+        global $connection;
+        if (isset($_GET['delete'])) {
 
-        $the_cat_id = escape($_GET['delete']);
+            $the_cat_id = escape($_GET['delete']);
 
-        $stmt = mysqli_prepare($connection, "DELETE FROM categories WHERE cat_id = ?");
-        mysqli_stmt_bind_param($stmt, 'i', $the_cat_id);
-        mysqli_stmt_execute($stmt);
+            $stmt = mysqli_prepare($connection, "DELETE FROM categories WHERE cat_id = ?");
+            mysqli_stmt_bind_param($stmt, 'i', $the_cat_id);
+            mysqli_stmt_execute($stmt);
 
-        mysqli_stmt_close($stmt);
+            mysqli_stmt_close($stmt);
 
-        // refraiche the page , to show data after deleting categories
-        redirect("categories.php");
-
+            // refraiche the page , to show data after deleting categories
+            redirect("categories.php");
+        }
     }
-}
 }
 
 /************ show catgeory from db ********* */
 function FindAllCategories()
-{if (isset($_SESSION['user_role'])) {
-    global $connection;
+{
+    if (isset($_SESSION['user_role'])) {
+        global $connection;
 
-    $query = "SELECT cat_title,cat_id FROM categories";
-    $select_categories = mysqli_query($connection, $query);
-    while ($row = mysqli_fetch_assoc($select_categories)) {
-        $cat_title = escape($row['cat_title']);
-        $cat_id = escape($row['cat_id']);
-        echo "<tr>";
-        echo "<td>{$cat_id}</td>";
-        echo "<td>{$cat_title}</td>";
-        echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
-        echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
-        echo "</tr>";
-
+        $query = "SELECT cat_title,cat_id FROM categories";
+        $select_categories = mysqli_query($connection, $query);
+        while ($row = mysqli_fetch_assoc($select_categories)) {
+            $cat_title = escape($row['cat_title']);
+            $cat_id = escape($row['cat_id']);
+            echo "<tr>";
+            echo "<td>{$cat_id}</td>";
+            echo "<td>{$cat_title}</td>";
+            echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
+            echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
+            echo "</tr>";
+        }
+        confirm($select_categories);
     }
-    confirm($select_categories);}
-
 }
 /************* delete post from db*********** */
 function delete_post()
-{if (isset($_SESSION['user_role'])) {
-    global $connection;
-    if (isset($_POST['delete'])) {
+{
+    if (isset($_SESSION['user_role'])) {
+        global $connection;
+        if (isset($_POST['delete'])) {
 
-        $the_post_id = escape($_POST['post_id']);
+            $the_post_id = escape($_POST['post_id']);
 
-        $stmt = mysqli_prepare($connection, "DELETE FROM posts WHERE post_id = ?");
-        mysqli_stmt_bind_param($stmt, 'i', $the_post_id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
+            $stmt = mysqli_prepare($connection, "DELETE FROM posts WHERE post_id = ?");
+            mysqli_stmt_bind_param($stmt, 'i', $the_post_id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
 
-        // refraiche the page , to show data after deleting a post
-        redirect("posts.php");
+            // refraiche the page , to show data after deleting a post
+            redirect("posts.php");
+        }
     }
-}
 }
 
 /******* show categorys ********* */
 function showCategories()
-{if (isset($_SESSION['user_role'])) {
-    global $connection;
-    $query = "SELECT cat_title,cat_id FROM categories ";
-    $select_categories = mysqli_query($connection, $query);
-    confirm($select_categories);
-    while ($row = mysqli_fetch_assoc($select_categories)) {
-        $cat_title = escape($row['cat_title']);
-        $cat_id = escape($row['cat_id']);
-        echo "<option value='{$cat_id}'>{$cat_title}</option>";
+{
+    if (isset($_SESSION['user_role'])) {
+        global $connection;
+        $query = "SELECT cat_title,cat_id FROM categories ";
+        $select_categories = mysqli_query($connection, $query);
+        confirm($select_categories);
+        while ($row = mysqli_fetch_assoc($select_categories)) {
+            $cat_title = escape($row['cat_title']);
+            $cat_id = escape($row['cat_id']);
+            echo "<option value='{$cat_id}'>{$cat_title}</option>";
+        }
     }
-}
 }
 
 // give table name   . and return how much data is there , exemple: count posts .
@@ -127,7 +128,6 @@ function counter($table_name)
     $send_query = mysqli_query($connection, $query);
     $result_count = mysqli_num_rows($send_query);
     return $result_count;
-
 }
 
 /******** check how much users are online ****** */
@@ -149,12 +149,10 @@ function users_online()
         mysqli_query($connection, "INSERT INTO users_online(session, time) VALUES('$session','$time')");
     } else {
         mysqli_query($connection, "UPDATE users_online SET time = '$time' WHERE session = '$session'");
-
     }
     $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out'");
     $count_users = mysqli_num_rows($users_online_query);
     return $count_users;
-
 }
 /****** get how much of passed argument exist in db ********** */
 function comment_counter($comment_post_id)
@@ -199,7 +197,7 @@ function checkPassword($pwd)
 function isValidEmail($email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL)
-    && preg_match('/@.+\./', $email);
+        && preg_match('/@.+\./', $email);
 }
 
 /*************** check if user is admin *************** */
@@ -289,7 +287,6 @@ function signup($username, $user_password, $user_firstname, $user_lastname, $use
         }
     } else {
         echo error_type('This username Exist , try another one');
-
     }
 }
 
@@ -342,12 +339,11 @@ function login_user($username, $password)
             $_SESSION['lastname'] = mysqli_real_escape_string($connection, $db_user_lastname);
             $_SESSION['user_role'] = mysqli_real_escape_string($connection, $db_user_role);
 
-            header("Location: ../admin");
-        } else {header("Location: ../index.php");
+            header("Location: admin");
+        } else {
+            header("Location: index.php");
         }
-
     }
-
 }
 /******** check If User Is Logged In And Redirect******** */
 function isAdminLoggedIn($url = null)
@@ -356,3 +352,4 @@ function isAdminLoggedIn($url = null)
         redirect($url);
     }
 }
+
