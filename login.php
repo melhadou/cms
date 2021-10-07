@@ -1,23 +1,20 @@
 <?php
-include "includes/db.php";?>
-<?php include "includes/header.php";?>
+include "includes/db.php"; ?>
+<?php include "includes/header.php"; ?>
 
 
 <?php
 
-isAdminLoggedIn('cms/admin');
+isAdminLoggedIn('/cms/admin');
 
 if (ifItIsMethod('post')) {
 
-    if (isset($_POST['username']) && isset($_POST['password'])) {
+  if (isset($_POST['username']) && isset($_POST['password'])) {
 
-        login_user($_POST['username'], $_POST['password']);
-
-
-    } else {
-        redirect('login.php');
-    }
-
+    login_user($_POST['username'], $_POST['password']);
+  } else {
+    redirect('login.php');
+  }
 }
 
 ?>
@@ -27,7 +24,7 @@ if (ifItIsMethod('post')) {
 
 <!-- Navigation -->
 
-<?php include "includes/nav.php";?>
+<?php include "includes/nav.php"; ?>
 
 <!-- Page Content -->
 <div class="container">
@@ -89,4 +86,4 @@ if (ifItIsMethod('post')) {
 
 
 </div> <!-- /.container -->
-<?php include "includes/footer.php";?>
+<?php include "includes/footer.php"; ?>
