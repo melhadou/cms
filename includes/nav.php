@@ -16,71 +16,70 @@
 
         <?php
 
-$query = "SELECT * FROM categories";
-$select_all_cat_querys = mysqli_query($connection, $query);
+        $query = "SELECT * FROM categories";
+        $select_all_cat_querys = mysqli_query($connection, $query);
 
-while ($row = mysqli_fetch_assoc($select_all_cat_querys)) {
-    $cat_title = mysqli_real_escape_string($connection, $row['cat_title']);
-    $cat_id = mysqli_real_escape_string($connection, $row['cat_id']);
+        while ($row = mysqli_fetch_assoc($select_all_cat_querys)) {
+          $cat_title = mysqli_real_escape_string($connection, $row['cat_title']);
+          $cat_id = mysqli_real_escape_string($connection, $row['cat_id']);
 
-    $cat_class = '';
-    if (isset($_GET['c_id']) && $_GET['c_id'] == $cat_id) {
-        $cat_class = 'active';
-    }
-    echo "<li class='$cat_class'><a  href='categories.php?c_id={$cat_id}'>{$cat_title}</a></li>";
-
-}
-
-?>
-        <?php
-/* check if user is loged in > then check if he is the admin */
-if (isLogedIn($_SESSION['user_role'])) {
-    if (isAdmin($_SESSION['username'])) {
-        echo "<li><a href='admin/'>Admin</a></li>";
-    }
-}
-
-/****** check if user isnt loged in ==> show login link ********* */
-if (!isLogedIn($_SESSION['user_role'])) {
-    echo "<li><a href='login.php'>Login</a></li>";
-}
-
-?>
-        <?php
-if (isLogedIn($_SESSION['user_role'])) {
-    if (isAdmin($_SESSION['username'])) {
-        if (isset($_GET['p_id'])) {
-            $the_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
-            echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+          $cat_class = '';
+          if (isset($_GET['c_id']) && $_GET['c_id'] == $cat_id) {
+            $cat_class = 'active';
+          }
+          echo "<li class='$cat_class'><a  href='categories.php?c_id={$cat_id}'>{$cat_title}</a></li>";
         }
-    }
-}
-?>
+
+        ?>
+        <?php
+        /* check if user is loged in > then check if he is the admin */
+        if (isLogedIn($_SESSION['user_role'])) {
+          if (isAdmin($_SESSION['username'])) {
+            echo "<li><a href='admin/'>Admin</a></li>";
+          }
+        }
+
+        /****** check if user isnt loged in ==> show login link ********* */
+        if (!isLogedIn($_SESSION['user_role'])) {
+          echo "<li><a href='login.php'>Login</a></li>";
+        }
+
+        ?>
+        <?php
+        if (isLogedIn($_SESSION['user_role'])) {
+          if (isAdmin($_SESSION['username'])) {
+            if (isset($_GET['p_id'])) {
+              $the_post_id = mysqli_real_escape_string($connection, $_GET['p_id']);
+              echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+            }
+          }
+        }
+        ?>
 
       </ul>
-      <?php if (isset($_SESSION['user_role'])) {?>
-      <ul class="nav navbar-right top-nav">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown">
-            <?php
-echo $_SESSION['firstname'];
-    echo " ";
-    echo $_SESSION['lastname'];
+      <?php if (isset($_SESSION['user_role'])) { ?>
+        <ul class="nav navbar-right top-nav">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              <?php
+              echo $_SESSION['firstname'];
+              echo " ";
+              echo $_SESSION['lastname'];
 
-    ?>
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="includes/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-            </li>
-          </ul>
+              ?>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="includes/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+              </li>
+            </ul>
           <?php
-}
+        }
 
-?>
-        </li>
-      </ul>
+          ?>
+          </li>
+        </ul>
     </div>
     <!-- /.navbar-collapse -->
   </div>
