@@ -1,4 +1,12 @@
-<?php include "includes/db.php"; ?>
+<?php
+
+require_once('vendor/autoload.php');
+
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
+
+include "includes/db.php";
+?>
 
 <?php include "includes/header.php"; ?>
 
@@ -66,7 +74,7 @@
                     <h2>
                         <a href="post.php?p_id=<?php echo $post_id;
                                                 ?>"><?php echo $post_title;
-                            ?></a>
+                                                    ?></a>
                     </h2>
                     <p class="lead">
                         <?php
