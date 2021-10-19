@@ -1,12 +1,12 @@
-<?php include "includes/db.php";?>
+<?php include "includes/db.php"; ?>
 
-<?php include "includes/header.php";?>
+<?php include "includes/header.php"; ?>
 
-    <!-- Navigation -->
-<?php include "includes/nav.php";?>
+<!-- Navigation -->
+<?php include "includes/nav.php"; ?>
 
-    <!-- Page Content -->
-    <div class="container">
+<!-- Page Content -->
+<div class="container">
 
     <div class="row">
 
@@ -34,7 +34,6 @@
 
             if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
                 $query = "SELECT * FROM posts ORDER BY post_id DESC LIMIT $page_1,$pre_page";
-
             } else {
                 $query = "SELECT * FROM posts WHERE post_status = 'published'  ORDER BY post_id DESC LIMIT $page_1,$pre_page";
             }
@@ -52,7 +51,7 @@
                     $post_status = mysqli_real_escape_string($connection, $row['post_status']);
                     $post_content = mysqli_real_escape_string($connection, substr($row['post_content'], 0, 400));
 
-                    ?>
+            ?>
                     <h1 class="page-header">
                         Page Heading
                         <small>Secondary Text</small>
@@ -66,7 +65,7 @@
 
                     <h2>
                         <a href="post.php?p_id=<?php echo $post_id;
-                        ?>"><?php echo $post_title;
+                                                ?>"><?php echo $post_title;
                             ?></a>
                     </h2>
                     <p class="lead">
@@ -79,7 +78,6 @@
                         while ($row = mysqli_fetch_assoc($select_user_query)) {
 
                             $post_author = mysqli_real_escape_string($connection, $row['user_firstname'] . " " . $row['user_lastname']);
-
                         }
                         ?>
                         by <a href="author_posts.php?p_author=<?php echo $user_id; ?>"><?php echo $post_author; ?></a>
@@ -87,15 +85,15 @@
                     <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
                     <hr>
                     <a href="post.php?p_id=<?php echo $post_id;
-                    ?>">
+                                            ?>">
                         <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="<?php echo $post_image; ?>">
                     </a>
                     <hr>
                     <p><?php echo $post_content; ?></p>
-                    <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span
-                                class="glyphicon glyphicon-chevron-right"></span></a>
-                    <?php
-                }}
+                    <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <?php
+                }
+            }
 
             ?>
 
@@ -105,7 +103,7 @@
 
         <!-- Blog Sidebar Widgets Column -->
 
-        <?php include "includes/sidebar.php";?>
+        <?php include "includes/sidebar.php"; ?>
     </div>
     <!-- /.row -->
 
@@ -116,14 +114,12 @@
         for ($i = 1; $i <= $count; $i++) {
             if ($i == $page)
                 echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
-             else
+            else
                 echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
-
-
         }
 
         ?>
 
     </ul>
 
-<?php include "includes/footer.php";?>
+    <?php include "includes/footer.php"; ?>
