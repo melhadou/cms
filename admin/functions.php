@@ -18,7 +18,6 @@ function confirm($result)
 /*********** redirecting to specfique url *********** */
 function redirect($url)
 {
-    global $connection;
     header("Location: $url");
 }
 /******** insert category to db ******* */
@@ -352,4 +351,3 @@ function isAdminLoggedIn($url = null)
         redirect($url);
     }
 }
-
